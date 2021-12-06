@@ -5,7 +5,7 @@
 #include "Turtle.h"
 
 int main(int argc, char *argv[]) {
-    std::cout << "Working... sex is fun!\n";
+    std::cout << "Working...\n";
 
     Params params;
 
