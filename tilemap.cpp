@@ -16,9 +16,7 @@ TileMap::TileMap(unsigned int size) {
     std::fill_n(tiles, size * size, false);
 }
 
-TileMap::~TileMap() {
-    delete [] tiles;
-}
+TileMap::~TileMap() { delete[] tiles; }
 
 void TileMap::step(unsigned int x, unsigned int y) {
     if (x >= size || y >= size) {
@@ -28,6 +26,4 @@ void TileMap::step(unsigned int x, unsigned int y) {
     tiles[y * size + x] = true;
 }
 
-unsigned int TileMap::getSize() {
-    return size;
-}
+unsigned int TileMap::getSize() { return size; }

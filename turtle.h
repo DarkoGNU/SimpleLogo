@@ -9,7 +9,8 @@ class Turtle {
     unsigned int y;
     double angle;
 
-public:
-    Turtle(TileMap& tileMap, unsigned int startX, unsigned int startY, double startAngle);
-
+  public:
+    Turtle(TileMap &tileMap);
+    Turtle(TileMap &tileMap, unsigned int startX, unsigned int startY,
+           double startAngle);
 };

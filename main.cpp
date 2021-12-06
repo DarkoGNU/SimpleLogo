@@ -2,8 +2,9 @@
 
 #include "params.h"
 #include "tilemap.h"
+#include "turtle.h"
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
     std::cout << "Working...\n";
 
     Params params;
@@ -14,5 +15,7 @@ int main(int argc, char* argv[]) {
 
     unsigned int size = params.size;
 
-    
+    TileMap tileMap(size);
+
+    Turtle turtle(tileMap);
 }
