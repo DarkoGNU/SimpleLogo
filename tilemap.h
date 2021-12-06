@@ -9,4 +9,6 @@ public:
     TileMap(unsigned int size);
     ~TileMap();
 
+    void step(unsigned int x, unsigned int y);
+    unsigned int getSize();
 };
