@@ -1,11 +1,11 @@
 #include <iostream>
 
-#include "params.h"
-#include "tilemap.h"
-#include "turtle.h"
+#include "Params.h"
+#include "TileMap.h"
+#include "Turtle.h"
 
 int main(int argc, char *argv[]) {
-    std::cout << "Working...\n";
+    std::cout << "Working... sex is fun!\n";
 
     Params params;
 

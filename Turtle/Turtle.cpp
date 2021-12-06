@@ -1,4 +1,4 @@
-#include "turtle.h"
+#include "Turtle.h"
 
 Turtle::Turtle(TileMap &tileMap)
     : tileMap(tileMap), x(tileMap.getSize() / 2), y(tileMap.getSize() / 2),

@@ -1,4 +1,4 @@
-#include "tilemap.h"
+#include "TileMap.h"
 
 #include <algorithm>
 #include <stdexcept>
