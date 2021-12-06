@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "params.h"
+#include "tilemap.h"
 
 int main(int argc, char* argv[]) {
     std::cout << "Working...\n";
@@ -11,5 +12,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    unsigned int size = params.size;
 
+    
 }

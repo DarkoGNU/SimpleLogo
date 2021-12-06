@@ -1,4 +1,4 @@
-#include <array>
+#pragma once
 
 class TileMap {
 private:
