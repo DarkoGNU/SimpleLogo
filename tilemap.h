@@ -1,7 +1,6 @@
 #pragma once
 
 class TileMap {
-private:
     unsigned int size;
     bool *tiles;
 
@@ -11,4 +10,5 @@ public:
 
     void step(unsigned int x, unsigned int y);
     unsigned int getSize();
+    
 };

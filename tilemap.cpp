@@ -4,6 +4,8 @@
 #include <stdexcept>
 
 TileMap::TileMap(unsigned int size) {
+    this->size = size;
+
     if (size == 0) {
         throw std::invalid_argument("TileMap's size must be other than 0");
     }
