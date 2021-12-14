@@ -2,7 +2,7 @@
 project (IO)
 
 # Add a library with the sources
-add_library(${PROJECT_NAME} Params.cpp)
+add_library(${PROJECT_NAME} Params.cpp Writer.cpp)
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC ${PROJECT_SOURCE_DIR}

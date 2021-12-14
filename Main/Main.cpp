@@ -3,6 +3,7 @@
 #include "Params.h"
 #include "TileMap.h"
 #include "Turtle.h"
+#include "Writer.h"
 
 int main(int argc, char *argv[]) {
     std::cout << "Working...\n";
@@ -13,9 +14,12 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    unsigned int size = params.size;
+    unsigned int size = params.getSize();
 
     TileMap tileMap(size);
 
     Turtle turtle(tileMap);
+
+    turtle.forward(90);
+    Writer::writeText(params.getOutputPath(), tileMap.toString());
 }

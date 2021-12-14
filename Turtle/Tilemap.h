@@ -1,13 +1,19 @@
 #pragma once
 
+#include <string>
+#include <vector>
+
 class TileMap {
-    unsigned int size;
-    bool *tiles;
+    const unsigned int size{};
+
+    // Accessing a tile: tiles[y * size + x]
+    std::vector<bool> tiles{};
 
   public:
     TileMap(unsigned int size);
-    ~TileMap();
+    unsigned int getSize();
 
     void step(unsigned int x, unsigned int y);
-    unsigned int getSize();
+
+    std::string toString(char stepped = '*', char unstepped = ' ');
 };

@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-bool Params::readParams(int argc, char *argv[]) {
+bool Params::readParams(int argc, char const *const argv[]) {
     // we need exactly 7 arguments, including the name of the executable
     if (argc != 7) {
         help(argv[0]);
@@ -34,9 +34,15 @@ bool Params::readParams(int argc, char *argv[]) {
     return true;
 }
 
-void Params::help(char exePath[]) {
+void Params::help(const char exePath[]) {
     std::string exeName = std::filesystem::path(exePath).filename().string();
 
     std::cerr << "Usage: " << exeName
               << " -i <input path> -o <output path> -s <size> \n";
 }
+
+std::filesystem::path Params::getInputPath() const { return inputPath; }
+
+std::filesystem::path Params::getOutputPath() const { return outputPath; }
+
+unsigned int Params::getSize() const { return size; }

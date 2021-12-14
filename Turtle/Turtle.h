@@ -3,14 +3,23 @@
 #include "TileMap.h"
 
 class Turtle {
-    TileMap tileMap;
+    TileMap &tileMap;
 
-    unsigned int x;
-    unsigned int y;
+    // We use doubles, but they will be rounded when stepping on TileMap
+    double x;
+    double y;
+
+    // in radians, angle >= 0 || angle < 2π
     double angle;
 
   public:
     Turtle(TileMap &tileMap);
     Turtle(TileMap &tileMap, unsigned int startX, unsigned int startY,
            double startAngle);
+
+    void left(double turnAngle);
+    void right(double turnAngle);
+
+    void forward(double length);
+    void back(double length);
 };

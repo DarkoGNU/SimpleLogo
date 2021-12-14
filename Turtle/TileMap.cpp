@@ -1,29 +1,28 @@
 #include "TileMap.h"
 
-#include <algorithm>
-#include <stdexcept>
+TileMap::TileMap(unsigned int size) : size{size}, tiles(size * size, false){};
 
-TileMap::TileMap(unsigned int size) {
-    this->size = size;
-
-    if (size == 0) {
-        throw std::invalid_argument("TileMap's size must be other than 0");
-    }
-
-    // tiles[x][y] = tiles[y * size + x]
-    tiles = new bool[size * size];
-
-    std::fill_n(tiles, size * size, false);
-}
-
-TileMap::~TileMap() { delete[] tiles; }
+unsigned int TileMap::getSize() { return size; }
 
 void TileMap::step(unsigned int x, unsigned int y) {
-    if (x >= size || y >= size) {
+    if (x >= size || y >= size)
         return;
-    }
 
     tiles[y * size + x] = true;
 }
 
-unsigned int TileMap::getSize() { return size; }
+std::string TileMap::toString(char stepped, char unstepped) {
+    std::string visualMap;
+    visualMap.reserve(size * size + size);
+
+    for (unsigned int y = 0; y < size; y++) {
+        for (unsigned int x = 0; x < size; x++) {
+            tiles[y * size + x] ? visualMap.push_back(stepped)
+                                : visualMap.push_back(unstepped);
+        }
+
+        visualMap.push_back('\n');
+    }
+
+    return visualMap;
+}
