@@ -1,0 +1,9 @@
+# Set the project name
+project (Interpreter)
+
+# Add a library with the sources
+add_library(${PROJECT_NAME} Interpreter.cpp)
+
+target_include_directories(${PROJECT_NAME}
+    PUBLIC ${PROJECT_SOURCE_DIR}
+)

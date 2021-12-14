@@ -5,17 +5,12 @@
 Turtle::Turtle(TileMap &tileMap)
     : tileMap(tileMap), x(tileMap.getSize() / 2), y(tileMap.getSize() / 2),
       angle(0) {
-
     left(90);
-    tileMap.step(x, y);
 }
 
 Turtle::Turtle(TileMap &tileMap, unsigned int startX, unsigned int startY,
                double startAngle)
-    : tileMap(tileMap), x(startX), y(startY), angle(startAngle) {
-
-    tileMap.step(x, y);
-}
+    : tileMap(tileMap), x(startX), y(startY), angle(startAngle) {}
 
 void Turtle::right(double turnAngle) {
     angle += turnAngle * (std::numbers::pi / 180);

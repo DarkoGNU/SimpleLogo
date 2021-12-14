@@ -15,5 +15,6 @@ class TileMap {
 
     void step(unsigned int x, unsigned int y);
 
-    std::string toString(char stepped = '*', char unstepped = ' ');
+    std::string toString(char stepped = '*', char unstepped = ' ') const;
+    std::vector<bool> getTiles() const;
 };

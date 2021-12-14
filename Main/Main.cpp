@@ -20,6 +20,8 @@ int main(int argc, char *argv[]) {
 
     Turtle turtle(tileMap);
 
-    turtle.forward(90);
-    Writer::writeText(params.getOutputPath(), tileMap.toString());
+    turtle.forward(25);
+
+    Writer::writePng("Test.png", tileMap.getTiles(), params.getSize());
+    Writer::writeText("Text.txt", tileMap.toString());
 }

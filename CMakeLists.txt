@@ -16,6 +16,7 @@ set(CMAKE_CXX_STANDARD 20)
 # Add subfolders
 add_subdirectory(Turtle)
 add_subdirectory(IO)
+add_subdirectory(Interpreter)
 add_subdirectory(Main)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})

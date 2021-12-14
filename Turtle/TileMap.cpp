@@ -11,7 +11,7 @@ void TileMap::step(unsigned int x, unsigned int y) {
     tiles[y * size + x] = true;
 }
 
-std::string TileMap::toString(char stepped, char unstepped) {
+std::string TileMap::toString(char stepped, char unstepped) const {
     std::string visualMap;
     visualMap.reserve(size * size + size);
 
@@ -26,3 +26,5 @@ std::string TileMap::toString(char stepped, char unstepped) {
 
     return visualMap;
 }
+
+std::vector<bool> TileMap::getTiles() const { return tiles; }
