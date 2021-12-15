@@ -15,3 +15,6 @@ target_include_directories(${PROJECT_NAME}
 
 # Link the libraries
 target_link_libraries (${PROJECT_NAME} LINK_PUBLIC Turtle IO Commands)
+
+# Set sources
+target_sources(${PROJECT_NAME} PRIVATE Parser.cpp)

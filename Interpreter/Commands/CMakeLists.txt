@@ -10,3 +10,6 @@ target_include_directories(${PROJECT_NAME}
 
 # Link the libraries
 target_link_libraries (${PROJECT_NAME} LINK_PUBLIC Turtle)
+
+# Set sources
+target_sources(${PROJECT_NAME} PRIVATE SimpleCommand.cpp IfCommand.cpp)
