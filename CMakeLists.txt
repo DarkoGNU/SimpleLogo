@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 
 project(
     MyLogo
+    VERSION 0.6
     DESCRIPTION "A simple Logo implementation in C++"
     HOMEPAGE_URL "https://github.com/DarkoGNU"
     LANGUAGES CXX
@@ -14,8 +15,6 @@ option(SELF_TEST "Enables testing code to be built" OFF)
 set(CMAKE_CXX_STANDARD 20)
 
 # Add subfolders
-add_subdirectory(Turtle)
-add_subdirectory(IO)
 add_subdirectory(Interpreter)
 add_subdirectory(Main)
 

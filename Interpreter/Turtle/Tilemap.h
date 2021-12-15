@@ -11,7 +11,7 @@ class TileMap {
 
   public:
     TileMap(unsigned int size);
-    unsigned int getSize();
+    unsigned int getSize() const;
 
     void step(unsigned int x, unsigned int y);
 

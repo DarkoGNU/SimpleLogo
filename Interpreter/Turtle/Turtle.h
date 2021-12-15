@@ -5,7 +5,7 @@
 class Turtle {
     TileMap &tileMap;
 
-    // We use doubles, but they will be rounded when stepping on TileMap
+    // We use doubles, but they will be rounded down when stepping on TileMap
     double x;
     double y;
 

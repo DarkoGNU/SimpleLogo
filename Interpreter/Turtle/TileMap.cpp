@@ -2,7 +2,7 @@
 
 TileMap::TileMap(unsigned int size) : size{size}, tiles(size * size, false){};
 
-unsigned int TileMap::getSize() { return size; }
+unsigned int TileMap::getSize() const { return size; }
 
 void TileMap::step(unsigned int x, unsigned int y) {
     if (x >= size || y >= size)
