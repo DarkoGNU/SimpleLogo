@@ -2,7 +2,7 @@
 project (Commands)
 
 # Add a library with the sources
-add_library(${PROJECT_NAME} Command.h)
+add_library(${PROJECT_NAME})
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC ${PROJECT_SOURCE_DIR}
@@ -12,4 +12,4 @@ target_include_directories(${PROJECT_NAME}
 target_link_libraries (${PROJECT_NAME} LINK_PUBLIC Turtle)
 
 # Set sources
-target_sources(${PROJECT_NAME} PRIVATE SimpleCommand.cpp IfCommand.cpp)
+target_sources(${PROJECT_NAME} PRIVATE)
