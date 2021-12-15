@@ -2,7 +2,7 @@
 project (Commands)
 
 # Add a library with the sources
-add_library(${PROJECT_NAME} SimpleCommand.cpp)
+add_library(${PROJECT_NAME} Command.h)
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC ${PROJECT_SOURCE_DIR}

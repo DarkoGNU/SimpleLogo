@@ -1,14 +1,7 @@
 #pragma once
 
-#include "Turtle.h"
+#include "Command.h"
 
-class SimpleCommand {
-    enum class Type { przod, tyl, lewo, prawo };
-    Type type;
+class SimpleCommand : public Command {
 
-    double arg;
-
-  public:
-    SimpleCommand(Type type, double arg);
-    void execute(Turtle turtle;);
 };
