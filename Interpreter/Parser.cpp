@@ -40,7 +40,7 @@ void Parser::tokenize(const std::string &text) {
     std::string token;
     std::stringstream ss(text);
 
-    while(getline(ss, token, ' ')) {
+    while(getline(ss, token, ';')) {
         tokens.push_back(token);
     }
 
@@ -50,15 +50,19 @@ void Parser::tokenize(const std::string &text) {
 }
 
 void Parser::cleanString(std::string &text) {
-    // Replace semicolons with spaces
-    std::regex pattern(R"(;+)");
-    text = std::regex_replace(text, pattern, " ");
+    // Replace ) with );
+    std::regex pattern(R"(\))");
+    text = std::regex_replace(text, pattern, ");");
 
-    // Replace all whitespaces with one space
-    pattern = R"(\s+)";
-    text = std::regex_replace(text, pattern, " ");
-
-    // Trim the string
-    pattern = R"(^\s+|\s+$)";
+    // Remove whitespace
+    pattern = R"(\s)";
     text = std::regex_replace(text, pattern, "");
+
+    // Get rid of double semicolons
+    pattern = R"(;+)";
+    text = std::regex_replace(text, pattern, ";");
+
+    // Replace end[name] with just end
+    pattern = R"(end[^\s;]*;)";
+    text = std::regex_replace(text, pattern, "end;");
 }
