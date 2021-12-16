@@ -14,4 +14,3 @@ Installation on Arch Linux:
 git submodule update --init --recursive
 sudo pacman -Syu
 sudo pacman -S png++ lua
-...
