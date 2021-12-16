@@ -5,8 +5,7 @@
 int main(int argc, char *argv[]) {
     Interpreter interpreter(argc, argv);
 
-    if (interpreter.bad())
-        return false;
+    std::cout << "!!!Test!!!\n\n";
 
-    return interpreter.execute() == true ? 0 : 1;
+    return interpreter.execute() ? 0 : 1;
 }
