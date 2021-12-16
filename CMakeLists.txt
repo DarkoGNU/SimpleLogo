@@ -17,6 +17,7 @@ set(CMAKE_CXX_STANDARD 20)
 # Add subfolders
 add_subdirectory(Interpreter)
 add_subdirectory(Main)
+add_subdirectory(lib/LuaBridge)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

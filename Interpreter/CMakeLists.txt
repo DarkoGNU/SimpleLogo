@@ -13,12 +13,12 @@ target_include_directories(${PROJECT_NAME}
 )
 
 # Find LUA
-FIND_PACKAGE(Lua 5.4 REQUIRED)
+FIND_PACKAGE(Lua 5.1 REQUIRED)
 add_definitions(-DLUA)
 include_directories(${LUA_INCLUDE_DIR})
 
 # Link the libraries
-target_link_libraries (${PROJECT_NAME} LINK_PUBLIC ${LUA_LIBRARY} Turtle IO)
+target_link_libraries (${PROJECT_NAME} LINK_PUBLIC ${LUA_LIBRARY} Turtle IO LuaBridge)
 
 # Set sources
 target_sources(${PROJECT_NAME} PRIVATE Parser.cpp)
