@@ -9,5 +9,5 @@ bool Interpreter::bad() const {
 }
 
 bool Interpreter::execute() {
-    
+    return false;
 }
