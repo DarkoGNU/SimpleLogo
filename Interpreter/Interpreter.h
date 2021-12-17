@@ -16,6 +16,8 @@ class Interpreter {
     TileMap tilemap;
     Turtle turtle;
 
+    bool writeMap() const;
+
   public:
     Interpreter(int argc, char const *const argv[]);
     bool bad() const;

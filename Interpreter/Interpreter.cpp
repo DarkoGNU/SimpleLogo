@@ -1,10 +1,10 @@
 #include "Interpreter.h"
 
+#include <algorithm>
+
 #include "LuaBridge/LuaBridge.h"
 #include "Parser.h"
 #include "Writer.h"
-
-#include <iostream> // debug
 
 namespace lb = luabridge;
 
@@ -39,17 +39,32 @@ bool Interpreter::execute() {
     lb::push(L.get(), &turtle);
     lua_setglobal(L.get(), "turtle");
 
-    // Check the code (debug)
-    std::cout << parser.getLua() << '\n';
+    // Execute the code and check the result
+    if (luaL_dostring(L.get(), parser.getLua().c_str()) != LUA_OK) {
+        std::cerr << lua_tostring(L.get(),-1) << '\n';
 
-    // Execute the code
-    luaL_dostring(L.get(), parser.getLua().c_str());
+        status = false;
+        return false;
+    }
 
-    // Write the result
-    Writer::writePng(params.getOutputPath(), tilemap.getTiles(), tilemap.getSize());
-
-    // Check error
-    std::cout << lua_tostring(L.get(),-1) << '\n';
+    // Write the TileMap
+    if (!writeMap()) {
+        status = false;
+        return false;
+    }
 
     return true;
+}
+
+bool Interpreter::writeMap() const {
+    std::string extension = params.getOutputPath().extension().string();
+    std::transform(extension.begin(), extension.end(), extension.begin(),
+                   ::tolower);
+
+    if (extension == ".png") {
+        return Writer::writePng(params.getOutputPath(), tilemap.getTiles(),
+                                tilemap.getSize());
+    }
+
+    return Writer::writeText(params.getOutputPath(), tilemap.toString());
 }

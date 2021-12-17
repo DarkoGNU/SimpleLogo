@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 
 project(
     MyLogo
-    VERSION 0.6
+    VERSION 0.9
     DESCRIPTION "A simple Logo implementation in C++"
     HOMEPAGE_URL "https://github.com/DarkoGNU"
     LANGUAGES CXX

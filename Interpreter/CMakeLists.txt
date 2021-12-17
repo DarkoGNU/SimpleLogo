@@ -21,4 +21,4 @@ include_directories(${LUA_INCLUDE_DIR})
 target_link_libraries (${PROJECT_NAME} PUBLIC ${LUA_LIBRARY} Turtle IO LuaBridge)
 
 # Set sources
-target_sources(${PROJECT_NAME} PRIVATE Parser.cpp)
+target_sources(${PROJECT_NAME} PRIVATE Interpreter.cpp Parser.cpp)

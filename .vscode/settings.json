@@ -63,6 +63,7 @@
         "forward_list": "cpp",
         "set": "cpp",
         "unordered_set": "cpp",
-        "optional": "cpp"
+        "optional": "cpp",
+        "filesystem": "cpp"
     },
 }

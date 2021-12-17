@@ -79,7 +79,7 @@ void Parser::handleBuiltIn(std::string &token) {
     std::string type = token.substr(0, index);
 
     if (type == "przod" || type == "tyl" || type == "prawo" || type == "lewo")
-        token.insert(0, "turtle.");
+        token.insert(0, "turtle:");
     else if (type == "if") {
         // Replace () with spaces
         const static std::regex pattern1(R"([()])");

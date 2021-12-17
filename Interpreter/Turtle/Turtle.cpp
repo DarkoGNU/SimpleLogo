@@ -2,8 +2,6 @@
 
 #include <cmath>
 
-#include <iostream> //debug
-
 Turtle::Turtle(TileMap &tileMap)
     : tileMap(tileMap), x(tileMap.getSize() / 2), y(tileMap.getSize() / 2),
       angle(0) {
@@ -44,9 +42,6 @@ void Turtle::forward(double length) {
     y += fractpart * std::sin(angle);
 
     tileMap.step(x, y);
-
-    // debug
-    std::cout << "Called with " << length << "\n";
 }
 
 void Turtle::back(double length) {
