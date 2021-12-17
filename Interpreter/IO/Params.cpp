@@ -34,7 +34,7 @@ bool Params::readParams(int argc, char const *const argv[]) {
     return true;
 }
 
-void Params::help(const char exePath[]) {
+void Params::help(const char exePath[]) const {
     std::string exeName = std::filesystem::path(exePath).filename().string();
 
     std::cerr << "Usage: " << exeName

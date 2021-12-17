@@ -10,7 +10,7 @@ class Parser {
     static const std::unordered_set<std::string> builtIn;
     std::unordered_set<std::string> registered;
 
-    std::filesystem::path inputPath;
+    const std::filesystem::path inputPath;
     std::vector<std::string> tokens;
     std::string luaCode;
 
@@ -22,7 +22,6 @@ class Parser {
     void cleanString(std::string &text);
 
     void handleBuiltIn(std::string &token);
-    void handleProcedure(std::string &token);
 
   public:
     Parser(std::filesystem::path inputPath);

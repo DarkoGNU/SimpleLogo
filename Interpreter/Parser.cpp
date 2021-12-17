@@ -5,8 +5,6 @@
 #include <sstream>
 #include <stdexcept>
 
-#include <iostream> // Debug
-
 Parser::Parser(std::filesystem::path inputPath) : inputPath(inputPath) {}
 
 std::string Parser::getLua() const { return luaCode; }
@@ -16,6 +14,11 @@ bool Parser::parse() {
 
     if (!readFile(file))
         return false;
+
+    luaCode.clear();
+
+    for (const std::string &token : tokens)
+        luaCode.append(token).push_back(' ');
 
     return true;
 }
@@ -35,9 +38,6 @@ bool Parser::readFile(std::ifstream &file) {
     cleanString(content);
     tokenize(content);
     translate(tokens);
-
-    for (auto &token : tokens)
-        std::cout << token << "\n";
 
     return true;
 }
@@ -67,7 +67,7 @@ void Parser::translate(std::string &token) {
     }
 
     if (registered.find(type) == registered.end()) {
-        handleProcedure(token);
+        token.insert(0, "function ");
         registered.insert(type);
     }
 
@@ -76,17 +76,10 @@ void Parser::translate(std::string &token) {
 
 void Parser::handleBuiltIn(std::string &token) {
     std::size_t index = token.find('(');
-
     std::string type = token.substr(0, index);
 
-    if (type == "przod")
-        token.replace(0, index, "turtle.forward");
-    else if (type == "tyl")
-        token.replace(0, index, "turtle.back");
-    else if (type == "prawo")
-        token.replace(0, index, "turtle.right");
-    else if (type == "lewo")
-        token.replace(0, index, "turtle.left");
+    if (type == "przod" || type == "tyl" || type == "prawo" || type == "lewo")
+        token.insert(0, "turtle.");
     else if (type == "if") {
         // Replace () with spaces
         const static std::regex pattern1(R"([()])");
@@ -96,10 +89,6 @@ void Parser::handleBuiltIn(std::string &token) {
     }
 
     // Do nothing if it's "end"
-}
-
-void Parser::handleProcedure(std::string &token) {
-    token.insert(0, "function ");
 }
 
 void Parser::cleanString(std::string &text) {

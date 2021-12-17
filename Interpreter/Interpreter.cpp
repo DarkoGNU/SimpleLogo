@@ -2,6 +2,9 @@
 
 #include "LuaBridge/LuaBridge.h"
 #include "Parser.h"
+#include "Writer.h"
+
+#include <iostream> // debug
 
 namespace lb = luabridge;
 
@@ -35,6 +38,18 @@ bool Interpreter::execute() {
     // Register turtle
     lb::push(L.get(), &turtle);
     lua_setglobal(L.get(), "turtle");
+
+    // Check the code (debug)
+    std::cout << parser.getLua() << '\n';
+
+    // Execute the code
+    luaL_dostring(L.get(), parser.getLua().c_str());
+
+    // Write the result
+    Writer::writePng(params.getOutputPath(), tilemap.getTiles(), tilemap.getSize());
+
+    // Check error
+    std::cout << lua_tostring(L.get(),-1) << '\n';
 
     return true;
 }

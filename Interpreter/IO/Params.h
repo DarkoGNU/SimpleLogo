@@ -7,7 +7,7 @@ class Params {
     std::filesystem::path outputPath;
     unsigned int size;
 
-    void help(const char exePath[]);
+    void help(const char exePath[]) const;
 
   public:
     bool readParams(int argc, char const *const argv[]);
