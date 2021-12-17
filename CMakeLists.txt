@@ -11,7 +11,7 @@ project(
 # Unused for now
 option(SELF_TEST "Enables testing code to be built" OFF)
 
-# Set the C++ standard
+# Set the C++ standard. LuaBridge (header-only library) won't compile with C++20
 set(CMAKE_CXX_STANDARD 17)
 
 # Add subfolders

@@ -5,7 +5,7 @@ A simple Logo implementation in C++
 ## Dependencies
 
 - png++
-- Lua 5.4
+- Lua 5.1
 - LuaBridge
 
 Installation on Arch Linux:
