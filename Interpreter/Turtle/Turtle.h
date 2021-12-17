@@ -9,7 +9,7 @@ class Turtle {
     double x;
     double y;
 
-    // in radians, angle >= 0 || angle < 2π
+    // in radians, angle >= 0 && angle < 2π
     double angle;
 
   public:
