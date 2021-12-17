@@ -1,7 +1,6 @@
 #include "Interpreter.h"
 
 #include "lua.hpp"
-#include "LuaBridge/LuaBridge.h"
 #include "Parser.h"
 
 Interpreter::Interpreter(const int argc, char const *const argv[])
