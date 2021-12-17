@@ -58,9 +58,20 @@ void Parser::translate(std::vector<std::string> &tokens) {
 }
 
 void Parser::translate(std::string &token) {
-    if (builtIn.find(token) == builtIn.end()) {
+    std::size_t index = token.find('(');
+    std::string type = token.substr(0, index);
+
+    if (builtIn.find(type) != builtIn.end()) {
         handleBuiltIn(token);
+        return;
     }
+
+    if (registered.find(type) == registered.end()) {
+        handleProcedure(token);
+        registered.insert(type);
+    }
+
+    // If it's a call, do nothing. It's already in the correct form
 }
 
 void Parser::handleBuiltIn(std::string &token) {
@@ -80,7 +91,15 @@ void Parser::handleBuiltIn(std::string &token) {
         // Replace () with spaces
         const static std::regex pattern1(R"([()])");
         token = std::regex_replace(token, pattern1, " ");
+        // append "then"
+        token += "then";
     }
+
+    // Do nothing if it's "end"
+}
+
+void Parser::handleProcedure(std::string &token) {
+    token.insert(0, "function ");
 }
 
 void Parser::cleanString(std::string &text) {

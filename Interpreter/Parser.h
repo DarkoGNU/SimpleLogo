@@ -17,11 +17,12 @@ class Parser {
     bool readFile(std::ifstream &file);
     void tokenize(const std::string &text);
 
-    static void translate(std::vector<std::string>& tokens);
-    static void translate(std::string& token);
-    static void cleanString(std::string &text);
+    void translate(std::vector<std::string> &tokens);
+    void translate(std::string &token);
+    void cleanString(std::string &text);
 
-    static void handleBuiltIn(std::string& token);
+    void handleBuiltIn(std::string &token);
+    void handleProcedure(std::string &token);
 
   public:
     Parser(std::filesystem::path inputPath);
