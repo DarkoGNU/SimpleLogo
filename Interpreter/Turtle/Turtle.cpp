@@ -13,17 +13,17 @@ Turtle::Turtle(TileMap &tileMap, unsigned int startX, unsigned int startY,
     : tileMap(tileMap), x(startX), y(startY), angle(startAngle) {}
 
 void Turtle::right(double turnAngle) {
-    angle += turnAngle * (std::numbers::pi / 180);
+    angle += turnAngle * (M_PI / 180);
 
-    while (angle >= std::numbers::pi * 2)
-        angle -= std::numbers::pi * 2;
+    while (angle >= M_PI * 2)
+        angle -= M_PI * 2;
 }
 
 void Turtle::left(double turnAngle) {
-    angle -= turnAngle * (std::numbers::pi / 180);
+    angle -= turnAngle * (M_PI / 180);
 
     while (angle < 0)
-        angle += std::numbers::pi * 2;
+        angle += M_PI * 2;
 }
 
 void Turtle::forward(double length) {
