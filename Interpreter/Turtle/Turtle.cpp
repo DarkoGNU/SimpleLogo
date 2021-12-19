@@ -3,8 +3,8 @@
 #include <cmath>
 
 Turtle::Turtle(TileMap &tileMap)
-    : tileMap(tileMap), x(tileMap.getSize() / 2), y(tileMap.getSize() / 2),
-      angle(0) {
+    : tileMap(tileMap), x(tileMap.getSize() / 2 + 0.5),
+      y(tileMap.getSize() / 2 + 0.5), angle(0) {
     left(90);
 }
 
