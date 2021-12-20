@@ -7,18 +7,16 @@
 #include <unordered_map>
 #include <vector>
 
-#include "Complex.h"
-
 class Parser {
     const std::filesystem::path inputPath;
-
-    static const std::unordered_set<std::string> builtIn;
-    std::unordered_map<std::string, Complex> registered;
     std::vector<std::string> tokens;
 
-    bool readFile(std::ifstream &file);
+    bool readFile();
     void tokenize(const std::string &text);
-    void cleanString(std::string &text);
+    void transformTokens();
+
+    static void cleanString(std::string &text);
+    static void transformToken(std::string &text);
 
   public:
     Parser(std::filesystem::path inputPath);

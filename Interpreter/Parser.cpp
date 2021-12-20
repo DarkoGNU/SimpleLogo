@@ -1,21 +1,27 @@
 #include "Parser.h"
 
-#include <cstddef> // not sure
+#include <cstddef>
+#include <iostream> // debug
 #include <regex>
 #include <sstream>
 
 Parser::Parser(std::filesystem::path inputPath) : inputPath(inputPath) {}
 
 bool Parser::parse() {
-    std::ifstream file(inputPath);
 
-    if (!readFile(file))
+    if (!readFile())
         return false;
+
+    for (auto &test : tokens) {
+        std::cout << test << "\n";
+    }
 
     return true;
 }
 
-bool Parser::readFile(std::ifstream &file) {
+bool Parser::readFile() {
+    std::ifstream file(inputPath);
+
     if (file.bad())
         return false;
 
@@ -31,6 +37,7 @@ bool Parser::readFile(std::ifstream &file) {
 
     cleanString(content);
     tokenize(content);
+    transformTokens();
 
     return true;
 }
@@ -44,23 +51,41 @@ void Parser::tokenize(const std::string &text) {
     }
 }
 
+void Parser::transformTokens() {
+    for (std::string &token : tokens) {
+        transformToken(token);
+    }
+}
+
 void Parser::cleanString(std::string &text) {
     // Replace ) with );
-    const static std::regex pattern1(R"(\))");
+    const static std::regex pattern1(R"(\)[^;])");
     text = std::regex_replace(text, pattern1, ");");
 
     // Remove whitespace
     const static std::regex pattern2(R"(\s)");
     text = std::regex_replace(text, pattern2, "");
-
-    // Get rid of double semicolons
-    const static std::regex pattern3(R"(;+)");
-    text = std::regex_replace(text, pattern3, ";");
-
-    // Replace end[name] with just end
-    const static std::regex pattern4(R"(end[^\s;]*;)");
-    text = std::regex_replace(text, pattern4, "end;");
 }
 
-const std::unordered_set<std::string> Parser::builtIn{"przod", "tyl", "prawo",
-                                                      "lewo",  "if",  "end"};
+void Parser::transformToken(std::string &text) {
+    // First step - replace outermost () with spaces, if the token contains them
+    std::size_t index1 = text.find_first_of('(');
+
+    if (index1 == std::string::npos) {
+        // Only "end" doesn't have parentheses. Simplify
+        text = "end";
+        return;
+    }
+
+    std::size_t index2 = text.find_first_of(')');
+
+    if (index2 == std::string::npos)
+        return;
+
+    text[index1] = ' ';
+    text[index2] = ' ';
+
+    // Second step - replace comas with spaces
+    const static std::regex pattern1(R"(,)");
+    text = std::regex_replace(text, pattern1, " ");
+}

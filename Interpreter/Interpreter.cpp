@@ -3,6 +3,7 @@
 #include <algorithm>
 
 #include "Writer.h"
+#include "Parser.h"
 
 Interpreter::Interpreter(const int argc, char const *const argv[])
     : status(params.readParams(argc, argv)), tilemap(params.getSize()),
@@ -11,6 +12,10 @@ Interpreter::Interpreter(const int argc, char const *const argv[])
 bool Interpreter::bad() const { return !status; }
 
 bool Interpreter::execute() {
+    Parser parser(params.getInputPath());
+    
+    parser.parse();
+
     return true;
 }
 
