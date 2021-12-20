@@ -5,12 +5,15 @@ A simple Logo implementation in C++
 ## Dependencies
 
 - png++
-- Lua 5.1
-- LuaBridge
 
 Installation on Arch Linux:
 
 ```bash
-git submodule update --init --recursive
 sudo pacman -Syu
-sudo pacman -S png++ lua
+sudo pacman -S png++
+
+Installation on Debian/Ubuntu:
+
+```bash
+sudo apt update
+sudo apt install libpng++-dev
