@@ -2,21 +2,28 @@
 
 #include <cstddef>
 #include <fstream>
-#include <iostream> // debug
 #include <regex>
 #include <sstream>
 #include <unordered_set>
 
 Parser::Parser(std::filesystem::path inputPath) : inputPath(inputPath) {}
 
+const std::vector<std::pair<std::vector<std::string>, unsigned int>> &
+Parser::getTokens() const {
+    return tokens;
+}
+
+const std::unordered_set<std::string> &Parser::getRegistered() const {
+    return registered;
+}
+
 bool Parser::parse() {
 
     if (!readFile())
         return false;
 
-    for (auto &test : tokens) {
-        std::cout << test.first << ", " << test.second << '\n';
-    }
+    transformTokens();
+    secondStage();
 
     return true;
 }
@@ -39,25 +46,8 @@ bool Parser::readFile() {
 
     cleanString(content);
     tokenize(content);
-    transformTokens();
-    secondStage();
 
     return true;
-}
-
-void Parser::tokenize(const std::string &text) {
-    std::string token;
-    std::stringstream ss(text);
-
-    while (getline(ss, token, ';')) {
-        tokens.push_back(std::make_pair(token, 0));
-    }
-}
-
-void Parser::transformTokens() {
-    for (auto &token : tokens) {
-        transformToken(token.first);
-    }
 }
 
 void Parser::cleanString(std::string &text) {
@@ -68,6 +58,21 @@ void Parser::cleanString(std::string &text) {
     // Remove whitespace
     const static std::regex pattern2(R"(\s)");
     text = std::regex_replace(text, pattern2, "");
+}
+
+void Parser::tokenize(const std::string &text) {
+    std::string token;
+    std::stringstream ss(text);
+
+    while (getline(ss, token, ';')) {
+        simpleTokens.push_back(std::make_pair(token, 0));
+    }
+}
+
+void Parser::transformTokens() {
+    for (auto &token : simpleTokens) {
+        transformToken(token.first);
+    }
 }
 
 void Parser::transformToken(std::string &text) {
@@ -96,17 +101,14 @@ void Parser::transformToken(std::string &text) {
 void Parser::secondStage() {
     firstStep();
     secondStep();
+    thirdStep();
 }
 
 void Parser::firstStep() {
-    const static std::unordered_set<std::string> builtIn{
-        "przod", "tyl", "prawo", "lewo", "if", "end"};
-    std::unordered_set<std::string> registered;
-
     // Set token.second to 1 for function calls
     // Set token.second to 2 for conditionals
     // Set token.second to 3 for ends
-    for (auto &token : tokens) {
+    for (auto &token : simpleTokens) {
         // Handle ends
         if (token.first == "end") {
             token.second = 3;
@@ -134,8 +136,8 @@ void Parser::firstStep() {
 
 void Parser::secondStep() {
     // Set token.second to place of return
-    for (int i = 0; i < tokens.size(); i++) {
-        auto &token = tokens[i];
+    for (int i = 0; i < simpleTokens.size(); i++) {
+        auto &token = simpleTokens[i];
 
         // Skip ends and things that don't need a place of return
         if (token.second == 0 || token.second == 3)
@@ -150,10 +152,10 @@ void Parser::secondStep() {
         // Handle conditionals (token.second == 2)
         int status = 1;
 
-        for (int x = i + 1; x < tokens.size(); x++) {
-            if (tokens[x].second == 2)
+        for (int x = i + 1; x < simpleTokens.size(); x++) {
+            if (simpleTokens[x].second == 2)
                 status++;
-            else if (tokens[x].second == 3)
+            else if (simpleTokens[x].second == 3)
                 status--;
 
             if (status == 0) {
@@ -163,3 +165,24 @@ void Parser::secondStep() {
         }
     }
 }
+
+void Parser::thirdStep() {
+    // Split elements into single words
+    for (int i = 0; i < simpleTokens.size(); i++) {
+        std::string element;
+        std::stringstream ss(simpleTokens[i].first);
+
+        tokens.push_back(
+            std::make_pair(std::vector<std::string>(), simpleTokens[i].second));
+
+        while (std::getline(ss, element, ' ')) {
+            tokens[i].first.push_back(element);
+        }
+    }
+
+    // simpleTokens no longer needed
+    simpleTokens.clear();
+}
+
+const std::unordered_set<std::string> Parser::builtIn{"przod", "tyl", "prawo",
+                                                      "lewo",  "if",  "end"};

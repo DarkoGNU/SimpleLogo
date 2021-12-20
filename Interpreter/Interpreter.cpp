@@ -14,7 +14,10 @@ bool Interpreter::bad() const { return !status; }
 bool Interpreter::execute() {
     Parser parser(params.getInputPath());
     
-    parser.parse();
+    if (!parser.parse())
+        return false;
+
+    
 
     return true;
 }
