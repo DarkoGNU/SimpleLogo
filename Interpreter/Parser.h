@@ -12,7 +12,10 @@ class Parser {
     bool readFile();
     void tokenize(const std::string &text);
     void transformTokens();
+
     void secondStage();
+    void firstStep();
+    void secondStep();
 
     static void cleanString(std::string &text);
     static void transformToken(std::string &text);
