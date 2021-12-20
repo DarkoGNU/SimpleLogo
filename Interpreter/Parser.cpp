@@ -1,9 +1,8 @@
 #include "Parser.h"
 
-#include <cstddef>
+#include <cstddef> // not sure
 #include <regex>
 #include <sstream>
-#include <stdexcept>
 
 Parser::Parser(std::filesystem::path inputPath) : inputPath(inputPath) {}
 
@@ -32,7 +31,7 @@ bool Parser::readFile(std::ifstream &file) {
 
     cleanString(content);
     tokenize(content);
-    
+
     return true;
 }
 
@@ -43,46 +42,6 @@ void Parser::tokenize(const std::string &text) {
     while (getline(ss, token, ';')) {
         tokens.push_back(token);
     }
-}
-
-void Parser::translate(std::vector<std::string> &tokens) {
-    for (std::string &token : tokens) {
-        translate(token);
-    }
-}
-
-void Parser::translate(std::string &token) {
-    std::size_t index = token.find('(');
-    std::string type = token.substr(0, index);
-
-    if (builtIn.find(type) != builtIn.end()) {
-        handleBuiltIn(token);
-        return;
-    }
-
-    if (registered.find(type) == registered.end()) {
-        token.insert(0, "function ");
-        registered.insert(type);
-    }
-
-    // If it's a call, do nothing. It's already in the correct form
-}
-
-void Parser::handleBuiltIn(std::string &token) {
-    std::size_t index = token.find('(');
-    std::string type = token.substr(0, index);
-
-    if (type == "przod" || type == "tyl" || type == "prawo" || type == "lewo")
-        token.insert(0, "turtle:");
-    else if (type == "if") {
-        // Replace () with spaces
-        const static std::regex pattern1(R"([()])");
-        token = std::regex_replace(token, pattern1, " ");
-        // append "then"
-        token += "then";
-    }
-
-    // Do nothing if it's "end"
 }
 
 void Parser::cleanString(std::string &text) {

@@ -4,23 +4,21 @@
 #include <fstream>
 #include <string>
 #include <unordered_set>
+#include <unordered_map>
 #include <vector>
 
-class Parser {
-    static const std::unordered_set<std::string> builtIn;
-    std::unordered_set<std::string> registered;
+#include "Complex.h"
 
+class Parser {
     const std::filesystem::path inputPath;
+
+    static const std::unordered_set<std::string> builtIn;
+    std::unordered_map<std::string, Complex> registered;
     std::vector<std::string> tokens;
 
     bool readFile(std::ifstream &file);
     void tokenize(const std::string &text);
-
-    void translate(std::vector<std::string> &tokens);
-    void translate(std::string &token);
     void cleanString(std::string &text);
-
-    void handleBuiltIn(std::string &token);
 
   public:
     Parser(std::filesystem::path inputPath);
