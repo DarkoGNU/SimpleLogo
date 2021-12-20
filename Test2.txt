@@ -1,0 +1,26 @@
+zad5(bok, minBok)
+    if(bok > minBok)
+        lewo(120);
+	przod(bok);
+
+	prawo(180);
+	zad5(bok / 2, minBok);
+	lewo(180);
+
+        lewo(120);
+	przod(bok);
+
+	prawo(180);
+	zad5(bok / 2, minBok);
+	lewo(180);
+
+        lewo(120);
+	przod(bok);
+
+	prawo(180);
+	zad5(bok / 2, minBok);
+	lewo(180);
+    end if;
+end zad5;
+
+zad5(300, 1);
