@@ -1,3 +1,5 @@
+#define _USE_MATH_DEFINES
+
 #include "Turtle.h"
 
 #include <cmath>
