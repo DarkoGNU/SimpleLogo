@@ -10,10 +10,12 @@ Installation on Arch Linux:
 
 ```bash
 sudo pacman -Syu
-sudo pacman -S png++```
+sudo pacman -S png++
+```
 
 Installation on Debian/Ubuntu:
 
 ```bash
 sudo apt update
-sudo apt install libpng++-dev```
+sudo apt install libpng++-dev
+```
