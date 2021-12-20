@@ -1,6 +1,7 @@
 #include "Parser.h"
 
 #include <cstddef>
+#include <fstream>
 #include <iostream> // debug
 #include <regex>
 #include <sstream>
@@ -13,7 +14,7 @@ bool Parser::parse() {
         return false;
 
     for (auto &test : tokens) {
-        std::cout << test << "\n";
+        std::cout << test.first << "\n";
     }
 
     return true;
@@ -38,6 +39,7 @@ bool Parser::readFile() {
     cleanString(content);
     tokenize(content);
     transformTokens();
+    secondStage();
 
     return true;
 }
@@ -47,13 +49,13 @@ void Parser::tokenize(const std::string &text) {
     std::stringstream ss(text);
 
     while (getline(ss, token, ';')) {
-        tokens.push_back(token);
+        tokens.push_back(std::make_pair(token, 0));
     }
 }
 
 void Parser::transformTokens() {
-    for (std::string &token : tokens) {
-        transformToken(token);
+    for (auto &token : tokens) {
+        transformToken(token.first);
     }
 }
 
@@ -89,3 +91,5 @@ void Parser::transformToken(std::string &text) {
     const static std::regex pattern1(R"(,)");
     text = std::regex_replace(text, pattern1, " ");
 }
+
+void Parser::secondStage() {}

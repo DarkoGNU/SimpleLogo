@@ -1,19 +1,18 @@
 #pragma once
 
 #include <filesystem>
-#include <fstream>
 #include <string>
-#include <unordered_set>
-#include <unordered_map>
 #include <vector>
+#include <utility>
 
 class Parser {
     const std::filesystem::path inputPath;
-    std::vector<std::string> tokens;
+    std::vector<std::pair<std::string, unsigned int>> tokens;
 
     bool readFile();
     void tokenize(const std::string &text);
     void transformTokens();
+    void secondStage();
 
     static void cleanString(std::string &text);
     static void transformToken(std::string &text);
