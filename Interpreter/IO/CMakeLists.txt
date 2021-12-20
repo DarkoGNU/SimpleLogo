@@ -40,3 +40,6 @@ mark_as_advanced(PNG++_INCLUDE_DIRS)
 
 include_directories(${PNG++_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} ${PNG_LIBRARIES})
+
+# Set sources
+target_sources(${PROJECT_NAME} PRIVATE Params.cpp Writer.cpp)
