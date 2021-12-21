@@ -1,5 +1,7 @@
 #include "Executor.h"
 
+#include <cmath>
+#include <cstddef>
 #include <iostream> // debug
 
 Executor::Executor(Turtle &turtle, Parser &parser)
@@ -33,10 +35,43 @@ void Executor::execute() {
     }
 }
 
-void Executor::executeCommand(std::string type,
-                              std::unordered_map<std::string, double> &argMap) {
+void Executor::executeCommand(
+    const std::string &type,
+    const std::unordered_map<std::string, double> &argMap) {}
 
+void call(unsigned int position,
+          const std::unordered_map<std::string, double> &argMap) {}
+
+double Executor::evaluate(const std::string &expression,
+                          std::unordered_map<std::string, double> &argMap) {
+    if (argMap.size() == 0)
+        return std::stod(expression);
+
+    std::size_t index = expression.find('+');
+
+    // It's addition
+    if (index != std::string::npos) {
+        double variable = argMap[expression.substr(0, index)];
+        double constant = std::stod(expression.substr(index));
+        return variable + constant;
+    }
+
+    index = expression.find('-');
+
+    // It's subtraction
+    if (index != std::string::npos) {
+        double variable = argMap[expression.substr(0, index)];
+        double constant = std::stod(expression.substr(index));
+        return variable - constant;
+    }
+
+    // It's multiplication
+    if (index != std::string::npos) {
+        double variable = argMap[expression.substr(0, index)];
+        double constant = std::stod(expression.substr(index));
+        return variable * constant;
+    }
+
+    // Return NaN
+    return std::nan("");
 }
-
-double Executor::evaluate(std::string expression,
-                          std::unordered_map<std::string, double> &argMap) {}

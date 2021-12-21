@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <unordered_map>
 #include <vector>
 
@@ -15,9 +16,11 @@ class Executor {
 
     void registerProcedures();
 
-    void executeCommand(std::string type,
-                        std::unordered_map<std::string, double> &argMap);
-    double evaluate(std::string expression,
+    void executeCommand(const std::string &type,
+                        const std::unordered_map<std::string, double> &argMap);
+    void call(unsigned int position,
+              const std::unordered_map<std::string, double> &argMap);
+    double evaluate(const std::string &expression,
                     std::unordered_map<std::string, double> &argMap);
 
   public:
