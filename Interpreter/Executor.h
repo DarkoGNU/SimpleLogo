@@ -1,7 +1,7 @@
 #pragma once
 
 #include <unordered_map>
-#include <unordered_set>
+#include <vector>
 
 #include "Parser.h"
 #include "Turtle.h"
@@ -14,6 +14,11 @@ class Executor {
     std::unordered_map<std::string, unsigned int> procedureMap;
 
     void registerProcedures();
+
+    void executeCommand(std::string type,
+                        std::unordered_map<std::string, double> &argMap);
+    double evaluate(std::string expression,
+                    std::unordered_map<std::string, double> &argMap);
 
   public:
     Executor(Turtle &turtle, Parser &parser);
