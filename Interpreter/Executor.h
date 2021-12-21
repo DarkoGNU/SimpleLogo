@@ -13,9 +13,9 @@ class Executor {
         &tokens;
     std::unordered_map<std::string, unsigned int> procedureMap;
 
-    void prepare();
+    void registerProcedures();
 
   public:
-    Executor(Turtle turtle, Parser parser);
+    Executor(Turtle &turtle, Parser &parser);
     void execute();
 };

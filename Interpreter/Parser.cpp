@@ -8,12 +8,12 @@
 
 Parser::Parser(std::filesystem::path inputPath) : inputPath(inputPath) {}
 
-const std::vector<std::pair<std::vector<std::string>, unsigned int>> &
+std::vector<std::pair<std::vector<std::string>, unsigned int>> const &
 Parser::getTokens() const {
     return tokens;
 }
 
-const std::unordered_set<std::string> &Parser::getRegistered() const {
+std::unordered_set<std::string> const &Parser::getRegistered() const {
     return registered;
 }
 
@@ -120,17 +120,17 @@ void Parser::firstStep() {
             token.first.substr(0, token.first.find_first_of(' '));
 
         if (builtIn.find(type) != builtIn.end()) {
-            if (type != "if")
-                continue;
-            else
+            if (type == "if")
                 token.second = 2;
+
+            continue;
         }
 
         // Handle function definitions
         if (registered.find(type) != registered.end())
             token.second = 1;
         else
-            registered.insert(type);
+            registered.emplace(type);
     }
 }
 
