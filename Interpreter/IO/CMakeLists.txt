@@ -42,4 +42,4 @@ include_directories(${PNG++_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} ${PNG_LIBRARIES})
 
 # Set sources
-target_sources(${PROJECT_NAME} PRIVATE Params.cpp Writer.cpp)
+target_sources(${PROJECT_NAME} PRIVATE Params.h Params.cpp Writer.h Writer.cpp)

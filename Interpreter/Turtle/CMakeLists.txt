@@ -9,4 +9,4 @@ target_include_directories(${PROJECT_NAME}
 )
 
 # Set sources
-target_sources(${PROJECT_NAME} PRIVATE Turtle.cpp TileMap.cpp)
+target_sources(${PROJECT_NAME} PRIVATE Turtle.h Turtle.cpp TileMap.h TileMap.cpp)

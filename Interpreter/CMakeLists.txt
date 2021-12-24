@@ -16,4 +16,4 @@ target_include_directories(${PROJECT_NAME}
 target_link_libraries (${PROJECT_NAME} PUBLIC Turtle IO)
 
 # Set sources
-target_sources(${PROJECT_NAME} PRIVATE Interpreter.cpp Parser.cpp Executor.cpp)
+target_sources(${PROJECT_NAME} PRIVATE Interpreter.h Interpreter.cpp Parser.h Parser.cpp Executor.h Executor.cpp Command.h)
