@@ -12,18 +12,7 @@ Interpreter::Interpreter(const int argc, char const *const argv[])
 
 bool Interpreter::bad() const { return !status; }
 
-bool Interpreter::execute() {
-    Parser parser(params.getInputPath());
-
-    if (!parser.parse())
-        return false;
-
-    Executor executor(turtle, parser);
-
-    executor.execute();
-
-    return true;
-}
+bool Interpreter::execute() { return true; }
 
 bool Interpreter::writeMap() const {
     std::string extension = params.getOutputPath().extension().string();
