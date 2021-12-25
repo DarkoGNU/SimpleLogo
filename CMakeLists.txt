@@ -2,13 +2,19 @@ cmake_minimum_required(VERSION 3.12)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 
+# Define the project
 project(
-    MyLogo
+    SimpleLogo
     VERSION 0.9
     DESCRIPTION "A simple Logo implementation in C++"
     HOMEPAGE_URL "https://github.com/DarkoGNU"
     LANGUAGES CXX
     )
+    
+# Some properties
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # Unused for now
 option(SELF_TEST "Enables testing code to be built" OFF)
