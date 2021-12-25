@@ -24,6 +24,14 @@ sudo apt install libpng++-dev
 
 Check files Test1.txt and Test2.txt for some examples
 
+## Compilation
+
+```bash
+git clone https://github.com/DarkoGNU/SimpleLogo
+cd SimpleLogo/
+cmake -B build && make -j -C build
+```
+
 ## Contributions and bug reports
 
 All contributions and bug reports are welcome!

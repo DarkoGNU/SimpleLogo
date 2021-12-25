@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "Params.h"
-#include "Tilemap.h"
+#include "TileMap.h"
 #include "Turtle.h"
 
 class Interpreter {
