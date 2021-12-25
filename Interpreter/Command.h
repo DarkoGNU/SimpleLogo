@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <vector>
+#include <list>
 
 struct Command;
 struct Arg;
@@ -16,9 +16,8 @@ struct Command {
         definition,
         call,
         end
-    };
+    } type;
 
-    Type type;
     std::string name;
     std::vector<Arg> args;
 };
