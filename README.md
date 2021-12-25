@@ -1,4 +1,4 @@
-# MyLogo
+# SimpleLogo
 
 A simple Logo implementation in C++
 
@@ -19,3 +19,11 @@ Installation on Debian/Ubuntu:
 sudo apt update
 sudo apt install libpng++-dev
 ```
+
+## Usage
+
+Check files Test1.txt and Test2.txt for some examples
+
+## Contributions and bug reports
+
+All contributions and bug reports are welcome!
