@@ -5,10 +5,9 @@
 #include <list>
 #include <regex>
 #include <sstream>
+#include <stdexcept>
 
 Parser::Parser(std::filesystem::path inputPath) : inputPath(inputPath) {}
-
-bool Parser::bad() const { return !status; }
 
 std::vector<std::vector<Command>> const &Parser::getCode() const {
     return code;
@@ -20,6 +19,7 @@ bool Parser::parse() {
     if (codeString.empty())
         return false;
 
+    cleanString(codeString);
     tokenize(codeString);
 
     return true;
@@ -40,7 +40,7 @@ std::string Parser::readFile() const {
     return buffer.str();
 }
 
-void Parser::tokenize(std::string &codeString) {
+void Parser::tokenize(const std::string &codeString) {
     std::vector<std::string> simpleTokens;
 
     {
@@ -64,9 +64,9 @@ void Parser::cleanString(std::string &text) {
     text = std::regex_replace(text, pattern2, "");
 };
 
-void Parser::processTokens(std::vector<std::string> &simpleTokens) {
-    std::vector<Command> mainCode;
-    code.push_back(mainCode);
+void Parser::processTokens(const std::vector<std::string> &simpleTokens) {
+    // code[0] will store the main code
+    code.emplace_back(std::vector<Command>());
 
     for (unsigned int i = 0; i < simpleTokens.size(); i++) {
         std::string name;
@@ -81,33 +81,100 @@ void Parser::processTokens(std::vector<std::string> &simpleTokens) {
 
         // Check if it is a conditional
         if (type == Command::conditional) {
-            std::vector<Command> result;
-            mainCode.insert(mainCode.end(), result.begin(), result.end());
+            std::vector<Command> result = processConditional(simpleTokens, i);
+            code[0].insert(code[0].end(), result.begin(), result.end());
             continue;
         }
 
         // Handle a simple command or a call
-        mainCode.emplace_back(Command{type, name, getArgs(parts)});
+        code[0].emplace_back(Command{type, name, getArgs(parts)});
     }
 }
 
 std::vector<Command>
-Parser::processProcedure(std::vector<std::string> &simpleTokens,
+Parser::processProcedure(const std::vector<std::string> &simpleTokens,
                          unsigned int &start) {
     std::vector<Command> procedure;
 
     // Put the definition in the vector
     std::string definition(simpleTokens[start++]);
     std::string name;
-    Command::Type type;
-    std::vector<Arg> args = getArgs(getParts(definition, name, type));
+    std::vector<Arg> args = getArgs(getParts(definition, name));
     procedure.emplace_back(Command{Command::definition, name, args});
 
     // Handle the rest
+    for (; start < simpleTokens.size(); start++) {
+        std::string name;
+        Command::Type type;
+        std::vector<std::string> parts =
+            getParts(simpleTokens[start], name, type);
+
+        if (type == Command::Type::definition)
+            throw std::runtime_error(
+                "Nested procedure definitions aren't supported");
+
+        // Check if it is a conditional
+        if (type == Command::conditional) {
+            std::vector<Command> result =
+                processConditional(simpleTokens, start);
+            procedure.insert(procedure.end(), result.begin(), result.end());
+            continue;
+        }
+
+        // Handle a simple command or a call
+        procedure.emplace_back(Command{type, name, getArgs(parts)});
+
+        // Check if it's "end"
+        if (type == Command::Type::end) {
+            return procedure;
+        }
+    }
+
+    throw std::runtime_error("The procedure doesn't have an end");
 }
 
-std::vector<Command> processConditional(std::vector<std::string> &simpleTokens,
-                                        unsigned int &start) {}
+std::vector<Command>
+Parser::processConditional(const std::vector<std::string> &simpleTokens,
+                           unsigned int &start) {
+    std::vector<Command> conditional;
+
+    // Put the conditional in a vector
+    std::string definition(simpleTokens[start++]);
+    std::string name;
+    Command::Type type;
+    std::vector<Arg> args = getArgs(getParts(definition, name, type));
+    conditional.emplace_back(Command{type, name, args});
+
+    // Handle the rest
+    for (; start < simpleTokens.size(); start++) {
+        std::string name;
+        Command::Type type;
+        std::vector<std::string> parts =
+            getParts(simpleTokens[start], name, type);
+
+        if (type == Command::Type::definition)
+            throw std::runtime_error(
+                "Procedures can't be defined inside conditional statements");
+
+        // Check if it is a conditional (it will be handled recursively)
+        if (type == Command::conditional) {
+            std::vector<Command> result =
+                processConditional(simpleTokens, start);
+            conditional.insert(conditional.end(), result.begin(), result.end());
+            continue;
+        }
+
+        // Handle a simple command or a call
+        conditional.emplace_back(Command{type, name, getArgs(parts)});
+
+        // Check if it's "end"
+        if (type == Command::Type::end) {
+            return conditional;
+        }
+    }
+
+    throw std::runtime_error("The conditional statement doesn't have an end");
+}
 
 Arg Parser::processArg(const std::string &expression) {
     char operation;
@@ -134,6 +201,12 @@ Arg Parser::processArg(const std::string &expression) {
 }
 
 std::vector<std::string> Parser::getParts(const std::string &token,
+                                          std::string &name) {
+    Command::Type type;
+    return getParts(token, name, type);
+}
+
+std::vector<std::string> Parser::getParts(const std::string &token,
                                           std::string &name,
                                           Command::Type &type) {
     std::stringstream ss(token);
@@ -150,6 +223,30 @@ std::vector<std::string> Parser::getParts(const std::string &token,
         parts.emplace_back(part);
 
     return parts;
+}
+
+std::vector<std::string> Parser::getParts(const std::string &token,
+                                          std::string &name,
+                                          Command::Type &type,
+                                          char &comparison) {
+    std::size_t index;
+
+    if (index = token.find('<'); index != std::string::npos)
+        comparison = '<';
+    else if (index = token.find('>'); index != std::string::npos)
+        comparison = '>';
+    else if (index = token.find('='); index != std::string::npos)
+        comparison = '=';
+    else if (index = token.find("<>"); index != std::string::npos)
+        comparison = '!';
+    else
+        throw std::runtime_error(
+            "The conditional doesn't contain a valid comparison");
+
+    std::string firstPart = token.substr(0, index);
+    std::string secondPart = token.substr(index, token.size());
+
+    return std::vector<std::string>{firstPart, secondPart};
 }
 
 std::vector<Arg> Parser::getArgs(const std::vector<std::string> &parts) {

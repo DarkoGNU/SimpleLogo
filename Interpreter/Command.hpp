@@ -1,7 +1,7 @@
 #pragma once
 
-#include <string>
 #include <list>
+#include <string>
 
 struct Command;
 struct Arg;
@@ -20,6 +20,10 @@ struct Command {
 
     std::string name;
     std::vector<Arg> args;
+
+    // < - less than, > - greater than, = - equal, ! - inequal. Applies only to
+    // conditionals
+    char comparison;
 };
 
 struct Arg {

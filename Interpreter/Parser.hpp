@@ -13,34 +13,37 @@ class Parser {
     const std::filesystem::path inputPath;
     std::unordered_set<std::string> procedures;
     std::vector<std::vector<Command>> code;
-    bool status;
 
     // Methods
     std::string readFile() const;
-    void tokenize(std::string &codeString);
     static void cleanString(std::string &text);
-    void processTokens(std::vector<std::string> &simpleTokens);
-    std::vector<Command>
+    void tokenize(const std::string &codeString);
 
-    processProcedure(std::vector<std::string> &simpleTokens,
+    void processTokens(const std::vector<std::string> &simpleTokens);
+
+    std::vector<Command>
+    processProcedure(const std::vector<std::string> &simpleTokens,
                      unsigned int &start);
 
     std::vector<Command>
-    processConditional(std::vector<std::string> &simpleTokens,
+    processConditional(const std::vector<std::string> &simpleTokens,
                        unsigned int &start);
 
-    static Arg processArg(const std::string &expression);
-    Command::Type getType(const std::string &command);
-
+    std::vector<std::string> getParts(const std::string &token,
+                                      std::string &name);
     std::vector<std::string> getParts(const std::string &token,
                                       std::string &name, Command::Type &type);
+    std::vector<std::string> getParts(const std::string &token,
+                                      std::string &name, Command::Type &type,
+                                      char &comparison);
 
+    Command::Type getType(const std::string &command);
     std::vector<Arg> getArgs(const std::vector<std::string> &parts);
+    static Arg processArg(const std::string &expression);
 
   public:
     Parser(std::filesystem::path inputPath);
     bool parse();
 
-    bool bad() const;
     std::vector<std::vector<Command>> const &getCode() const;
 };

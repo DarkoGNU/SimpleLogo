@@ -16,6 +16,13 @@ bool Interpreter::execute() {
     if (bad())
         return false;
 
+    Parser parser(params.getInputPath());
+
+    if (!parser.parse())
+        return false;
+
+    auto& code = parser.getCode();
+
     return true;
 }
 
