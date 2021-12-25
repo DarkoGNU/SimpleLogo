@@ -35,7 +35,7 @@ class Parser {
     std::vector<std::string> getParts(const std::string &token,
                                       std::string &name, Command::Type &type);
 
-    std::vector<Arg> getArgs(const std::vector<std::string>& parts);
+    std::vector<Arg> getArgs(const std::vector<std::string> &parts);
 
   public:
     Parser(std::filesystem::path inputPath);

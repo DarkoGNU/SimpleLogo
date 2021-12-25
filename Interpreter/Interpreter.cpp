@@ -12,7 +12,12 @@ Interpreter::Interpreter(const int argc, char const *const argv[])
 
 bool Interpreter::bad() const { return !status; }
 
-bool Interpreter::execute() { return true; }
+bool Interpreter::execute() {
+    if (bad())
+        return false;
+
+    return true;
+}
 
 bool Interpreter::writeMap() const {
     std::string extension = params.getOutputPath().extension().string();
