@@ -1,10 +1,10 @@
-#include "Interpreter.h"
+#include "Interpreter.hpp"
 
 #include <algorithm>
 
-#include "Executor.h"
-#include "Parser.h"
-#include "Writer.h"
+#include "Executor.hpp"
+#include "Parser.hpp"
+#include "Writer.hpp"
 
 Interpreter::Interpreter(const int argc, char const *const argv[])
     : status(params.readParams(argc, argv)), tilemap(params.getSize()),

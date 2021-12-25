@@ -1,4 +1,4 @@
-#include "TileMap.h"
+#include "TileMap.hpp"
 
 TileMap::TileMap(unsigned int size) : size{size}, tiles(size * size, false){};
 

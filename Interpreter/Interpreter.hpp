@@ -2,9 +2,9 @@
 
 #include <memory>
 
-#include "Params.h"
-#include "TileMap.h"
-#include "Turtle.h"
+#include "Params.hpp"
+#include "TileMap.hpp"
+#include "Turtle.hpp"
 
 class Interpreter {
 

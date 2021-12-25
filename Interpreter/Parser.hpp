@@ -5,8 +5,8 @@
 #include <unordered_set>
 #include <vector>
 
-#include "Command.h"
-#include "Params.h"
+#include "Command.hpp"
+#include "Params.hpp"
 
 class Parser {
     // Variables
