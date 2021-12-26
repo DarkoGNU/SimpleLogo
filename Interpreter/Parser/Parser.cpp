@@ -2,8 +2,8 @@
 
 #include <fstream>
 
-#include "SimpleLexer.hpp"
 #include "DeepLexer.hpp"
+#include "SimpleLexer.hpp"
 
 Parser::Parser(std::filesystem::path inputPath) : inputPath(inputPath) {}
 
@@ -17,13 +17,6 @@ bool Parser::parse() {
 
     if (codeString.empty())
         return false;
-
-    std::vector<std::string> simpleTokens = SimpleLexer::tokenize(codeString);
-
-    // Deeper tokenization
-    DeepLexer deepLexer;
-
-    code = deepLexer.tokenize(simpleTokens);
 
     return true;
 }

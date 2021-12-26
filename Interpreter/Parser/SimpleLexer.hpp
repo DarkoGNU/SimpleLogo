@@ -1,11 +1,20 @@
 #pragma once
 
-#include <vector>
+#include <sstream>
 #include <string>
+#include <vector>
 
 class SimpleLexer {
-    static void cleanString(std::string &text);
+    // Variables
+    std::stringstream ss;
+    std::vector<std::string> simpleTokens;
+
+    // Methods
+    static std::stringstream getStream(const std::string &text);
 
   public:
-    static std::vector<std::string> tokenize(std::string codeString);
+    SimpleLexer(const std::string &codeString);
+
+    void tokenize();
+    const std::vector<std::string> &getTokens() const;
 };

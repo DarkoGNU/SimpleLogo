@@ -1,19 +1,33 @@
 #pragma once
 
+#include <cstddef>
 #include <unordered_set>
 #include <vector>
 
 #include "TurtleCommand.hpp"
-#include "Arg.hpp"
 
 class DeepLexer {
     // Variables
+    const std::vector<std::string> &simpleTokens;
+
+    std::vector<std::vector<TurtleCommand>> code;
     std::unordered_set<std::string> procedures;
+    std::size_t position{0};
+    std::size_t procedure{0};
 
     // Methods
-    static void cleanToken(std::string &token);
+    static std::string cleanToken(std::string token);
+
+    std::string getCleanToken();
+    TurtleCommand getCommand();
+
+    void handleProcedure();
+    void handleConditional(std::size_t currentProcedure = 0);
+    bool handleComplex(std::size_t currentProcedure);
 
   public:
-    std::vector<std::vector<TurtleCommand>>
-    tokenize(std::vector<std::string> simpleTokens);
+    DeepLexer(const std::vector<std::string> &simpleTokens);
+
+    void tokenize();
+    const std::vector<std::vector<TurtleCommand>> &getCode() const;
 };

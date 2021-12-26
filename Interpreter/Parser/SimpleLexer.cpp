@@ -2,24 +2,22 @@
 
 #include <regex>
 
-void SimpleLexer::cleanString(std::string &text) {
-    // Replace ) with );
-    const static std::regex pattern1(R"(\)[^;])");
-    text = std::regex_replace(text, pattern1, ");");
+SimpleLexer::SimpleLexer(const std::string &codeString)
+    : ss{getStream(codeString)} {}
+
+const std::vector<std::string> &SimpleLexer::getTokens() const {
+    return simpleTokens;
 }
 
-std::vector<std::string> SimpleLexer::tokenize(std::string codeString) {
-    cleanString(codeString);
+std::stringstream SimpleLexer::getStream(const std::string &text) {
+    // Replace ) with );
+    const static std::regex pattern1{R"(\)[^;])"};
+    return std::stringstream{regex_replace(text, pattern1, ");")};
+}
 
-    std::vector<std::string> simpleTokens;
+void SimpleLexer::tokenize() {
+    std::string token;
 
-    {
-        std::string token;
-        std::stringstream ss(codeString);
-
-        while (std::getline(ss, token, ';'))
-            simpleTokens.push_back(token);
-    }
-
-    return simpleTokens;
+    while (std::getline(ss, token, ';'))
+        simpleTokens.push_back(token);
 }

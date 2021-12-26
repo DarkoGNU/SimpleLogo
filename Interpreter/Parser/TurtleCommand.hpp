@@ -1,8 +1,8 @@
 #pragma once
 
 #include <string>
-#include <vector>
 #include <unordered_set>
+#include <vector>
 
 #include "Arg.hpp"
 
@@ -32,5 +32,6 @@ class TurtleCommand {
     const std::vector<Arg> args;
 
     // Methods
-    TurtleCommand(std::string code, std::unordered_set<std::string>& procedures);
+    TurtleCommand(const std::string &code,
+                  const std::unordered_set<std::string> &procedures);
 };
