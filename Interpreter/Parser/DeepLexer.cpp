@@ -8,7 +8,7 @@
 DeepLexer::DeepLexer(const std::vector<std::string> &simpleTokens)
     : simpleTokens{simpleTokens}, code{std::vector<TurtleCommand>()} {}
 
-const std::vector<std::vector<TurtleCommand>> &DeepLexer::getCode() const {
+std::vector<std::vector<TurtleCommand>> DeepLexer::getCode() const {
     return code;
 }
 
@@ -24,8 +24,10 @@ void DeepLexer::tokenize() {
 
         if (newCommand.type == TurtleCommand::Type::definition) {
             procedures.emplace(newCommand.name);
-            code.emplace_back(std::vector<TurtleCommand>{newCommand});
+            code.emplace_back(std::vector<TurtleCommand>());
             procedure++;
+
+            code[procedure].push_back(newCommand);
             handleProcedure();
 
         } else if (newCommand.type == TurtleCommand::Type::conditional) {

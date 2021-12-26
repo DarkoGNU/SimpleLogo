@@ -1,5 +1,6 @@
 #pragma once
 
+#include <sstream>
 #include <string>
 #include <unordered_set>
 #include <vector>
@@ -9,7 +10,7 @@
 class TurtleCommand {
   public:
     // Variables
-    const enum class Type {
+    enum class Type {
         forward,
         back,
         right,
@@ -18,20 +19,27 @@ class TurtleCommand {
         definition,
         call,
         end
-    } type;
+    };
 
-    const enum class Comparison {
-        greater,
-        less,
-        equal,
-        inequal,
-        null
-    } comparison;
+    enum class Comparison { greater, less, equal, inequal, null };
 
-    const std::string name;
-    const std::vector<Arg> args;
+    TurtleCommand::Type type;
+    TurtleCommand::Comparison comparison;
+    std::string name;
+    std::vector<Arg> args;
 
     // Methods
     TurtleCommand(const std::string &code,
                   const std::unordered_set<std::string> &procedures);
+
+  private:
+    // Variables
+
+    // Methods
+    std::string getName();
+
+    TurtleCommand::Type
+    getType(const std::unordered_set<std::string> &procedures);
+
+    TurtleCommand::Comparison getComparison();
 };

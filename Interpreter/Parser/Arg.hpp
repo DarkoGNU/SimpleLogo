@@ -2,20 +2,21 @@
 
 #include <string>
 
-struct Arg {
+class Arg {
   public:
     // Variables
-    const enum class Operation {
+    enum class Operation {
         multiply,
         add,
         subtract,
         name,
         value
-    } operation;
+    };
 
-    const std::string name;
-    const double value;
+    Arg::Operation operation;
+    std::string name;
+    double value;
 
     // Methods
-    Arg(std::string& arg);
+    Arg();
 };

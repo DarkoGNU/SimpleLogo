@@ -29,5 +29,5 @@ class DeepLexer {
     DeepLexer(const std::vector<std::string> &simpleTokens);
 
     void tokenize();
-    const std::vector<std::vector<TurtleCommand>> &getCode() const;
+    std::vector<std::vector<TurtleCommand>> getCode() const;
 };

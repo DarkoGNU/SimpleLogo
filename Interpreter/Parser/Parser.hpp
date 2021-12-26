@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "TurtleCommand.hpp"
+#include "DeepLexer.hpp"
 
 class Parser {
     // Variables
