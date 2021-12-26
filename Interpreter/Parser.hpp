@@ -33,9 +33,7 @@ class Parser {
                                       std::string &name);
     std::vector<std::string> getParts(const std::string &token,
                                       std::string &name, Command::Type &type);
-    std::vector<std::string> getParts(const std::string &token,
-                                      std::string &name, Command::Type &type,
-                                      char &comparison);
+    std::vector<std::string> getParts(std::string token, char &comparison);
 
     Command::Type getType(const std::string &command);
     std::vector<Arg> getArgs(const std::vector<std::string> &parts);

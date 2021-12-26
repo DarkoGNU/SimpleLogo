@@ -63,14 +63,14 @@ void Parser::cleanString(std::string &text) {
     const static std::regex pattern2(R"(end([\s]+)([^\s;]+);)");
     text = std::regex_replace(text, pattern2, "end;");
 
-    // Remove whitespace
-    const static std::regex pattern3(R"(\s)");
+    // Remove whitespace and )
+    const static std::regex pattern3(R"([\s\)])");
     text = std::regex_replace(text, pattern3, "");
 
-    // Replace (,) with spaces
-    const static std::regex pattern4(R"([\(\),])");
+    // Replace (, with spaces
+    const static std::regex pattern4(R"([\(,])");
     text = std::regex_replace(text, pattern4, " ");
-};
+}
 
 void Parser::processTokens(const std::vector<std::string> &simpleTokens) {
     // code[0] will store the main code
@@ -148,10 +148,9 @@ Parser::processConditional(const std::vector<std::string> &simpleTokens,
 
     // Put the conditional in a vector
     std::string definition(simpleTokens[start++]);
-    std::string name;
-    Command::Type type;
-    std::vector<Arg> args = getArgs(getParts(definition, name, type));
-    conditional.emplace_back(Command{type, name, args});
+    char comparison;
+    std::vector<Arg> args = getArgs(getParts(definition, comparison));
+    conditional.emplace_back(Command{Command::Type::conditional, "if", args, comparison});
 
     // Handle the rest
     for (; start < simpleTokens.size(); start++) {
@@ -233,26 +232,25 @@ std::vector<std::string> Parser::getParts(const std::string &token,
     return parts;
 }
 
-std::vector<std::string> Parser::getParts(const std::string &token,
-                                          std::string &name,
-                                          Command::Type &type,
-                                          char &comparison) {
+std::vector<std::string> Parser::getParts(std::string token, char &comparison) {
     std::size_t index;
 
-    if (index = token.find('<'); index != std::string::npos)
-        comparison = '<';
+    if (index = token.find("<>"); index != std::string::npos) {
+        comparison = '!';
+        token.erase(index + 1);
+    }
     else if (index = token.find('>'); index != std::string::npos)
         comparison = '>';
     else if (index = token.find('='); index != std::string::npos)
         comparison = '=';
-    else if (index = token.find("<>"); index != std::string::npos)
-        comparison = '!';
+    else if (index = token.find('<'); index != std::string::npos)
+        comparison = '<';
     else
         throw std::runtime_error(
             "The conditional doesn't contain a valid comparison");
 
-    std::string firstPart = token.substr(0, index);
-    std::string secondPart = token.substr(index, token.size());
+    std::string firstPart(token.begin() + 3, token.begin() + index);
+    std::string secondPart(token.begin() + index + 1, token.end());
 
     return std::vector<std::string>{firstPart, secondPart};
 }
