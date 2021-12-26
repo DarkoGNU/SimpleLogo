@@ -2,12 +2,12 @@
 
 #include <fstream>
 
-#include "DeepLexer.hpp"
 #include "SimpleLexer.hpp"
+#include "DeepLexer.hpp"
 
 Parser::Parser(std::filesystem::path inputPath) : inputPath(inputPath) {}
 
-std::vector<std::vector<Command>> const &Parser::getCode() const {
+std::vector<std::vector<TurtleCommand>> const &Parser::getCode() const {
     return code;
 }
 

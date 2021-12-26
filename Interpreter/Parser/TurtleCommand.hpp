@@ -2,14 +2,14 @@
 
 #include <string>
 #include <vector>
+#include <unordered_set>
 
-#include "DeepLexer.hpp"
 #include "Arg.hpp"
 
-class Command {
+class TurtleCommand {
   public:
     // Variables
-    const enum Type {
+    const enum class Type {
         forward,
         back,
         right,
@@ -20,7 +20,7 @@ class Command {
         end
     } type;
 
-    const enum Comparison {
+    const enum class Comparison {
         greater,
         less,
         equal,
@@ -32,5 +32,5 @@ class Command {
     const std::vector<Arg> args;
 
     // Methods
-    Command(std::string code, DeepLexer& lexer);
+    TurtleCommand(std::string code, std::unordered_set<std::string>& procedures);
 };

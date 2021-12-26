@@ -1,6 +1,6 @@
 #include "Executor.hpp"
 
-Executor::Executor(const std::vector<std::vector<Command>> &code,
+Executor::Executor(const std::vector<std::vector<TurtleCommand>> &code,
                    Turtle &turtle)
     : code(code), turtle(turtle) { createProcedureMap(); }
 

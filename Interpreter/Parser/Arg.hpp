@@ -5,7 +5,7 @@
 struct Arg {
   public:
     // Variables
-    const enum Operation {
+    const enum class Operation {
         multiply,
         add,
         subtract,

@@ -4,12 +4,12 @@
 #include <string>
 #include <vector>
 
-#include "Command.hpp"
+#include "TurtleCommand.hpp"
 
 class Parser {
     // Variables
     const std::filesystem::path inputPath;
-    std::vector<std::vector<Command>> code;
+    std::vector<std::vector<TurtleCommand>> code;
 
     // Methods
     std::string readFile() const;
@@ -18,5 +18,5 @@ class Parser {
     Parser(std::filesystem::path inputPath);
     bool parse();
 
-    std::vector<std::vector<Command>> const &getCode() const;
+    std::vector<std::vector<TurtleCommand>> const &getCode() const;
 };
