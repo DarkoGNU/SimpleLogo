@@ -59,9 +59,17 @@ void Parser::cleanString(std::string &text) {
     const static std::regex pattern1(R"(\)[^;])");
     text = std::regex_replace(text, pattern1, ");");
 
+    // Replace end [name]; with just end;
+    const static std::regex pattern2(R"(end([\s]+)([^\s;]+);)");
+    text = std::regex_replace(text, pattern2, "end;");
+
     // Remove whitespace
-    const static std::regex pattern2(R"(\s)");
-    text = std::regex_replace(text, pattern2, "");
+    const static std::regex pattern3(R"(\s)");
+    text = std::regex_replace(text, pattern3, "");
+
+    // Replace (,) with spaces
+    const static std::regex pattern4(R"([\(\),])");
+    text = std::regex_replace(text, pattern4, " ");
 };
 
 void Parser::processTokens(const std::vector<std::string> &simpleTokens) {
@@ -195,7 +203,7 @@ Arg Parser::processArg(const std::string &expression) {
 
     std::size_t index = expression.find(operation);
     std::string name = expression.substr(0, index);
-    double value = std::stod(expression.substr(index, expression.size()));
+    double value = std::stod(expression.substr(index + 1, expression.size()));
 
     return Arg{operation, name, value};
 }
