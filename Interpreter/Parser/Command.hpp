@@ -30,7 +30,7 @@ class Command {
 
     const std::string name;
     const std::vector<Arg> args;
-    
+
     // Methods
-    Command(std::string& code, DeepLexer lexer);
+    Command(std::string code, DeepLexer& lexer);
 };

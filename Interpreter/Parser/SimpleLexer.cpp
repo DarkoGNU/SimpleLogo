@@ -8,7 +8,7 @@ void SimpleLexer::cleanString(std::string &text) {
     text = std::regex_replace(text, pattern1, ");");
 }
 
-std::vector<std::string> SimpleLexer::tokenize(std::string &codeString) {
+std::vector<std::string> SimpleLexer::tokenize(std::string codeString) {
     cleanString(codeString);
 
     std::vector<std::string> simpleTokens;
