@@ -21,7 +21,7 @@ bool Interpreter::execute() {
     if (!parser.parse())
         return false;
 
-    auto& code = parser.getCode();
+    Executor executor(parser.getCode(), turtle);
 
     return true;
 }
