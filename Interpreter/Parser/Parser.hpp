@@ -2,22 +2,17 @@
 
 #include <filesystem>
 #include <string>
-#include <unordered_set>
 #include <vector>
 
 #include "Command.hpp"
-#include "Params.hpp"
 
 class Parser {
     // Variables
     const std::filesystem::path inputPath;
-    std::unordered_set<std::string> procedures;
     std::vector<std::vector<Command>> code;
 
     // Methods
     std::string readFile() const;
-    static void cleanString(std::string &text);
-    void tokenize(const std::string &codeString);
 
     void processTokens(const std::vector<std::string> &simpleTokens);
 

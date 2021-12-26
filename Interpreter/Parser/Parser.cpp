@@ -7,6 +7,9 @@
 #include <sstream>
 #include <stdexcept>
 
+#include "DeepLexer.hpp"
+#include "SimpleLexer.hpp"
+
 Parser::Parser(std::filesystem::path inputPath) : inputPath(inputPath) {}
 
 std::vector<std::vector<Command>> const &Parser::getCode() const {
@@ -14,13 +17,22 @@ std::vector<std::vector<Command>> const &Parser::getCode() const {
 }
 
 bool Parser::parse() {
+    // Make sure that code is empty
+    code.clear();
+
+    // Read the file and tokenize it
     std::string codeString = readFile();
 
     if (codeString.empty())
         return false;
 
-    cleanString(codeString);
-    tokenize(codeString);
+    std::vector<std::string> simpleTokens = SimpleLexer::tokenize(codeString);
+
+    // Deeper tokenization
+    DeepLexer deepLexer;
+
+    for (auto &token : simpleTokens)
+        code.emplace_back(Command(token));
 
     return true;
 }
@@ -38,38 +50,6 @@ std::string Parser::readFile() const {
         return std::string();
 
     return buffer.str();
-}
-
-void Parser::tokenize(const std::string &codeString) {
-    std::vector<std::string> simpleTokens;
-
-    {
-        std::string token;
-        std::stringstream ss(codeString);
-
-        while (std::getline(ss, token, ';'))
-            simpleTokens.push_back(token);
-    }
-
-    processTokens(simpleTokens);
-}
-
-void Parser::cleanString(std::string &text) {
-    // Replace ) with );
-    const static std::regex pattern1(R"(\)[^;])");
-    text = std::regex_replace(text, pattern1, ");");
-
-    // Replace end [name]; with just end;
-    const static std::regex pattern2(R"(end([\s]+)([^\s;]+);)");
-    text = std::regex_replace(text, pattern2, "end;");
-
-    // Remove whitespace and )
-    const static std::regex pattern3(R"([\s\)])");
-    text = std::regex_replace(text, pattern3, "");
-
-    // Replace (, with spaces
-    const static std::regex pattern4(R"([\(,])");
-    text = std::regex_replace(text, pattern4, " ");
 }
 
 void Parser::processTokens(const std::vector<std::string> &simpleTokens) {
@@ -150,7 +130,8 @@ Parser::processConditional(const std::vector<std::string> &simpleTokens,
     std::string definition(simpleTokens[start++]);
     char comparison;
     std::vector<Arg> args = getArgs(getParts(definition, comparison));
-    conditional.emplace_back(Command{Command::Type::conditional, "if", args, comparison});
+    conditional.emplace_back(
+        Command{Command::Type::conditional, "if", args, comparison});
 
     // Handle the rest
     for (; start < simpleTokens.size(); start++) {
@@ -238,8 +219,7 @@ std::vector<std::string> Parser::getParts(std::string token, char &comparison) {
     if (index = token.find("<>"); index != std::string::npos) {
         comparison = '!';
         token.erase(index + 1);
-    }
-    else if (index = token.find('>'); index != std::string::npos)
+    } else if (index = token.find('>'); index != std::string::npos)
         comparison = '>';
     else if (index = token.find('='); index != std::string::npos)
         comparison = '=';

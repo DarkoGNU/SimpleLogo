@@ -5,8 +5,9 @@ project (Interpreter)
 add_library(${PROJECT_NAME} Interpreter.cpp)
 
 # Add subfolders
-add_subdirectory(Turtle)
 add_subdirectory(IO)
+add_subdirectory(Parser)
+add_subdirectory(Turtle)
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC ${PROJECT_SOURCE_DIR}
@@ -16,4 +17,4 @@ target_include_directories(${PROJECT_NAME}
 target_link_libraries (${PROJECT_NAME} PUBLIC Turtle IO)
 
 # Set sources
-target_sources(${PROJECT_NAME} PRIVATE Interpreter.hpp Interpreter.cpp Parser.hpp Parser.cpp Executor.hpp Executor.cpp Command.hpp)
+target_sources(${PROJECT_NAME} PRIVATE Interpreter.hpp Interpreter.cpp Executor.hpp Executor.cpp)
