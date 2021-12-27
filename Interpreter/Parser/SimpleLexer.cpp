@@ -20,4 +20,7 @@ void SimpleLexer::tokenize() {
 
     while (std::getline(ss, token, ';'))
         simpleTokens.push_back(token);
+
+    // Because of how std::getline works, there's going to be one empty token
+    simpleTokens.pop_back();
 }

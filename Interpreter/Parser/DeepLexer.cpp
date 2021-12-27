@@ -85,7 +85,7 @@ std::string DeepLexer::cleanToken(std::string token) {
     // If it's end, we don't need any more information
     const static auto endTest = [](char c) { return !std::isspace(c); };
     auto it = std::find_if(token.begin(), token.end(), endTest);
-    if (it + 4 >= token.end() && std::string(it, it + 4) == "end ")
+    if (it + 4 <= token.end() && std::string(it, it + 4) == "end ")
         return "end";
 
     // Remove any whitespace
@@ -94,7 +94,7 @@ std::string DeepLexer::cleanToken(std::string token) {
 
     // Replace (, with spaces
     const static std::regex pattern2{R"([\(,])"};
-    token = std::regex_replace(token, pattern2, "");
+    token = std::regex_replace(token, pattern2, " ");
 
     // If there's ), remove it
     if (token.find(')') != std::string::npos)

@@ -32,6 +32,7 @@ bool Parser::parse() {
 
     return !code.empty();
 }
+
 std::string Parser::readFile() const {
     std::ifstream file(inputPath);
 

@@ -1,17 +1,19 @@
 #include "TurtleCommand.hpp"
 
-TurtleCommand::TurtleCommand(const std::string &code,
-                             const std::unordered_set<std::string> &procedures)
-    : TurtleCommand(std::stringstream(code), procedures) {}
-
-TurtleCommand::TurtleCommand(std::stringstream code,
+TurtleCommand::TurtleCommand(std::string code,
                              const std::unordered_set<std::string> &procedures)
     : name(getName(code)), type(getType(procedures)),
-      comparison(getComparison(code)) {}
+      comparison(getComparison(code)), args(getArgs(code)) {}
 
-std::string TurtleCommand::getName(std::stringstream &ss) {
+std::string TurtleCommand::getName(std::string &code) {
+    std::stringstream ss(code);
     std::string cmdName;
-    ss >> cmdName;
+    std::getline(ss, cmdName, ' ');
+
+    std::stringstream temp;
+    temp << ss.rdbuf();
+    code = temp.str();
+
     return cmdName;
 }
 
@@ -33,11 +35,41 @@ TurtleCommand::getType(const std::unordered_set<std::string> &procedures) {
         return procedures.find(name) == procedures.end()
                    ? TurtleCommand::Type::definition
                    : TurtleCommand::Type::call;
-};
+}
 
-TurtleCommand::Comparison TurtleCommand::getComparison(std::stringstream &ss) {
+TurtleCommand::Comparison TurtleCommand::getComparison(std::string &code) {
     if (type != TurtleCommand::Type::conditional)
         return TurtleCommand::Comparison::null;
 
-    std::string expression;
+    TurtleCommand::Comparison exprType;
+    std::size_t index;
+
+    if (index = code.find("<>"); index != std::string::npos)
+        exprType = TurtleCommand::Comparison::inequal;
+    else if (index = code.find(">"); index != std::string::npos)
+        exprType = TurtleCommand::Comparison::greater;
+    else if (index = code.find("<"); index != std::string::npos)
+        exprType = TurtleCommand::Comparison::less;
+    else if (index = code.find("="); index != std::string::npos)
+        exprType = TurtleCommand::Comparison::equal;
+    else
+        return TurtleCommand::Comparison::null;
+
+    if (exprType != TurtleCommand::Comparison::inequal) {
+        code[index] = ' ';
+    } else {
+        code.erase(index, 1);
+        code[index] = ' ';
+    }
+
+    return exprType;
+}
+
+std::vector<Arg> TurtleCommand::getArgs(std::string &code) {
+    std::stringstream ss(code);
+    std::vector<Arg> nArgs;
+    std::string arg;
+
+    while (std::getline(ss, arg, ' '))
+        nArgs.emplace_back(Arg(arg));
 }

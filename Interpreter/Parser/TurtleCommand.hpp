@@ -29,18 +29,15 @@ class TurtleCommand {
     const std::vector<Arg> args;
 
     // Methods
-    TurtleCommand(const std::string &code,
+    TurtleCommand(std::string code,
                   const std::unordered_set<std::string> &procedures);
 
   private:
     // Methods
-    TurtleCommand(std::stringstream code,
-                  const std::unordered_set<std::string> &procedures);
-
-    std::string getName(std::stringstream &ss);
+    std::string getName(std::string &code);
+    TurtleCommand::Comparison getComparison(std::string &code);
+    std::vector<Arg> getArgs(std::string &code);
 
     TurtleCommand::Type
     getType(const std::unordered_set<std::string> &procedures);
-
-    TurtleCommand::Comparison getComparison(std::stringstream &ss);
 };
