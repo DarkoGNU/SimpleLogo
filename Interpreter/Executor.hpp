@@ -17,9 +17,15 @@ class Executor {
 
     // Methods
     std::unordered_map<std::string, unsigned int> createProcedureMap();
+    void call(std::vector<TurtleCommand> const &current,
+              std::unordered_map<std::string, double> const &argMap);
+
+    void handleCommand(TurtleCommand const &current,
+                       std::unordered_map<std::string, double> const &argMap,
+                       unsigned int &pos);
 
   public:
     Executor(std::vector<std::vector<TurtleCommand>> code, Turtle &turtle);
 
-    void execute() {};
+    void execute();
 };

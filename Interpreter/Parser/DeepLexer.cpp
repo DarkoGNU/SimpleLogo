@@ -6,7 +6,12 @@
 #include <stdexcept>
 
 DeepLexer::DeepLexer(std::vector<std::string> simpleTokens)
-    : simpleTokens{simpleTokens}, code{std::vector<TurtleCommand>()} {}
+    : simpleTokens{simpleTokens}, code{std::vector<TurtleCommand>()} {
+
+    // The main code will be a default main() procedure
+    code[0].emplace_back(TurtleCommand("main ", procedures));
+    procedures.emplace("main");
+}
 
 std::vector<std::vector<TurtleCommand>> DeepLexer::getCode() const {
     return code;
@@ -23,8 +28,8 @@ void DeepLexer::tokenize() {
             throw std::runtime_error("There's at least one ending too much");
 
         if (newCommand.type == TurtleCommand::Type::definition) {
-            procedures.emplace(newCommand.name);
             proc = procedures.size();
+            procedures.emplace(newCommand.name);
             code.emplace_back(std::vector<TurtleCommand>());
 
             code[proc].push_back(newCommand);
