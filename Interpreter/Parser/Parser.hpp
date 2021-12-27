@@ -1,7 +1,6 @@
 #pragma once
 
 #include <filesystem>
-#include <memory>
 #include <string>
 #include <vector>
 
@@ -19,5 +18,5 @@ class Parser {
     Parser(std::filesystem::path inputPath);
     bool parse();
 
-    const std::vector<std::vector<TurtleCommand>> &getCode() const;
+    std::vector<std::vector<TurtleCommand>> getCode() const;
 };

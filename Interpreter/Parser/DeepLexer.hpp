@@ -12,8 +12,8 @@ class DeepLexer {
 
     std::vector<std::vector<TurtleCommand>> code;
     std::unordered_set<std::string> procedures;
-    std::size_t position{0};
-    std::size_t procedure{0};
+    std::size_t pos{0};
+    std::size_t proc{0};
 
     // Methods
     static std::string cleanToken(std::string token);
@@ -22,13 +22,12 @@ class DeepLexer {
     TurtleCommand getCommand();
 
     void handleProcedure();
-    void handleConditional(std::size_t currentProcedure = 0);
-    bool handleComplex(std::size_t currentProcedure);
+    void handleConditional();
+    bool handleComplex();
 
   public:
     DeepLexer(std::vector<std::string> simpleTokens);
     void tokenize();
 
-    const std::vector<std::vector<TurtleCommand>> &getCodeRef() const;
-    std::vector<std::vector<TurtleCommand>> getCode();
+    std::vector<std::vector<TurtleCommand>> getCode() const;
 };

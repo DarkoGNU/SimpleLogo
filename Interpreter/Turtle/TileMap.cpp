@@ -27,4 +27,4 @@ std::string TileMap::toString(char stepped, char unstepped) const {
     return visualMap;
 }
 
-std::vector<bool> TileMap::getTiles() const { return tiles; }
+const std::vector<bool> &TileMap::getTiles() const { return tiles; }

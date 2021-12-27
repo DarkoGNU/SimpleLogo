@@ -7,9 +7,7 @@
 
 Parser::Parser(std::filesystem::path inputPath) : inputPath(inputPath) {}
 
-std::vector<std::vector<TurtleCommand>> const &Parser::getCode() const {
-    return code;
-}
+std::vector<std::vector<TurtleCommand>> Parser::getCode() const { return code; }
 
 bool Parser::parse() {
     // Read the file
@@ -19,14 +17,13 @@ bool Parser::parse() {
         return false;
 
     // Basic splitting
-    SimpleLexer simpleLexer(codeString);
-    simpleLexer.tokenize();
+    std::vector<std::string> simpleTokens = SimpleLexer::tokenize(codeString);
 
-    if (simpleLexer.getTokens().empty())
+    if (simpleTokens.empty())
         return false;
 
     // Split it further
-    DeepLexer deepLexer(simpleLexer.getTokens());
+    DeepLexer deepLexer(simpleTokens);
     deepLexer.tokenize();
     code = deepLexer.getCode();
 

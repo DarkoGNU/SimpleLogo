@@ -8,28 +8,26 @@
 DeepLexer::DeepLexer(std::vector<std::string> simpleTokens)
     : simpleTokens{simpleTokens}, code{std::vector<TurtleCommand>()} {}
 
-const std::vector<std::vector<TurtleCommand>> &DeepLexer::getCodeRef() const {
+std::vector<std::vector<TurtleCommand>> DeepLexer::getCode() const {
     return code;
 }
-
-std::vector<std::vector<TurtleCommand>> DeepLexer::getCode() { return code; }
 
 void DeepLexer::tokenize() {
     // code[0] will store the main code
     // code[1] etc. will be procedures
-    for (; position < simpleTokens.size(); position++) {
-
+    for (; pos < simpleTokens.size(); pos++) {
+        proc = 0;
         auto newCommand = getCommand();
 
         if (newCommand.type == TurtleCommand::Type::end)
             throw std::runtime_error("There's at least one ending too much");
 
         if (newCommand.type == TurtleCommand::Type::definition) {
+            proc = procedures.size();
             procedures.emplace(newCommand.name);
             code.emplace_back(std::vector<TurtleCommand>());
-            procedure++;
 
-            code[procedure].push_back(newCommand);
+            code[proc].push_back(newCommand);
             handleProcedure();
 
         } else if (newCommand.type == TurtleCommand::Type::conditional) {
@@ -40,31 +38,35 @@ void DeepLexer::tokenize() {
             code[0].push_back(newCommand);
         }
     }
+
+    // They aren't needed anymore
+    simpleTokens.clear();
+    procedures.clear();
 }
 
 void DeepLexer::handleProcedure() {
-    if (!handleComplex(procedure))
+    if (!handleComplex())
         throw std::runtime_error("The procedure doesn't have an ending");
 }
 
-void DeepLexer::handleConditional(std::size_t currentProcedure) {
-    if (!handleComplex(currentProcedure))
+void DeepLexer::handleConditional() {
+    if (!handleComplex())
         throw std::runtime_error(
             "The conditional statement doesn't have an ending");
 }
 
-bool DeepLexer::handleComplex(std::size_t currentProcedure) {
-    for (position++; position < simpleTokens.size(); position++) {
+bool DeepLexer::handleComplex() {
+    for (pos++; pos < simpleTokens.size(); pos++) {
 
-        code[currentProcedure].push_back(getCommand());
-        auto type = code[currentProcedure].back().type;
+        code[proc].push_back(getCommand());
+        auto type = code[proc].back().type;
 
         if (type == TurtleCommand::Type::definition)
             throw std::runtime_error(
                 "Nested procedure definitions aren't supported");
 
         else if (type == TurtleCommand::Type::conditional)
-            handleConditional(procedure);
+            handleConditional();
 
         else if (type == TurtleCommand::Type::end)
             return true;
@@ -73,9 +75,7 @@ bool DeepLexer::handleComplex(std::size_t currentProcedure) {
     return false;
 }
 
-std::string DeepLexer::getCleanToken() {
-    return cleanToken(simpleTokens[position]);
-}
+std::string DeepLexer::getCleanToken() { return cleanToken(simpleTokens[pos]); }
 
 TurtleCommand DeepLexer::getCommand() {
     return TurtleCommand(getCleanToken(), procedures);

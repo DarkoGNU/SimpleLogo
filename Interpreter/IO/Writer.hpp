@@ -1,13 +1,12 @@
 #pragma once
 
 #include <filesystem>
-#include <string>
+#include <string_view>
 
 #include <png++/png.hpp>
 
 namespace Writer {
-bool writeText(const std::filesystem::path &outputPath,
-               const std::string &text);
+bool writeText(const std::filesystem::path &outputPath, std::string_view text);
 
 // The task demands a BMP file (optional feature), but I'm too lazy
 // so I just write a PNG file using PNG++

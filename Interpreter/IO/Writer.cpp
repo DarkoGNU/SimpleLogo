@@ -4,8 +4,7 @@
 #include <vector>
 
 namespace Writer {
-bool writeText(const std::filesystem::path &outputPath,
-               const std::string &text) {
+bool writeText(const std::filesystem::path &outputPath, std::string_view text) {
 
     std::ofstream file(outputPath);
 
