@@ -10,9 +10,7 @@ std::string TurtleCommand::getName(std::string &code) {
     std::string cmdName;
     std::getline(ss, cmdName, ' ');
 
-    std::stringstream temp;
-    temp << ss.rdbuf();
-    code = temp.str();
+    code.erase(0, cmdName.size() + 1);
 
     return cmdName;
 }
@@ -65,11 +63,11 @@ TurtleCommand::Comparison TurtleCommand::getComparison(std::string &code) {
     return exprType;
 }
 
-std::vector<Arg> TurtleCommand::getArgs(std::string &code) {
+std::vector<Arg> TurtleCommand::getArgs(const std::string &code) {
     std::stringstream ss(code);
     std::vector<Arg> nArgs;
     std::string arg;
 
     while (std::getline(ss, arg, ' '))
-        nArgs.emplace_back(Arg(arg));
+        return nArgs;
 }

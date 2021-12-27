@@ -23,8 +23,8 @@ void DeepLexer::tokenize() {
             throw std::runtime_error("There's at least one ending too much");
 
         if (newCommand.type == TurtleCommand::Type::definition) {
-            proc = procedures.size();
             procedures.emplace(newCommand.name);
+            proc = procedures.size();
             code.emplace_back(std::vector<TurtleCommand>());
 
             code[proc].push_back(newCommand);
