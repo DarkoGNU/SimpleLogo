@@ -2,6 +2,7 @@
 
 #include <fstream>
 
+#include "DeepLexer.hpp"
 #include "SimpleLexer.hpp"
 
 Parser::Parser(std::filesystem::path inputPath) : inputPath(inputPath) {}
@@ -20,16 +21,17 @@ bool Parser::parse() {
     // Basic splitting
     SimpleLexer simpleLexer(codeString);
     simpleLexer.tokenize();
-    auto simpleTokens = simpleLexer.getTokens();
+
+    if (simpleLexer.getTokens().empty())
+        return false;
 
     // Split it further
-    DeepLexer deepLexer(simpleTokens);
+    DeepLexer deepLexer(simpleLexer.getTokens());
     deepLexer.tokenize();
     code = deepLexer.getCode();
 
-    return true;
+    return !code.empty();
 }
-
 std::string Parser::readFile() const {
     std::ifstream file(inputPath);
 

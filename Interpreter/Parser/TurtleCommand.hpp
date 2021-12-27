@@ -23,23 +23,24 @@ class TurtleCommand {
 
     enum class Comparison { greater, less, equal, inequal, null };
 
-    TurtleCommand::Type type;
-    TurtleCommand::Comparison comparison;
-    std::string name;
-    std::vector<Arg> args;
+    const std::string name;
+    const TurtleCommand::Type type;
+    const TurtleCommand::Comparison comparison;
+    const std::vector<Arg> args;
 
     // Methods
     TurtleCommand(const std::string &code,
                   const std::unordered_set<std::string> &procedures);
 
   private:
-    // Variables
-
     // Methods
-    std::string getName();
+    TurtleCommand(std::stringstream code,
+                  const std::unordered_set<std::string> &procedures);
+
+    std::string getName(std::stringstream &ss);
 
     TurtleCommand::Type
     getType(const std::unordered_set<std::string> &procedures);
 
-    TurtleCommand::Comparison getComparison();
+    TurtleCommand::Comparison getComparison(std::stringstream &ss);
 };

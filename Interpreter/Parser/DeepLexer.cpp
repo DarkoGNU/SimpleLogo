@@ -5,12 +5,14 @@
 #include <regex>
 #include <stdexcept>
 
-DeepLexer::DeepLexer(const std::vector<std::string> &simpleTokens)
+DeepLexer::DeepLexer(std::vector<std::string> simpleTokens)
     : simpleTokens{simpleTokens}, code{std::vector<TurtleCommand>()} {}
 
-std::vector<std::vector<TurtleCommand>> DeepLexer::getCode() const {
+const std::vector<std::vector<TurtleCommand>> &DeepLexer::getCodeRef() const {
     return code;
 }
+
+std::vector<std::vector<TurtleCommand>> DeepLexer::getCode() { return code; }
 
 void DeepLexer::tokenize() {
     // code[0] will store the main code

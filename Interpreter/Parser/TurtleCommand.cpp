@@ -1,12 +1,17 @@
 #include "TurtleCommand.hpp"
 
-TurtleCommand::TurtleCommand(
-    const std::string &code,
-    const std::unordered_set<std::string> &procedures) {}
+TurtleCommand::TurtleCommand(const std::string &code,
+                             const std::unordered_set<std::string> &procedures)
+    : TurtleCommand(std::stringstream(code), procedures) {}
 
-std::string TurtleCommand::getName() {
+TurtleCommand::TurtleCommand(std::stringstream code,
+                             const std::unordered_set<std::string> &procedures)
+    : name(getName(code)), type(getType(procedures)),
+      comparison(getComparison(code)) {}
+
+std::string TurtleCommand::getName(std::stringstream &ss) {
     std::string cmdName;
-    // ss >> cmdName;
+    ss >> cmdName;
     return cmdName;
 }
 
@@ -30,7 +35,9 @@ TurtleCommand::getType(const std::unordered_set<std::string> &procedures) {
                    : TurtleCommand::Type::call;
 };
 
-TurtleCommand::Comparison TurtleCommand::getComparison() {
+TurtleCommand::Comparison TurtleCommand::getComparison(std::stringstream &ss) {
     if (type != TurtleCommand::Type::conditional)
         return TurtleCommand::Comparison::null;
+
+    std::string expression;
 }

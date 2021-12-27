@@ -8,7 +8,7 @@
 
 class DeepLexer {
     // Variables
-    const std::vector<std::string> &simpleTokens;
+    std::vector<std::string> simpleTokens;
 
     std::vector<std::vector<TurtleCommand>> code;
     std::unordered_set<std::string> procedures;
@@ -26,8 +26,9 @@ class DeepLexer {
     bool handleComplex(std::size_t currentProcedure);
 
   public:
-    DeepLexer(const std::vector<std::string> &simpleTokens);
-
+    DeepLexer(std::vector<std::string> simpleTokens);
     void tokenize();
-    std::vector<std::vector<TurtleCommand>> getCode() const;
+
+    const std::vector<std::vector<TurtleCommand>> &getCodeRef() const;
+    std::vector<std::vector<TurtleCommand>> getCode();
 };

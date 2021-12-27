@@ -1,11 +1,11 @@
 #pragma once
 
 #include <filesystem>
+#include <memory>
 #include <string>
 #include <vector>
 
 #include "TurtleCommand.hpp"
-#include "DeepLexer.hpp"
 
 class Parser {
     // Variables
@@ -19,5 +19,5 @@ class Parser {
     Parser(std::filesystem::path inputPath);
     bool parse();
 
-    std::vector<std::vector<TurtleCommand>> const &getCode() const;
+    const std::vector<std::vector<TurtleCommand>> &getCode() const;
 };
