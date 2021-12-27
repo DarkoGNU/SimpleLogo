@@ -69,5 +69,7 @@ std::vector<Arg> TurtleCommand::getArgs(const std::string &code) {
     std::string arg;
 
     while (std::getline(ss, arg, ' '))
-        return nArgs;
+        nArgs.emplace_back(Arg(arg));
+
+    return nArgs;
 }

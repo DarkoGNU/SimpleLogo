@@ -23,6 +23,7 @@ class TurtleCommand {
 
     enum class Comparison { greater, less, equal, inequal, null };
 
+    // Warning - the order matters!
     const std::string name;
     const TurtleCommand::Type type;
     const TurtleCommand::Comparison comparison;

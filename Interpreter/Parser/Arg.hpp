@@ -7,15 +7,16 @@ class Arg {
     // Variables
     enum class Operation { multiply, add, subtract, name, value };
 
+    // Warning - the order matters!
     const Arg::Operation operation;
-    const std::string name;
     const double value;
+    const std::string name;
 
     // Methods
-    Arg(const std::string &arg);
+    Arg(std::string arg);
 
   private:
-    Arg::Operation getOperation(const std::string &arg);
-    std::string getName(const std::string &arg);
-    double getValue(const std::string &arg);
+    Arg::Operation getOperation(std::string &arg);
+    std::string getName(std::string arg);
+    double getValue(std::string &arg);
 };
