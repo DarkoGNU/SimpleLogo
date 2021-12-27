@@ -22,6 +22,7 @@ bool Interpreter::execute() {
         return false;
 
     Executor executor(parser.getCode(), turtle);
+    executor.execute();
 
     return true;
 }

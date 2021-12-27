@@ -1,28 +1,25 @@
 #pragma once
 
-#include <vector>
 #include <unordered_map>
+#include <vector>
 
-#include "TurtleCommand.hpp"
+#include "Arg.hpp"
 #include "Turtle.hpp"
+#include "TurtleCommand.hpp"
 
 class Executor {
     // Variables
-    const std::vector<std::vector<TurtleCommand>> &code;
     Turtle &turtle;
 
-    std::unordered_map<std::string, unsigned int> procedureMap;
+    // Warning - the order matters!
+    const std::vector<std::vector<TurtleCommand>> code;
+    const std::unordered_map<std::string, unsigned int> procedureMap;
 
     // Methods
-    void createProcedureMap();
-
-    void execute(const std::vector<TurtleCommand>& TurtleCommands, const std::vector<Arg>& args);
-    void executeConditional(const std::vector<TurtleCommand>& TurtleCommands, const std::vector<Arg>& args, unsigned int& start);
-
-    double evaluateArg(const Arg& arg, const std::vector<Arg>& args);
-    bool evaluateCondition(const TurtleCommand& conditional, const std::vector<Arg>& args);
+    std::unordered_map<std::string, unsigned int> createProcedureMap();
 
   public:
-    Executor(const std::vector<std::vector<TurtleCommand>> &code, Turtle &turtle);
-    void execute();
+    Executor(std::vector<std::vector<TurtleCommand>> code, Turtle &turtle);
+
+    void execute() {};
 };

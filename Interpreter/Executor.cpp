@@ -1,11 +1,13 @@
 #include "Executor.hpp"
 
-Executor::Executor(const std::vector<std::vector<TurtleCommand>> &code,
-                   Turtle &turtle)
-    : code(code), turtle(turtle) { createProcedureMap(); }
+Executor::Executor(std::vector<std::vector<TurtleCommand>> code, Turtle &turtle)
+    : turtle(turtle), code(code), procedureMap(createProcedureMap()) {}
 
-void Executor::createProcedureMap() {
-    for (unsigned int i = 1; i < code.size(); i++) {
-        procedureMap[code[i][0].name] = i;
-    }
+std::unordered_map<std::string, unsigned int> Executor::createProcedureMap() {
+    std::unordered_map<std::string, unsigned int> nProcedureMap;
+
+    for (unsigned int i = 1; i < code.size(); i++)
+        nProcedureMap[code[i][0].name] = i;
+
+    return nProcedureMap;
 }
