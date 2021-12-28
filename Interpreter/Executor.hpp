@@ -20,7 +20,7 @@ class Executor {
     void call(std::vector<TurtleCommand> const &procedure,
               std::unordered_map<std::string, double> &argMap);
 
-    bool handleCommand(std::vector<TurtleCommand> const &procedure,
+    void handleCommand(std::vector<TurtleCommand> const &procedure,
                        std::unordered_map<std::string, double> &argMap,
                        unsigned int &pos);
 

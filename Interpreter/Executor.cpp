@@ -26,7 +26,7 @@ void Executor::call(std::vector<TurtleCommand> const &procedure,
         handleCommand(procedure, argMap, i);
 }
 
-bool Executor::handleCommand(std::vector<TurtleCommand> const &procedure,
+void Executor::handleCommand(std::vector<TurtleCommand> const &procedure,
                              std::unordered_map<std::string, double> &argMap,
                              unsigned int &pos) {
     auto const &current = procedure[pos];
@@ -34,15 +34,32 @@ bool Executor::handleCommand(std::vector<TurtleCommand> const &procedure,
     switch (current.type) {
     case (TurtleCommand::Type::call):
         handleCall(current, argMap);
-        break;
+        return;
     case (TurtleCommand::Type::conditional):
         handleConditional(procedure, argMap, pos);
-        break;
+        return;
     case (TurtleCommand::Type::end):
-        return false;
+        return;
     }
 
-    return true;
+    double value = evaluateArg(current.args[0], argMap);
+
+    switch (current.type) {
+    case (TurtleCommand::Type::forward):
+        turtle.forward(value);
+        return;
+    case (TurtleCommand::Type::back):
+        turtle.back(value);
+        return;
+    case (TurtleCommand::Type::right):
+        turtle.right(value);
+        return;
+    case (TurtleCommand::Type::left):
+        turtle.left(value);
+        return;
+    default:
+        throw std::runtime_error("Unrecognized command");
+    }
 }
 
 void Executor::handleCall(TurtleCommand const &current,
@@ -61,10 +78,15 @@ void Executor::handleConditional(
     std::unordered_map<std::string, double> &argMap, unsigned int &pos) {
 
     auto const &current = procedure[pos];
+
     if (!evaluateComparison(current.args[0], current.args[1],
-                            current.comparison, argMap))
+                            current.comparison, argMap)) {
         while (procedure[++pos].type != TurtleCommand::Type::end)
             continue;
+    } else {
+        while (procedure[++pos].type != TurtleCommand::Type::end)
+            handleCommand(procedure, argMap, pos);
+    }
 }
 
 std::unordered_map<std::string, double>

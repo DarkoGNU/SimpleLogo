@@ -24,7 +24,7 @@ bool Interpreter::execute() {
     Executor executor(parser.getCode(), turtle);
     executor.execute();
 
-    return true;
+    return writeMap();
 }
 
 bool Interpreter::writeMap() const {
