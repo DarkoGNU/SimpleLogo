@@ -19,25 +19,52 @@ void Executor::execute() {
     call(code[0], nArgMap);
 }
 
-void Executor::call(std::vector<TurtleCommand> const &current,
+void Executor::call(std::vector<TurtleCommand> const &procedure,
                     std::unordered_map<std::string, double> &argMap) {
 
-    for (unsigned int i = 1; i < current.size(); i++)
-        handleCommand(current[i], argMap, i);
+    for (unsigned int i = 1; i < procedure.size(); i++)
+        handleCommand(procedure, argMap, i);
 }
 
-void Executor::handleCommand(TurtleCommand const &current,
+bool Executor::handleCommand(std::vector<TurtleCommand> const &procedure,
                              std::unordered_map<std::string, double> &argMap,
                              unsigned int &pos) {
+    auto const &current = procedure[pos];
 
-    if (current.type == TurtleCommand::Type::call) {
-        auto index = procedureMap[current.name];
-        auto const &procedure = code[index];
-        auto const &definition = procedure[0];
-
-        auto map = getArgMap(definition, current, argMap);
-        call(procedure, map);
+    switch (current.type) {
+    case (TurtleCommand::Type::call):
+        handleCall(current, argMap);
+        break;
+    case (TurtleCommand::Type::conditional):
+        handleConditional(procedure, argMap, pos);
+        break;
+    case (TurtleCommand::Type::end):
+        return false;
     }
+
+    return true;
+}
+
+void Executor::handleCall(TurtleCommand const &current,
+                          std::unordered_map<std::string, double> &argMap) {
+
+    auto index = procedureMap[current.name];
+    auto const &procedure = code[index];
+    auto const &definition = procedure[0];
+
+    auto map = getArgMap(definition, current, argMap);
+    call(procedure, map);
+}
+
+void Executor::handleConditional(
+    std::vector<TurtleCommand> const &procedure,
+    std::unordered_map<std::string, double> &argMap, unsigned int &pos) {
+
+    auto const &current = procedure[pos];
+    if (!evaluateComparison(current.args[0], current.args[1],
+                            current.comparison, argMap))
+        while (procedure[++pos].type != TurtleCommand::Type::end)
+            continue;
 }
 
 std::unordered_map<std::string, double>
@@ -54,25 +81,38 @@ Executor::getArgMap(TurtleCommand const &definition,
 
 double Executor::evaluateArg(Arg const &arg,
                              std::unordered_map<std::string, double> &argMap) {
-    Arg::Operation operation = arg.operation;
-
-    switch (operation) {
+    switch (arg.operation) {
     case (Arg::Operation::value):
         return arg.value;
-        break;
     case (Arg::Operation::name):
         return argMap[arg.name];
-        break;
     case (Arg::Operation::multiply):
         return argMap[arg.name] * arg.value;
-        break;
     case (Arg::Operation::add):
         return argMap[arg.name] * arg.value;
-        break;
     case (Arg::Operation::subtract):
         return argMap[arg.name] - arg.value;
-        break;
     default:
         throw std::runtime_error("The argument's operation is unknown");
+    }
+}
+
+bool Executor::evaluateComparison(
+    Arg const &first, Arg const &second, TurtleCommand::Comparison type,
+    std::unordered_map<std::string, double> &argMap) {
+    double firstValue = evaluateArg(first, argMap);
+    double secondValue = evaluateArg(second, argMap);
+
+    switch (type) {
+    case (TurtleCommand::Comparison::equal):
+        return firstValue == secondValue;
+    case (TurtleCommand::Comparison::inequal):
+        return firstValue != secondValue;
+    case (TurtleCommand::Comparison::greater):
+        return firstValue > secondValue;
+    case (TurtleCommand::Comparison::less):
+        return firstValue < secondValue;
+    default:
+        throw std::runtime_error("This comparison can't be evaluated");
     }
 }
