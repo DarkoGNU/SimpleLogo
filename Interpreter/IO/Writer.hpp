@@ -5,11 +5,29 @@
 
 #include <png++/png.hpp>
 
+/**
+ * @brief Provides methods for writing text files and images.
+ */
 namespace Writer {
+/**
+ * @brief Writes a text file.
+ * Returns false if something went wrong.
+ *
+ * @param outputPath path to the output file
+ * @param text text to write
+ * @return bool
+ */
 bool writeText(const std::filesystem::path &outputPath, std::string_view text);
 
-// The task demands a BMP file (optional feature), but I'm too lazy
-// so I just write a PNG file using PNG++
+/**
+ * @brief Writes a PNG file.
+ * Returns false if something went wrong.
+ *
+ * @param outputPath path to the output file
+ * @param tiles tiles to write (2D mapped onto 1D)
+ * @param size length and width of tiles
+ * @return bool
+ */
 bool writePng(const std::filesystem::path &outputPath,
               const std::vector<bool> &tiles, unsigned int size);
 

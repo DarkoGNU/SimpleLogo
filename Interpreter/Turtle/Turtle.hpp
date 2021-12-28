@@ -2,24 +2,75 @@
 
 #include "TileMap.hpp"
 
+/**
+ * @brief Represents a turtle.
+ * The Turtle can step on a TileMap
+ */
 class Turtle {
+    /**
+     * @brief Reference to the TileMap on which Turtle steps.
+     * Appropriate lifetime for the TileMap needs to be ensured
+     */
     TileMap &tileMap;
 
-    // We use doubles, but they will be rounded down when stepping on TileMap
+    /**
+     * @brief Turtle's horizontal position.
+     * Will be rounded down to int when stepping
+     */
     double x;
+    /**
+     * @brief Turtle's vertical position.
+     * Will be rounded down to int when stepping
+     */
     double y;
 
-    // in radians, angle >= 0 && angle < 2π
+    /**
+     * @brief Turtle's angle in radians.
+     * Angle >= 0 && angle < 2π
+     */
     double angle;
 
   public:
+    /**
+     * @brief Construct a new Turtle object
+     *
+     * @param tileMap one-dimensional TileMap
+     */
     Turtle(TileMap &tileMap);
+    /**
+     * @brief Construct a new Turtle object
+     *
+     * @param tileMap one-dimensional TileMap
+     * @param startX initial X
+     * @param startY initial Y
+     * @param startAngle initial angle
+     */
     Turtle(TileMap &tileMap, unsigned int startX, unsigned int startY,
            double startAngle);
 
+    /**
+     * @brief Turns left.
+     *
+     * @param turnAngle in degrees
+     */
     void left(double turnAngle);
+    /**
+     * @brief Turns right.
+     *
+     * @param turnAngle in degrees
+     */
     void right(double turnAngle);
 
+    /**
+     * @brief Goes forward.
+     *
+     * @param length in tiles
+     */
     void forward(double length);
+    /**
+     * @brief Goes backward.
+     *
+     * @param length in tiles
+     */
     void back(double length);
 };

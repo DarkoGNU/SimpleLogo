@@ -11,15 +11,14 @@
  * @brief Provides Logo code execution
  */
 class Executor {
-    // Variables
     /**
      * @brief The code is executed on this Turtle.
      */
     Turtle &turtle;
 
-    // Warning - the order matters!
     /**
      * @brief Stores vectors containing Logo code.
+     * Has to be initialized before procedureMap
      */
     const std::vector<std::vector<TurtleCommand>> code;
     /**
@@ -27,7 +26,6 @@ class Executor {
      */
     std::unordered_map<std::string, unsigned int> procedureMap;
 
-    // Methods
     /**
      * @brief Create a procedureMap.
      * Depends on code being initialized
@@ -132,7 +130,7 @@ class Executor {
      */
     Executor(std::vector<std::vector<TurtleCommand>> code, Turtle &turtle);
     /**
-     * @brief executes the code on the turtle.
+     * @brief Executes the code on the turtle.
      */
     void execute();
 };
