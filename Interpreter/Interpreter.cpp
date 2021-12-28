@@ -24,18 +24,18 @@ bool Interpreter::execute() {
     Executor executor(parser.getCode(), turtle);
     executor.execute();
 
-    return writeMap();
+    writeMap();
+    return status;
 }
 
-bool Interpreter::writeMap() const {
+void Interpreter::writeMap() {
     std::string extension = params.getOutputPath().extension().string();
     std::transform(extension.begin(), extension.end(), extension.begin(),
                    ::tolower);
 
-    if (extension == ".png") {
-        return Writer::writePng(params.getOutputPath(), tilemap.getTiles(),
-                                tilemap.getSize());
-    }
-
-    return Writer::writeText(params.getOutputPath(), tilemap.toString());
+    if (extension == ".png")
+        status = Writer::writePng(params.getOutputPath(), tilemap.getTiles(),
+                                  tilemap.getSize());
+    else
+        status = Writer::writeText(params.getOutputPath(), tilemap.toString());
 }
