@@ -22,7 +22,7 @@ sudo apt install libpng++-dev
 
 ## Usage
 
-Check files Test1.txt and Test2.txt for examples of SimpleLogo's scripting language
+Check the folder Examples for examples of SimpleLogo's scripting language
 
 ## Compilation
 
