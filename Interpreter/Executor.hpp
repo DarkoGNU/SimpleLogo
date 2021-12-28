@@ -23,6 +23,7 @@ class Executor {
     const std::vector<std::vector<TurtleCommand>> code;
     /**
      * @brief Stores the indexes of Logo procedures in the code vector.
+     * Has to be initialized after code
      */
     std::unordered_map<std::string, unsigned int> procedureMap;
 

@@ -1,5 +1,7 @@
 #include "TurtleCommand.hpp"
 
+#include <sstream>
+
 TurtleCommand::TurtleCommand(std::string code,
                              const std::unordered_set<std::string> &procedures)
     : name(getName(code)), type(getType(procedures)),

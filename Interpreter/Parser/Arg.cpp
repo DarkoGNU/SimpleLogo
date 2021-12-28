@@ -4,7 +4,7 @@
 #include <sstream>
 
 Arg::Arg(std::string arg)
-    : operation(getOperation(arg)), value(getValue(arg)), name(getName(arg)) {}
+    : operation(getOperation(arg)), value(getValue(arg)), name(arg) {}
 
 Arg::Operation Arg::getOperation(std::string &arg) {
     // If there's an operation, determine its type
@@ -40,5 +40,3 @@ double Arg::getValue(std::string &arg) {
 
     return std::stod(value);
 }
-
-std::string Arg::getName(std::string arg) { return arg; }
