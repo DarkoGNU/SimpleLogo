@@ -1,0 +1,16 @@
+// ./SimpleLogo -i Test5.txt -o Tested5.png -s 700
+// Basically - testing nested ifs
+
+frac(bok, minBok)
+    if (bok > minBok)
+        if (bok > minBok)
+            if (bok > minBok)
+                przod(bok);
+                lewo(123);
+                frac(bok - 2, minBok);
+            end if;
+        end if;
+    end if;
+end frac;
+
+frac(300, 50);

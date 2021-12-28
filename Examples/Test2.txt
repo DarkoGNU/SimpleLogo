@@ -1,12 +1,15 @@
-zad5(bok, minBok)
+// ./SimpleLogo -i Test2.txt -o Tested2.png -s 1200
+
+zad5(bok, minBok) // hey
     if(bok > minBok)
         lewo(120);
 	przod(bok);
-
+// do comments work?
 	prawo(180);
 	zad5(bok / 2, minBok);
 	lewo(180);
-
+// prawo(180);
+// prawo(180)
         lewo(120);
 	przod(bok);
 
@@ -23,4 +26,10 @@ zad5(bok, minBok)
     end if;
 end zad5;
 
-zad5(300, 1);
+zad5(300, 1);    				    
+
+
+
+
+
+

@@ -1,0 +1,58 @@
+// ./SimpleLogo -i Test7.txt -o Tested7.png -s 1200
+// Testing multiple procedures
+
+krzaczek1(x, n)
+    if(n > 0)
+        przod(x);
+        lewo(45);
+	    krzaczek1(x*0.75, n-1);
+        prawo(90);
+	    krzaczek1(x*0.75, n-1);
+	    lewo(45);tyl(x);
+    end if;
+end krzaczek1;
+
+krzaczek2(x, n)
+    if(n > 0)
+        przod(x);
+        lewo(60);
+	    krzaczek2(x*0.75, n-1);
+        prawo(120);
+	    krzaczek2(x*0.75, n-1);
+	    lewo(60);tyl(x);
+    end if;
+end krzaczek2;
+
+krzaczek3(x, n)
+    if(n > 0)
+        przod(x);
+        lewo(45);
+	    krzaczek3(x*0.6, n-1);
+        prawo(90);
+	    krzaczek3(x*0.6, n-1);
+	    lewo(45);tyl(x);
+    end if;
+end krzaczek3;
+
+krzaczek4(x, n)
+    if(n > 0)
+        przod(x);
+        lewo(35);
+	    krzaczek4(x*0.8, n-1);
+        prawo(70);
+	    krzaczek4(x*0.8, n-1);
+	    lewo(35);tyl(x);
+    end if;
+end krzaczek4;
+
+krzaczek1(200, 5);
+prawo(90);
+
+krzaczek2(200, 5);
+prawo(90);
+
+krzaczek3(200, 5);
+prawo(90);
+
+krzaczek4(200, 5);
+prawo(90);

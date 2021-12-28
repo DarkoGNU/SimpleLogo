@@ -1,0 +1,39 @@
+// ./SimpleLogo -i Test4.txt -o Tested4.png -s 1200
+
+square(bok, minBok)
+    if(bok > minBok)
+            przod(bok / 2);
+            lewo(90);
+            przod(bok);
+
+            prawo(90);
+            square(bok / 2, minBok);
+            lewo(90);
+
+            przod(bok / 2);
+            lewo(90);
+            przod(bok);
+
+            prawo(90);
+            square(bok / 2, minBok);
+            lewo(90);
+
+            przod(bok / 2);
+            lewo(90);
+            przod(bok);
+
+            prawo(90);
+            square(bok / 2, minBok);
+            lewo(90);
+
+            przod(bok / 2);
+            lewo(90);
+            przod(bok);
+
+            prawo(90);
+            square(bok / 2, minBok);
+            lewo(90);
+    end if;
+end square;
+
+square(300, 50);

@@ -1,0 +1,12 @@
+// ./SimpleLogo -i Test6.txt -o Tested6.png -s 1700
+// Also shows that it still works when the turtle goes out of range
+
+frac(bok, minBok)
+    if (bok > minBok)
+        przod(bok);
+        prawo(144);
+        frac(bok - 15, minBok);
+    end if;
+end frac;
+
+frac(1000, 20);
