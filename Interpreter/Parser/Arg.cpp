@@ -11,6 +11,9 @@ Arg::Operation Arg::getOperation(std::string &arg) {
     if (auto index = arg.find('*'); index != std::string::npos) {
         arg[index] = ' ';
         return Arg::Operation::multiply;
+    } else if (auto index = arg.find('/'); index != std::string::npos) {
+        arg[index] = ' ';
+        return Arg::Operation::divide;
     } else if (auto index = arg.find('+'); index != std::string::npos) {
         arg[index] = ' ';
         return Arg::Operation::add;

@@ -110,6 +110,8 @@ double Executor::evaluateArg(Arg const &arg,
         return argMap[arg.name];
     case (Arg::Operation::multiply):
         return argMap[arg.name] * arg.value;
+    case (Arg::Operation::divide):
+        return argMap[arg.name] / arg.value;
     case (Arg::Operation::add):
         return argMap[arg.name] * arg.value;
     case (Arg::Operation::subtract):

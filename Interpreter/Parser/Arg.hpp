@@ -5,7 +5,7 @@
 class Arg {
   public:
     // Variables
-    enum class Operation { multiply, add, subtract, name, value };
+    enum class Operation { multiply, divide, add, subtract, name, value };
 
     // Warning - the order matters!
     const Arg::Operation operation;
