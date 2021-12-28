@@ -1,5 +1,7 @@
 #include "Executor.hpp"
 
+#include <stdexcept>
+
 Executor::Executor(std::vector<std::vector<TurtleCommand>> code, Turtle &turtle)
     : turtle(turtle), code(code), procedureMap(createProcedureMap()) {}
 
@@ -48,4 +50,29 @@ Executor::getArgMap(TurtleCommand const &definition,
         nArgMap[definition.args[i].name] = evaluateArg(current.args[i], argMap);
 
     return nArgMap;
+}
+
+double Executor::evaluateArg(Arg const &arg,
+                             std::unordered_map<std::string, double> &argMap) {
+    Arg::Operation operation = arg.operation;
+
+    switch (operation) {
+    case (Arg::Operation::value):
+        return arg.value;
+        break;
+    case (Arg::Operation::name):
+        return argMap[arg.name];
+        break;
+    case (Arg::Operation::multiply):
+        return argMap[arg.name] * arg.value;
+        break;
+    case (Arg::Operation::add):
+        return argMap[arg.name] * arg.value;
+        break;
+    case (Arg::Operation::subtract):
+        return argMap[arg.name] - arg.value;
+        break;
+    default:
+        throw std::runtime_error("The argument's operation is unknown");
+    }
 }

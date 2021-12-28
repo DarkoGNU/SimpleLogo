@@ -28,6 +28,9 @@ class Executor {
     getArgMap(TurtleCommand const &definition, TurtleCommand const &current,
               std::unordered_map<std::string, double> &argMap);
 
+    double evaluateArg(Arg const &arg,
+                       std::unordered_map<std::string, double> &argMap);
+
   public:
     Executor(std::vector<std::vector<TurtleCommand>> code, Turtle &turtle);
 

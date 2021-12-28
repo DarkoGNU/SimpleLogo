@@ -19,11 +19,8 @@ Arg::Operation Arg::getOperation(std::string &arg) {
         return Arg::Operation::subtract;
     }
 
-    // If there's no operation, determine whether it's a number
-    if (std::isdigit(arg[0]))
-        return Arg::Operation::value;
-    else
-        return Arg::Operation::name;
+    // If there's no operation, it's a name/value
+    return std::isdigit(arg[0]) ? Arg::Operation::value : Arg::Operation::name;
 }
 
 double Arg::getValue(std::string &arg) {
