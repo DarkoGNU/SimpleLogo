@@ -1,5 +1,6 @@
 #include "Executor.hpp"
 
+#include <cstdlib> // we don't need whole <cmath> for std::abs
 #include <stdexcept>
 
 Executor::Executor(std::vector<std::vector<TurtleCommand>> code, Turtle &turtle)
@@ -129,9 +130,9 @@ bool Executor::evaluateComparison(
 
     switch (type) {
     case (TurtleCommand::Comparison::equal):
-        return firstValue == secondValue;
+        return compare(firstValue, secondValue);
     case (TurtleCommand::Comparison::inequal):
-        return firstValue != secondValue;
+        return !compare(firstValue, secondValue);
     case (TurtleCommand::Comparison::greater):
         return firstValue > secondValue;
     case (TurtleCommand::Comparison::less):
@@ -139,4 +140,8 @@ bool Executor::evaluateComparison(
     default:
         throw std::runtime_error("This comparison can't be evaluated");
     }
+}
+
+bool Executor::compare(double a, double b, double epsilon) {
+    return std::abs(a - b) < epsilon;
 }

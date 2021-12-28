@@ -40,6 +40,8 @@ class Executor {
                             TurtleCommand::Comparison type,
                             std::unordered_map<std::string, double> &argMap);
 
+    static bool compare(double a, double b, double epsilon = 0.01);
+
   public:
     Executor(std::vector<std::vector<TurtleCommand>> code, Turtle &turtle);
     void execute();
