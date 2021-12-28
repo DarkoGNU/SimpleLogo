@@ -17,16 +17,15 @@ class Executor {
 
     // Methods
     std::unordered_map<std::string, unsigned int> createProcedureMap();
+
     void call(std::vector<TurtleCommand> const &procedure,
               std::unordered_map<std::string, double> &argMap);
 
     void handleCommand(std::vector<TurtleCommand> const &procedure,
                        std::unordered_map<std::string, double> &argMap,
                        unsigned int &pos);
-
     void handleCall(TurtleCommand const &current,
                     std::unordered_map<std::string, double> &argMap);
-
     void handleConditional(std::vector<TurtleCommand> const &procedure,
                            std::unordered_map<std::string, double> &argMap,
                            unsigned int &pos);
@@ -37,13 +36,11 @@ class Executor {
 
     double evaluateArg(Arg const &arg,
                        std::unordered_map<std::string, double> &argMap);
-
     bool evaluateComparison(Arg const &first, Arg const &second,
                             TurtleCommand::Comparison type,
                             std::unordered_map<std::string, double> &argMap);
 
   public:
     Executor(std::vector<std::vector<TurtleCommand>> code, Turtle &turtle);
-
     void execute();
 };

@@ -5,8 +5,8 @@
 
 class SimpleLexer {
     // Methods
-    static std::string cleanString(std::string text);
+    static std::string cleanString(std::string const &code);
 
   public:
-    static std::vector<std::string> tokenize(std::string code);
+    static std::vector<std::string> tokenize(std::string const &code);
 };
