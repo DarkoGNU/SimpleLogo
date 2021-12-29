@@ -24,7 +24,7 @@ class Params {
      *
      * @param exePath path to the executable
      */
-    void help(const char exePath[]) const;
+    static void help(const char exePath[]);
 
   public:
     /**

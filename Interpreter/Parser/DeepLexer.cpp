@@ -80,9 +80,11 @@ bool DeepLexer::handleComplex() {
     return false;
 }
 
-std::string DeepLexer::getCleanToken() { return cleanToken(simpleTokens[pos]); }
+std::string DeepLexer::getCleanToken() const {
+    return cleanToken(simpleTokens[pos]);
+}
 
-TurtleCommand DeepLexer::getCommand() {
+TurtleCommand DeepLexer::getCommand() const {
     return TurtleCommand(getCleanToken(), procedures);
 }
 

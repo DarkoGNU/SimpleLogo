@@ -8,7 +8,7 @@
 #include "TurtleCommand.hpp"
 
 /**
- * @brief Provides Logo code execution
+ * @brief Provides Logo code execution.
  */
 class Executor {
     /**
@@ -33,14 +33,14 @@ class Executor {
      *
      * @return std::unordered_map<std::string, unsigned int>
      */
-    std::unordered_map<std::string, unsigned int> createProcedureMap();
+    std::unordered_map<std::string, unsigned int> createProcedureMap() const;
+
     /**
      * @brief Executes a procedure.
      *
      * @param procedure the procedure's code
      * @param argMap the arguments and their values
      */
-
     void call(std::vector<TurtleCommand> const &procedure,
               std::unordered_map<std::string, double> &argMap);
     /**
@@ -82,7 +82,7 @@ class Executor {
      * @param argMap current procedure's arguments
      * @return std::unordered_map<std::string, double>
      */
-    std::unordered_map<std::string, double>
+    static std::unordered_map<std::string, double>
     getArgMap(TurtleCommand const &definition, TurtleCommand const &current,
               std::unordered_map<std::string, double> &argMap);
 
@@ -95,8 +95,8 @@ class Executor {
      * @param argMap current procedure's argument
      * @return double
      */
-    double evaluateArg(Arg const &arg,
-                       std::unordered_map<std::string, double> &argMap);
+    static double evaluateArg(Arg const &arg,
+                              std::unordered_map<std::string, double> &argMap);
     /**
      * @brief Evaluates a comparison.
      *
@@ -106,9 +106,10 @@ class Executor {
      * @param argMap current procedure's arguments
      * @return bool
      */
-    bool evaluateComparison(Arg const &first, Arg const &second,
-                            TurtleCommand::Comparison type,
-                            std::unordered_map<std::string, double> &argMap);
+    static bool
+    evaluateComparison(Arg const &first, Arg const &second,
+                       TurtleCommand::Comparison type,
+                       std::unordered_map<std::string, double> &argMap);
 
     /**
      * @brief Properly checks whether two doubles are equal.

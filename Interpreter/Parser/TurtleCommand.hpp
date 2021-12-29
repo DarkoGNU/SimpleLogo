@@ -70,7 +70,7 @@ class TurtleCommand {
      * @param code reference to string representing the command
      * @return std::string
      */
-    std::string getName(std::string &code);
+    static std::string getName(std::string &code);
     /**
      * @brief Get the type for the constructor.
      * Depends on name being initialized.
@@ -80,16 +80,17 @@ class TurtleCommand {
      * @return TurtleCommand::Type
      */
     TurtleCommand::Type
-    getType(const std::unordered_set<std::string> &procedures);
+    getType(const std::unordered_set<std::string> &procedures) const;
     /**
      * @brief Get the type of comparison for the constructor.
      * Has to be called before getArgs.
+     * Depends on type being initialized.
      * The string may be modified
      *
      * @param code reference to string representing the command
      * @return TurtleCommand::Comparison
      */
-    TurtleCommand::Comparison getComparison(std::string &code);
+    TurtleCommand::Comparison getComparison(std::string &code) const;
     /**
      * @brief Get the arguments for the constructor.
      * Has to be called after getComparison.
@@ -98,5 +99,5 @@ class TurtleCommand {
      * @param code reference to string representing the command
      * @return std::vector<Arg>
      */
-    std::vector<Arg> getArgs(const std::string &code);
+    static std::vector<Arg> getArgs(const std::string &code);
 };

@@ -4,7 +4,10 @@
 #include <cstddef>
 #include <regex>
 
-std::string SimpleLexer::cleanString(std::string const &text) {
+namespace SimpleLexer {
+
+namespace {
+std::string cleanString(std::string const &text) {
     // Get rid of comments
     std::stringstream ss(text);
     std::string line;
@@ -22,8 +25,9 @@ std::string SimpleLexer::cleanString(std::string const &text) {
     const static std::regex pattern1{R"(\)[^;])"};
     return regex_replace(result, pattern1, ");");
 }
+} // namespace
 
-std::vector<std::string> SimpleLexer::tokenize(std::string const &code) {
+std::vector<std::string> tokenize(std::string const &code) {
     std::vector<std::string> simpleTokens;
     std::stringstream ss(cleanString(code));
 
@@ -35,3 +39,4 @@ std::vector<std::string> SimpleLexer::tokenize(std::string const &code) {
 
     return simpleTokens;
 }
+} // namespace SimpleLexer

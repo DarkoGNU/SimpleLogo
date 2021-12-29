@@ -30,7 +30,7 @@ class Parser {
     /**
      * @brief Construct a new Parser object
      *
-     * @param inputPath Path to the source file.
+     * @param inputPath path to the source file.
      */
     Parser(std::filesystem::path inputPath);
     /**

@@ -18,8 +18,10 @@ bool Interpreter::execute() {
 
     Parser parser(params.getInputPath());
 
-    if (!parser.parse())
+    if (!parser.parse()) {
+        status = false;
         return false;
+    }
 
     Executor executor(parser.getCode(), turtle);
     executor.execute();

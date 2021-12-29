@@ -26,7 +26,7 @@ Arg::Operation Arg::getOperation(std::string &arg) {
     return std::isdigit(arg[0]) ? Arg::Operation::value : Arg::Operation::name;
 }
 
-double Arg::getValue(std::string &arg) {
+double Arg::getValue(std::string &arg) const {
     if (operation == Arg::Operation::name)
         return 0;
 

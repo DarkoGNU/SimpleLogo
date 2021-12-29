@@ -46,13 +46,13 @@ class DeepLexer {
      *
      * @return std::string
      */
-    std::string getCleanToken();
+    std::string getCleanToken() const;
     /**
      * @brief Constructs and returns currently parsed command.
      *
      * @return TurtleCommand
      */
-    TurtleCommand getCommand();
+    TurtleCommand getCommand() const;
 
     /**
      * @brief Handles procedure parsing.

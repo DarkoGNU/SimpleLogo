@@ -17,8 +17,8 @@ std::string TurtleCommand::getName(std::string &code) {
     return cmdName;
 }
 
-TurtleCommand::Type
-TurtleCommand::getType(const std::unordered_set<std::string> &procedures) {
+TurtleCommand::Type TurtleCommand::getType(
+    const std::unordered_set<std::string> &procedures) const {
     if (name == "przod")
         return TurtleCommand::Type::forward;
     else if (name == "tyl")
@@ -37,7 +37,8 @@ TurtleCommand::getType(const std::unordered_set<std::string> &procedures) {
                    : TurtleCommand::Type::call;
 }
 
-TurtleCommand::Comparison TurtleCommand::getComparison(std::string &code) {
+TurtleCommand::Comparison
+TurtleCommand::getComparison(std::string &code) const {
     if (type != TurtleCommand::Type::conditional)
         return TurtleCommand::Comparison::null;
 

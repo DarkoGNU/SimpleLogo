@@ -46,7 +46,7 @@ class Arg {
      * @param arg reference to string representing the argument
      * @return Arg::Operation
      */
-    Arg::Operation getOperation(std::string &arg);
+    static Arg::Operation getOperation(std::string &arg);
     /**
      * @brief Gets the value for the constructor.
      * Has to be called before initializing name.
@@ -55,5 +55,5 @@ class Arg {
      * @param arg reference to string representing the argument
      * @return double
      */
-    double getValue(std::string &arg);
+    double getValue(std::string &arg) const;
 };
