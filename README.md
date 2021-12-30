@@ -29,7 +29,10 @@ Check the folder Examples for examples of SimpleLogo's scripting language
 ```bash
 git clone https://github.com/DarkoGNU/SimpleLogo
 cd SimpleLogo/
-cmake -B build && make -j -C build
+
+BUILD_TYPE=RelWithDebInfo
+cmake -B build -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+cmake --build build --config $BUILD_TYPE
 ```
 
 The binary is named SimpleLogo and will be placed in build/bin
