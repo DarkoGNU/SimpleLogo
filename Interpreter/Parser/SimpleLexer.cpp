@@ -7,6 +7,13 @@
 namespace SimpleLexer {
 
 namespace {
+/**
+ * @brief Removes comments and ensures that
+ * every command ends with a semicolon.
+ *
+ * @param code Logo code
+ * @return std::string
+ */
 std::string cleanString(std::string const &text) {
     // Get rid of comments
     std::stringstream ss(text);
