@@ -28,9 +28,10 @@ std::string cleanString(std::string const &text) {
         result += line;
     }
 
-    // Replace ) with );
-    const static std::regex pattern1{R"(\)[^;])"};
-    return regex_replace(result, pattern1, ");");
+    // Replace ) with );. Make sure that the string ends with whitespace
+    const static std::regex pattern1{R"(\)(?=[^;]))"};
+    return regex_replace(result + ' ', pattern1, ");");
+    // This will double ; in cases like ") ;", but tokenize will deal with it
 }
 } // namespace
 
