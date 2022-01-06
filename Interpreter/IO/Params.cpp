@@ -1,6 +1,7 @@
 #include "Params.hpp"
 
 #include <iostream>
+#include <string>
 
 bool Params::readParams(int argc, char const *const argv[]) {
     // we need exactly 7 arguments, including the name of the executable

@@ -2,8 +2,7 @@
 
 #include <filesystem>
 #include <string_view>
-
-#include <png++/png.hpp>
+#include <vector>
 
 /**
  * @brief Provides methods for writing text files and images.

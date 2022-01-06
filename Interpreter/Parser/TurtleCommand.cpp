@@ -1,5 +1,6 @@
 #include "TurtleCommand.hpp"
 
+#include <cstddef>
 #include <sstream>
 
 TurtleCommand::TurtleCommand(std::string code,

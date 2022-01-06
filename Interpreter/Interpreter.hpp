@@ -1,7 +1,5 @@
 #pragma once
 
-#include <memory>
-
 #include "Params.hpp"
 #include "TileMap.hpp"
 #include "Turtle.hpp"

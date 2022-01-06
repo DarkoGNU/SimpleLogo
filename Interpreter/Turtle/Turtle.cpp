@@ -32,16 +32,19 @@ void Turtle::forward(double length) {
     double intpart;
     double fractpart = std::modf(length, &intpart);
 
+    double angleCos = std::cos(angle);
+    double angleSin = std::sin(angle);
+
     for (int i = 1; i <= intpart; i++) {
-        x += std::cos(angle);
-        y += std::sin(angle);
+        x += angleCos;
+        y += angleSin;
 
         tileMap.step(x, y);
     }
 
     // The remainder
-    x += fractpart * std::cos(angle);
-    y += fractpart * std::sin(angle);
+    x += fractpart * angleCos;
+    y += fractpart * angleSin;
 
     tileMap.step(x, y);
 }
@@ -50,16 +53,19 @@ void Turtle::back(double length) {
     double intpart;
     double fractpart = std::modf(length, &intpart);
 
+    double angleCos = std::cos(angle);
+    double angleSin = std::sin(angle);
+
     for (int i = 1; i <= intpart; i++) {
-        x -= std::cos(angle);
-        y -= std::sin(angle);
+        x -= angleCos;
+        y -= angleSin;
 
         tileMap.step(x, y);
     }
 
     // The remainder
-    x -= fractpart * std::cos(angle);
-    y -= fractpart * std::sin(angle);
+    x -= fractpart * angleCos;
+    y -= fractpart * angleSin;
 
     tileMap.step(x, y);
 }

@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cstddef>
 #include <regex>
+#include <sstream>
 
 namespace SimpleLexer {
 

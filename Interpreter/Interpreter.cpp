@@ -1,6 +1,7 @@
 #include "Interpreter.hpp"
 
 #include <algorithm>
+#include <string>
 
 #include "Executor.hpp"
 #include "Parser.hpp"

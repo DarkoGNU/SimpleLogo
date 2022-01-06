@@ -1,6 +1,7 @@
 #include "Arg.hpp"
 
 #include <cctype>
+#include <cstddef>
 #include <sstream>
 
 Arg::Arg(std::string arg)

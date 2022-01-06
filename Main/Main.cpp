@@ -7,8 +7,6 @@
  *
  * @license GPLv3
  */
-#include <iostream>
-
 #include "Interpreter.hpp"
 
 /**
