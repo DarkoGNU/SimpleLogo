@@ -38,6 +38,6 @@ jobs:
 
     - uses: actions/upload-artifact@v2
       with:
-        name: SimpleLogo
+        name: SimpleLogo_${{ matrix.flavor }}_${{ matrix.compiler.name }}
         path: build/bin/SimpleLogo
         
