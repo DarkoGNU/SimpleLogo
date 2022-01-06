@@ -30,6 +30,9 @@ jobs:
     - name: Install dependencies
       run: sudo apt update && sudo apt install -yq libpng++-dev
 
+    - name: Set environment variables
+      run: echo "MAKEFLAGS=-j$(nproc)" >> $GITHUB_ENV
+
     - name: Configure CMake
       run: cmake -B ${{ env.BUILD_DIR }}
 
