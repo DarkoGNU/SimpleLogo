@@ -13,5 +13,6 @@ target_sources(${PROJECT_NAME} PRIVATE Params.hpp Params.cpp Writer.hpp Writer.c
 
 # Link PNG++
 find_package(PNG++ REQUIRED)
-include_directories(${PNG++_INCLUDE_DIRS})
-target_link_libraries(${PROJECT_NAME} ${PNG++_LIBRARIES})
+include_directories(${PNG++_INCLUDE_DIRS} ${PNG_INCLUDE_DIRS})
+add_definitions(${PNG_DEFINITIONS})
+target_link_libraries(${PROJECT_NAME} ${PNG_LIBRARIES})
