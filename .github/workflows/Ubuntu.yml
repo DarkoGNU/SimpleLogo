@@ -44,4 +44,3 @@ jobs:
       with:
         name: Linux_${{ matrix.flavor }}_${{ matrix.compiler.name }}
         path: build/bin/SimpleLogo
-        
