@@ -6,16 +6,28 @@ A simple Logo implementation in C++
 
 - png++
 
+Installation on Windows:
+
+```cmd
+vcpkg install pngpp
+```
+
+Installation on macOS:
+
+```sh
+brew install png++
+```
+
 Installation on Arch Linux:
 
-```bash
+```sh
 sudo pacman -Syu
 sudo pacman -S png++
 ```
 
 Installation on Debian/Ubuntu:
 
-```bash
+```sh
 sudo apt update
 sudo apt install libpng++-dev
 ```
@@ -26,7 +38,7 @@ Check the folder Examples for examples of SimpleLogo's scripting language
 
 ## Compilation
 
-```bash
+```sh
 git clone https://github.com/DarkoGNU/SimpleLogo
 cd SimpleLogo/
 
