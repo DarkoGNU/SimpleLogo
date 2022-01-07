@@ -8,14 +8,15 @@ on:
 
 jobs:
   build:
-    name: Ubuntu ${{ matrix.flavor }} ${{ matrix.compiler.name }}
-    runs-on: ubuntu-latest
+    name: ${{ matrix.os.name }} ${{ matrix.flavor }} ${{ matrix.compiler.name }}
+    runs-on: ${{ matrix.os.label }}
 
     strategy:
       fail-fast: false
       matrix:
-        flavor: [Release, Debug]
+        os: [ {name: "Ubuntu", label: "ubuntu-latest"}, {name: "macOS", label: "macos-latest"} ]
         compiler: [ {name: "GCC", cc: "gcc", cxx: "g++"}, {name: "Clang", cc: "clang", cxx: "clang++"} ]
+        flavor: [ Release ]
 
     env:
       CMAKE_BUILD_TYPE: ${{ matrix.flavor }}
@@ -27,11 +28,19 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install dependencies
+    - name: Install dependencies on Ubuntu
+      if: ${{ matrix.os.name == 'Ubuntu' }}
       run: sudo apt update && sudo apt install -yq libpng++-dev
+    - name: Install dependencies on macOS
+      if: ${{ matrix.os.name == 'macOS' }}
+      run: brew install png++
 
-    - name: Set environment variables
-      run: echo "MAKEFLAGS=-j$(nproc)" >> $GITHUB_ENV
+    - name: Set environment variables on Ubuntu
+      if: ${{ matrix.os.name == 'Ubuntu' }}
+      run: echo "CMAKE_BUILD_PARALLEL_LEVEL=$(nproc)" >> $GITHUB_ENV
+    - name: Set environment variables on macOS
+      if: ${{ matrix.os.name == 'macOS' }}
+      run: echo "CMAKE_BUILD_PARALLEL_LEVEL=$(sysctl -n hw.logicalcpu)" >> $GITHUB_ENV
 
     - name: Configure CMake
       run: cmake -B ${{ env.BUILD_DIR }}
@@ -41,6 +50,6 @@ jobs:
 
     - uses: actions/upload-artifact@v2
       with:
-        name: SimpleLogo_${{ matrix.flavor }}_${{ matrix.compiler.name }}
+        name: ${{ matrix.os.name }}_${{ matrix.flavor }}_${{ matrix.compiler.name }}
         path: build/bin/SimpleLogo
         
