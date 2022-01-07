@@ -2,7 +2,7 @@
 
 #include <fstream>
 
-#include <png.hpp>
+#include "png++/png.hpp"
 
 namespace Writer {
 bool writeText(const std::filesystem::path &outputPath, std::string_view text) {
@@ -31,7 +31,7 @@ bool writePng(const std::filesystem::path &outputPath,
         for (unsigned int x = 0; x < size; x++)
             image[y][x] = png::gray_pixel_1(!tiles[y * size + x]);
 
-    image.write(outputPath);
+    image.write(outputPath.string());
 
     return !std::filesystem::is_empty(outputPath);
 }

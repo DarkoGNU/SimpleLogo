@@ -1,0 +1,47 @@
+name: macOS
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: ${{ matrix.os.name }} ${{ matrix.flavor }} ${{ matrix.compiler.name }}
+    runs-on: ${{ matrix.os.label }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ {name: "macOS", label: "macos-latest"} ]
+        compiler: [ {name: "GCC", cc: "gcc", cxx: "g++"}, {name: "Clang", cc: "clang", cxx: "clang++"} ]
+        flavor: [ Release ]
+
+    env:
+      CMAKE_BUILD_TYPE: ${{ matrix.flavor }}
+      CMAKE_CONFIG_TYPE: ${{ matrix.flavor }}
+      CC: ${{ matrix.compiler.cc }}
+      CXX: ${{ matrix.compiler.cxx }}
+      BUILD_DIR: ${{github.workspace}}/build
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: brew install png++
+
+    - name: Set environment variables
+      run: echo "CMAKE_BUILD_PARALLEL_LEVEL=$(sysctl -n hw.logicalcpu)" >> $GITHUB_ENV
+      
+    - name: Configure CMake
+      run: cmake -B ${{ env.BUILD_DIR }}
+
+    - name: Build
+      run: cmake --build ${{ env.BUILD_DIR }}
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: macOS_${{ matrix.flavor }}_${{ matrix.compiler.name }}
+        path: build/bin/SimpleLogo
+        

@@ -30,7 +30,7 @@ find_package(ZLIB ${_FIND_ZLIB_ARG})
 find_package(PNG REQUIRED)
 
 if(ZLIB_FOUND)
-    find_path(PNG++_INCLUDE_DIR png.hpp /usr/local/include/png++ /usr/include/png++)
+    find_path(PNG++_INCLUDE_DIR png++/png.hpp /usr/local/include/png++ /usr/include/png++)
 
     set(PNG++_LIBRARIES ${PNG_LIBRARIES})
 

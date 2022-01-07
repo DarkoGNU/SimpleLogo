@@ -2,53 +2,54 @@
 
 A simple Logo implementation in C++
 
+## Downloading the source and preparing for compilation
+
+```sh
+git clone https://github.com/DarkoGNU/SimpleLogo
+mkdir SimpleLogo/build
+cd SimpleLogo/build
+```
+
 ## Dependencies
 
 - png++
 
 Installation on Windows:
-
 ```cmd
-Coming soon :)
+conan install ..
 ```
+Refer to [docs.conan.io](https://docs.conan.io/en/latest/installation.html) for Conan installation guide
 
 Installation on macOS:
-
 ```sh
 brew install png++
 ```
 Refer to [brew.sh](https://brew.sh/) for Homebrew installation guide
 
 Installation on Arch Linux:
-
 ```sh
 sudo pacman -Syu
 sudo pacman -S png++
 ```
 
 Installation on Debian/Ubuntu:
-
 ```sh
 sudo apt update
 sudo apt install libpng++-dev
 ```
 
-## Usage
-
-Check the folder Examples for examples of SimpleLogo's scripting language
-
 ## Compilation
 
 ```sh
-git clone https://github.com/DarkoGNU/SimpleLogo
-cd SimpleLogo/
-
-BUILD_TYPE=RelWithDebInfo
-cmake -B build -DCMAKE_BUILD_TYPE=$BUILD_TYPE
-cmake --build build --config $BUILD_TYPE
+cmake ..
+cmake --build .
 ```
 
 The binary is named SimpleLogo and will be placed in build/bin
+
+## Usage
+
+Check the folder Examples for examples of SimpleLogo's scripting language
 
 ## Contributions and bug reports
 

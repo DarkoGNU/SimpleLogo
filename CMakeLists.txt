@@ -10,7 +10,13 @@ project(
     HOMEPAGE_URL "https://github.com/DarkoGNU"
     LANGUAGES CXX
     )
-    
+
+# Windows setup
+if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+    conan_basic_setup()
+endif()
+
 # Some properties
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
