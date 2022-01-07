@@ -39,14 +39,15 @@ void Turtle::forward(double length) {
         x += angleCos;
         y += angleSin;
 
-        tileMap.step(x, y);
+        tileMap.step(static_cast<unsigned int>(x),
+                     static_cast<unsigned int>(y));
     }
 
     // The remainder
     x += fractpart * angleCos;
     y += fractpart * angleSin;
 
-    tileMap.step(x, y);
+    tileMap.step(static_cast<unsigned int>(x), static_cast<unsigned int>(y));
 }
 
 void Turtle::back(double length) {
@@ -60,12 +61,13 @@ void Turtle::back(double length) {
         x -= angleCos;
         y -= angleSin;
 
-        tileMap.step(x, y);
+        tileMap.step(static_cast<unsigned int>(x),
+                     static_cast<unsigned int>(y));
     }
 
     // The remainder
     x -= fractpart * angleCos;
     y -= fractpart * angleSin;
 
-    tileMap.step(x, y);
+    tileMap.step(static_cast<unsigned int>(x), static_cast<unsigned int>(y));
 }
