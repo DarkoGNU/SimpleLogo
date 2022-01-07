@@ -31,7 +31,9 @@ void Executor::call(std::vector<TurtleCommand> const &procedure,
 void Executor::handleCommand(std::vector<TurtleCommand> const &procedure,
                              std::unordered_map<std::string, double> &argMap,
                              unsigned int &pos) {
+
     auto const &current = procedure[pos];
+    double value;
 
     switch (current.type) {
     case (TurtleCommand::Type::call):
@@ -42,23 +44,23 @@ void Executor::handleCommand(std::vector<TurtleCommand> const &procedure,
         return;
     case (TurtleCommand::Type::end):
         return;
+    default:
+        value = evaluateArg(current.args[0], argMap);
     }
-
-    double value = evaluateArg(current.args[0], argMap);
 
     switch (current.type) {
     case (TurtleCommand::Type::forward):
         turtle.forward(value);
-        return;
+        break;
     case (TurtleCommand::Type::back):
         turtle.back(value);
-        return;
+        break;
     case (TurtleCommand::Type::right):
         turtle.right(value);
-        return;
+        break;
     case (TurtleCommand::Type::left):
         turtle.left(value);
-        return;
+        break;
     default:
         throw std::runtime_error("Unrecognized command");
     }
