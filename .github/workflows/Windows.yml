@@ -30,7 +30,10 @@ jobs:
       uses: turtlebrowser/get-conan@main
 
     - name: Install dependencies
-      run: mkdir ${{ env.BUILD_DIR }} && cd ${{ env.BUILD_DIR }} && conan install ..
+      run: |
+       mkdir ${{ env.BUILD_DIR }}
+       cd ${{ env.BUILD_DIR }}
+       conan install .. -s build_type=${{ matrix.flavor }}
 
     - name: Set environment variables
       shell: bash
