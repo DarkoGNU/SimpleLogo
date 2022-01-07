@@ -2,7 +2,7 @@
 
 #include <fstream>
 
-#include <png++/png.hpp>
+#include <png.hpp>
 
 namespace Writer {
 bool writeText(const std::filesystem::path &outputPath, std::string_view text) {
