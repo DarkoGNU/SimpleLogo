@@ -40,10 +40,10 @@ jobs:
       run: echo "CMAKE_BUILD_PARALLEL_LEVEL=$(nproc)" >> $GITHUB_ENV
       
     - name: Configure CMake
-      run: cmake -B ${{ env.BUILD_DIR }}
+      run: cmake -B ${{ env.BUILD_DIR }} -DCMAKE_BUILD_TYPE=${{ env.CMAKE_BUILD_TYPE }}
 
     - name: Build
-      run: cmake --build ${{ env.BUILD_DIR }}
+      run: cmake --build ${{ env.BUILD_DIR }} --config ${{ env.CMAKE_CONFIG_TYPE }}
 
     - uses: actions/upload-artifact@v2
       with:
