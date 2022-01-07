@@ -9,7 +9,7 @@ A simple Logo implementation in C++
 Installation on Windows:
 
 ```cmd
-vcpkg install pngpp
+Coming soon :)
 ```
 
 Installation on macOS:
@@ -17,6 +17,7 @@ Installation on macOS:
 ```sh
 brew install png++
 ```
+Refer to [brew.sh](https://brew.sh/) for Homebrew installation guide
 
 Installation on Arch Linux:
 
