@@ -1,6 +1,7 @@
 #include "Parser.hpp"
 
 #include <fstream>
+#include <sstream>
 
 #include "DeepLexer.hpp"
 #include "SimpleLexer.hpp"
