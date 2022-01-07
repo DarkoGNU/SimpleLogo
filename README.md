@@ -1,4 +1,4 @@
-# SimpleLogo [![CMake](https://github.com/DarkoGNU/SimpleLogo/actions/workflows/cmake.yml/badge.svg)](https://github.com/DarkoGNU/SimpleLogo/actions/workflows/cmake.yml)
+# SimpleLogo [![](http://github-actions.40ants.com/DarkoGNU/SimpleLogo/matrix.svg)](https://github.com/DarkoGNU/SimpleLogo)
 
 A simple Logo implementation in C++
 
