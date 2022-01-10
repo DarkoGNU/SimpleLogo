@@ -8,23 +8,25 @@
 
 #include <cstdlib> // we don't need whole <cmath> for std::abs
 #include <stdexcept>
+#include <utility>
 
 Executor::Executor(std::vector<std::vector<TurtleCommand>> code, Turtle &turtle)
-    : turtle(turtle), code(code), procedureMap(createProcedureMap()) {}
+    : turtle(turtle), procedureMap(createProcedureMap(code)) {}
 
-std::unordered_map<std::string, unsigned int>
-Executor::createProcedureMap() const {
-    std::unordered_map<std::string, unsigned int> nProcedureMap;
+std::unordered_map<std::string, std::vector<TurtleCommand>>
+Executor::createProcedureMap(std::vector<std::vector<TurtleCommand>> code) {
 
-    for (unsigned int i = 0; i < code.size(); i++)
-        nProcedureMap[code[i][0].name] = i;
+    std::unordered_map<std::string, std::vector<TurtleCommand>> nProcedureMap;
+
+    for (auto &procedure : code)
+        nProcedureMap.emplace(procedure[0].name, std::move(procedure));
 
     return nProcedureMap;
 }
 
 void Executor::execute() {
     auto nArgMap = std::unordered_map<std::string, double>();
-    call(code[0], nArgMap);
+    call(procedureMap["main"], nArgMap);
 }
 
 void Executor::call(std::vector<TurtleCommand> const &procedure,
@@ -75,8 +77,7 @@ void Executor::handleCommand(std::vector<TurtleCommand> const &procedure,
 void Executor::handleCall(TurtleCommand const &current,
                           std::unordered_map<std::string, double> &argMap) {
 
-    auto index = procedureMap[current.name];
-    auto const &procedure = code[index];
+    auto const &procedure = procedureMap[current.name];
     auto const &definition = procedure[0];
 
     auto map = getArgMap(definition, current, argMap);
@@ -105,8 +106,10 @@ Executor::getArgMap(TurtleCommand const &definition,
                     std::unordered_map<std::string, double> &argMap) {
 
     std::unordered_map<std::string, double> nArgMap;
+
     for (unsigned int i = 0; i < current.args.size(); i++)
-        nArgMap[definition.args[i].name] = evaluateArg(current.args[i], argMap);
+        nArgMap.emplace(definition.args[i].name,
+                        evaluateArg(current.args[i], argMap));
 
     return nArgMap;
 }
@@ -134,6 +137,7 @@ double Executor::evaluateArg(Arg const &arg,
 bool Executor::evaluateComparison(
     Arg const &first, Arg const &second, TurtleCommand::Comparison type,
     std::unordered_map<std::string, double> &argMap) {
+
     double firstValue = evaluateArg(first, argMap);
     double secondValue = evaluateArg(second, argMap);
 

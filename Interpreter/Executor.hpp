@@ -24,23 +24,19 @@ class Executor {
     Turtle &turtle;
 
     /**
-     * @brief Stores vectors containing Logo code.
-     * Has to be initialized before procedureMap
+     * @brief Maps procedure names to full procedures.
+     * Stores the source code
      */
-    const std::vector<std::vector<TurtleCommand>> code;
-    /**
-     * @brief Stores the indexes of Logo procedures in the code vector.
-     * Has to be initialized after code
-     */
-    std::unordered_map<std::string, unsigned int> procedureMap;
+    std::unordered_map<std::string, std::vector<TurtleCommand>> procedureMap;
 
     /**
-     * @brief Create a procedureMap.
-     * Depends on code being initialized
+     * @brief Create a procedureMap for the constructor.
      *
-     * @return std::unordered_map<std::string, unsigned int>
+     * @param code the source code
+     * @return std::unordered_map<std::string, std::vector<TurtleCommand>>
      */
-    std::unordered_map<std::string, unsigned int> createProcedureMap() const;
+    static std::unordered_map<std::string, std::vector<TurtleCommand>>
+    createProcedureMap(std::vector<std::vector<TurtleCommand>> code);
 
     /**
      * @brief Executes a procedure.
@@ -138,6 +134,7 @@ class Executor {
      * @param turtle reference to a Turtle
      */
     Executor(std::vector<std::vector<TurtleCommand>> code, Turtle &turtle);
+
     /**
      * @brief Executes the code on the turtle.
      */
