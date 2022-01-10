@@ -1,3 +1,6 @@
+// Copyright 2021 The SimpleLogo Authors.
+// Licensed under GPL-3.0-or-later
+
 // ./SimpleLogo -i Test4.txt -o Tested4.png -s 1200
 
 square(bok, minBok)

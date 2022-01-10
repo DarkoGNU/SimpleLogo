@@ -1,3 +1,6 @@
+// Copyright 2021 The SimpleLogo Authors.
+// Licensed under GPL-3.0-or-later
+
 // ./SimpleLogo -i Test5.txt -o Tested5.png -s 700
 // Basically - testing nested ifs
 

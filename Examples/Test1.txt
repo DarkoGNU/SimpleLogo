@@ -1,3 +1,6 @@
+// Copyright 2021 The SimpleLogo Authors.
+// Licensed under GPL-3.0-or-later
+
 // ./SimpleLogo -i Test1.txt -o Tested1.txt -s 100
 
 krzaczek(x, n)

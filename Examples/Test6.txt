@@ -1,3 +1,6 @@
+// Copyright 2021 The SimpleLogo Authors.
+// Licensed under GPL-3.0-or-later
+
 // ./SimpleLogo -i Test6.txt -o Tested6.png -s 1700
 // Also shows that it still works when the turtle goes out of range
 

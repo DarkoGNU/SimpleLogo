@@ -1,3 +1,9 @@
+/**
+ * @copyright
+ * Copyright 2021 The SimpleLogo Authors.
+ * Licensed under GPL-3.0-or-later
+ */
+
 #include "Executor.hpp"
 
 #include <cstdlib> // we don't need whole <cmath> for std::abs

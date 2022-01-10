@@ -1,3 +1,6 @@
+# Copyright 2021 The SimpleLogo Authors.
+# Licensed under GPL-3.0-or-later
+
 # Set the project name
 project (IO)
 

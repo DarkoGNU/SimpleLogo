@@ -1,3 +1,6 @@
+// Copyright 2021 The SimpleLogo Authors.
+// Licensed under GPL-3.0-or-later
+
 // ./SimpleLogo -i Test7.txt -o Tested7.png -s 1200
 // Testing multiple procedures
 

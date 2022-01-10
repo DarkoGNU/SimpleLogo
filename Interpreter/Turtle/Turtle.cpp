@@ -1,3 +1,9 @@
+/**
+ * @copyright
+ * Copyright 2021 The SimpleLogo Authors.
+ * Licensed under GPL-3.0-or-later
+ */
+
 #define _USE_MATH_DEFINES
 
 #include "Turtle.hpp"

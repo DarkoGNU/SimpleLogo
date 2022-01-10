@@ -1,3 +1,9 @@
+/**
+ * @copyright
+ * Copyright 2021 The SimpleLogo Authors.
+ * Licensed under GPL-3.0-or-later
+ */
+
 #include "TileMap.hpp"
 
 TileMap::TileMap(unsigned int size) : size{size}, tiles(size * size, false){};
