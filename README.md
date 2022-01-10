@@ -52,6 +52,7 @@ The binary is named SimpleLogo and will be placed in build/bin
 Check the folder Examples for examples of SimpleLogo's scripting language
 
 ## Copyright
+
 Copyright 2021 The SimpleLogo Authors.
 Licensed under GPL-3.0-or-later
 

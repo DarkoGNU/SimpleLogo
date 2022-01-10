@@ -14,8 +14,8 @@ project(
     LANGUAGES CXX
     )
 
-# Windows setup
-if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
+# Setup for Conan users
+if (EXISTS ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
     include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
     conan_basic_setup()
 endif()
