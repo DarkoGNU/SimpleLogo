@@ -6,44 +6,48 @@
 
 #include "Arg.hpp"
 
-#include <cctype>
 #include <cstddef>
-#include <sstream>
 
-Arg::Arg(std::string arg)
-    : operation(getOperation(arg)), value(getValue(arg)), name(arg) {}
+// The public constructor
+Arg::Arg(std::string const &arg) : Arg{createArg(arg)} {}
 
-Arg::Operation Arg::getOperation(std::string &arg) {
-    // If there's an operation, determine its type
-    if (auto index = arg.find('*'); index != std::string::npos) {
-        arg[index] = ' ';
-        return Arg::Operation::multiply;
-    } else if (auto index = arg.find('/'); index != std::string::npos) {
-        arg[index] = ' ';
-        return Arg::Operation::divide;
-    } else if (auto index = arg.find('+'); index != std::string::npos) {
-        arg[index] = ' ';
-        return Arg::Operation::add;
-    } else if (auto index = arg.find('-'); index != std::string::npos) {
-        arg[index] = ' ';
-        return Arg::Operation::subtract;
-    }
+// The delegated constructor
+Arg::Arg(std::tuple<Arg::Operation, double, std::string> vars)
+    : operation{std::get<0>(vars)}, value{std::get<1>(vars)}, name{std::get<2>(
+                                                                  vars)} {}
+
+std::tuple<Arg::Operation, double, std::string>
+Arg::createArg(std::string const &arg) {
+    // Search for an operatiom
+    constexpr auto operations = "*/+-";
+    std::size_t index = arg.find_first_of(operations);
 
     // If there's no operation, it's a name/value
-    return std::isdigit(arg[0]) ? Arg::Operation::value : Arg::Operation::name;
-}
+    if (index == std::string::npos)
+        return std::isdigit(arg[0])
+                   ? std::make_tuple(Arg::Operation::value, std::stod(arg),
+                                     std::string())
+                   : std::make_tuple(Arg::Operation::name, 0.0, arg);
 
-double Arg::getValue(std::string &arg) const {
-    if (operation == Arg::Operation::name)
-        return 0;
+    // Determine the specific
+    Arg::Operation operation;
+    switch (arg[index]) {
+    case ('*'):
+        operation = Arg::Operation::multiply;
+        break;
+    case ('/'):
+        operation = Arg::Operation::divide;
+        break;
+    case ('+'):
+        operation = Arg::Operation::add;
+        break;
+    case ('-'):
+        operation = Arg::Operation::subtract;
+        break;
+    }
 
-    if (operation == Arg::Operation::value)
-        return std::stod(arg);
+    std::string name = arg.substr(0, index);
+    double value = std::stod(arg.substr(index + 1));
 
-    std::size_t index = arg.find(' ');
-    std::string value = arg.substr(index + 1);
-
-    arg.erase(arg.size() - value.size() - 1);
-
-    return std::stod(value);
+    return std::make_tuple(operation, value, name);
 }

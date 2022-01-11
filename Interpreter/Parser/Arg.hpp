@@ -7,6 +7,7 @@
 #pragma once
 
 #include <string>
+#include <tuple>
 
 /**
  * @brief Represents an argument.
@@ -14,52 +15,46 @@
 class Arg {
   public:
     /**
-     * @brief Possible operation.
-     * Name - it's a variable.
-     * Value - it's a value
+     * @brief Possible operations.
+     * Name - it's just a variable.
+     * Value - it's just a value
      */
     enum class Operation { multiply, divide, add, subtract, name, value };
 
     /**
-     * @brief The operation.
-     * Has to be initialized before value
+     * @brief Argument's operation.
      */
     const Arg::Operation operation;
     /**
-     * @brief The value.
-     * Has to be initialized before name
+     * @brief Argument's value.
      */
     const double value;
     /**
-     * @brief Variable's name.
-     * Has to be initialized after value
+     * @brief Argument's name.
      */
     const std::string name;
 
     /**
-     * @brief Construct a new Arg
+     * @brief Construct a new Arg.
      *
      * @param arg string representing the argument
      */
-    Arg(std::string arg);
+    Arg(std::string const &arg);
 
   private:
     /**
-     * @brief Gets the operation for the constructor.
-     * Has to be called before getValue.
-     * The string will be modified
+     * @brief Construct a new Arg object
      *
-     * @param arg reference to string representing the argument
-     * @return Arg::Operation
+     * @param vars member variables in a tuple
      */
-    static Arg::Operation getOperation(std::string &arg);
+    Arg(std::tuple<Arg::Operation, double, std::string> vars);
+
     /**
-     * @brief Gets the value for the constructor.
-     * Has to be called before initializing name.
-     * The string will be modified
+     * @brief Provides values for the constructor.
      *
-     * @param arg reference to string representing the argument
-     * @return double
+     * @param arg string representing the argument
+     * @return std::tuple<Arg::Operation, double, std::string>
      */
-    double getValue(std::string &arg) const;
+    static std::tuple<Arg::Operation, double, std::string>
+    createArg(std::string const &arg);
 };
