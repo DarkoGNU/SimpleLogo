@@ -40,7 +40,7 @@ varTuple Cmd::createCommand(std::string const &code,
 
     // Handle args
     std::vector<Arg> nArgs;
-    for (unsigned int i = 1; i < parts.size(); i++)
+    for (std::size_t i = 1; i < parts.size(); i++)
         nArgs.emplace_back(Arg(parts[i]));
 
     return std::make_tuple(type, Cmd::Comparison::null, std::move(parts[0]),

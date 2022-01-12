@@ -6,11 +6,11 @@
 
 #include "TileMap.hpp"
 
-TileMap::TileMap(unsigned int size) : size{size}, tiles(size * size, false){}
+TileMap::TileMap(std::size_t size) : size{size}, tiles(size * size, false) {}
 
-unsigned int TileMap::getSize() const { return size; }
+std::size_t TileMap::getSize() const { return size; }
 
-void TileMap::step(unsigned int x, unsigned int y) {
+void TileMap::step(std::size_t x, std::size_t y) {
     if (x >= size || y >= size)
         return;
 
@@ -21,8 +21,8 @@ std::string TileMap::toString(char stepped, char unstepped) const {
     std::string visualMap;
     visualMap.reserve(size * size + size);
 
-    for (unsigned int y = 0; y < size; y++) {
-        for (unsigned int x = 0; x < size; x++) {
+    for (std::size_t y = 0; y < size; y++) {
+        for (std::size_t x = 0; x < size; x++) {
             tiles[y * size + x] ? visualMap.push_back(stepped)
                                 : visualMap.push_back(unstepped);
         }
@@ -33,4 +33,6 @@ std::string TileMap::toString(char stepped, char unstepped) const {
     return visualMap;
 }
 
-const std::vector<bool> &TileMap::getTiles() const { return tiles; }
+std::vector<bool> TileMap::getTiles() const { return tiles; }
+
+std::vector<bool> &TileMap::getTilesRef() { return tiles; }

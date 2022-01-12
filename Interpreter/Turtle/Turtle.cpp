@@ -16,7 +16,7 @@ Turtle::Turtle(TileMap &tileMap)
     left(90);
 }
 
-Turtle::Turtle(TileMap &tileMap, unsigned int startX, unsigned int startY,
+Turtle::Turtle(TileMap &tileMap, std::size_t startX, std::size_t startY,
                double startAngle)
     : tileMap(tileMap), x(startX), y(startY), angle(startAngle) {}
 
@@ -35,45 +35,51 @@ void Turtle::left(double turnAngle) {
 }
 
 void Turtle::forward(double length) {
+    // Length check
+    if (length <= 0)
+        return length != 0 ? back(-length) : void();
+
     double intpart;
     double fractpart = std::modf(length, &intpart);
 
     double angleCos = std::cos(angle);
     double angleSin = std::sin(angle);
 
-    for (int i = 1; i <= intpart; i++) {
+    for (std::size_t i = 1; i <= static_cast<std::size_t>(intpart); i++) {
         x += angleCos;
         y += angleSin;
 
-        tileMap.step(static_cast<unsigned int>(x),
-                     static_cast<unsigned int>(y));
+        tileMap.step(static_cast<std::size_t>(x), static_cast<std::size_t>(y));
     }
 
     // The remainder
     x += fractpart * angleCos;
     y += fractpart * angleSin;
 
-    tileMap.step(static_cast<unsigned int>(x), static_cast<unsigned int>(y));
+    tileMap.step(static_cast<std::size_t>(x), static_cast<std::size_t>(y));
 }
 
 void Turtle::back(double length) {
+    // Length check
+    if (length <= 0)
+        return length != 0 ? forward(-length) : void();
+
     double intpart;
     double fractpart = std::modf(length, &intpart);
 
     double angleCos = std::cos(angle);
     double angleSin = std::sin(angle);
 
-    for (int i = 1; i <= intpart; i++) {
+    for (std::size_t i = 1; i <= static_cast<std::size_t>(intpart); i++) {
         x -= angleCos;
         y -= angleSin;
 
-        tileMap.step(static_cast<unsigned int>(x),
-                     static_cast<unsigned int>(y));
+        tileMap.step(static_cast<std::size_t>(x), static_cast<std::size_t>(y));
     }
 
     // The remainder
     x -= fractpart * angleCos;
     y -= fractpart * angleSin;
 
-    tileMap.step(static_cast<unsigned int>(x), static_cast<unsigned int>(y));
+    tileMap.step(static_cast<std::size_t>(x), static_cast<std::size_t>(y));
 }

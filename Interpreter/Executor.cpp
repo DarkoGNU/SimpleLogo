@@ -32,13 +32,13 @@ void Executor::execute() {
 void Executor::call(std::vector<Cmd> const &procedure,
                     std::unordered_map<std::string, double> &argMap) {
 
-    for (unsigned int i = 1; i < procedure.size(); i++)
+    for (std::size_t i = 1; i < procedure.size(); i++)
         handleCommand(procedure, argMap, i);
 }
 
 void Executor::handleCommand(std::vector<Cmd> const &procedure,
                              std::unordered_map<std::string, double> &argMap,
-                             unsigned int &pos) {
+                             std::size_t &pos) {
 
     auto const &current = procedure[pos];
     double value;
@@ -86,7 +86,7 @@ void Executor::handleCall(Cmd const &current,
 
 void Executor::handleConditional(
     std::vector<Cmd> const &procedure,
-    std::unordered_map<std::string, double> &argMap, unsigned int &pos) {
+    std::unordered_map<std::string, double> &argMap, std::size_t &pos) {
 
     auto const &current = procedure[pos];
 
@@ -101,13 +101,12 @@ void Executor::handleConditional(
 }
 
 std::unordered_map<std::string, double>
-Executor::getArgMap(Cmd const &definition,
-                    Cmd const &current,
+Executor::getArgMap(Cmd const &definition, Cmd const &current,
                     std::unordered_map<std::string, double> &argMap) {
 
     std::unordered_map<std::string, double> nArgMap;
 
-    for (unsigned int i = 0; i < current.args.size(); i++)
+    for (std::size_t i = 0; i < current.args.size(); i++)
         nArgMap.emplace(definition.args[i].name,
                         evaluateArg(current.args[i], argMap));
 

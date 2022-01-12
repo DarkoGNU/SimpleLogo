@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <string>
 #include <vector>
 
@@ -19,7 +20,7 @@ class TileMap {
      * @brief Size of the TileMap.
      * It's both its length and width
      */
-    const unsigned int size;
+    const std::size_t size;
     /**
      * @brief Container storing the state of tiles.
      * A tile is false by default, it becomes true when something steps on it.
@@ -34,23 +35,23 @@ class TileMap {
      *
      * @param size TileMap's size (length and width)
      */
-    TileMap(unsigned int size);
+    TileMap(std::size_t size);
     /**
      * @brief Get the TileMap's 2D size.
      *
-     * @return unsigned int
+     * @return std::size_t
      */
-    unsigned int getSize() const;
+    std::size_t getSize() const;
 
     /**
      * @brief Step on a tile.
-     * Parameters should be in range 0 - (size - 1).
+     * Parameters should be in range [0, size - 1].
      * Else, nothing happens (it won't step out of bounds)
      *
      * @param x the horizontal position
      * @param y the vertical position
      */
-    void step(unsigned int x, unsigned int y);
+    void step(std::size_t x, std::size_t y);
 
     /**
      * @brief Returns the TileMap as a string.
@@ -60,12 +61,17 @@ class TileMap {
      * @return std::string
      */
     std::string toString(char stepped = '*', char unstepped = ' ') const;
+
+    /**
+     * @brief Get a copy of tiles.
+     *
+     * @return std::vector<bool>
+     */
+    std::vector<bool> getTiles() const;
     /**
      * @brief Get a reference to tiles.
-     * It's still a 1D vector representing
-     * two dimensions
      *
-     * @return const std::vector<bool>&
+     * @return std::vector<bool>&
      */
-    const std::vector<bool> &getTiles() const;
+    std::vector<bool> &getTilesRef();
 };

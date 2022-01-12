@@ -23,7 +23,7 @@ class Params {
     /**
      * @brief Length and width of the output.
      */
-    unsigned int size;
+    std::size_t size;
 
     /**
      * @brief Help if the arguments are incorrect.
@@ -57,7 +57,7 @@ class Params {
     /**
      * @brief Get the size (length and width) of the output.
      *
-     * @return unsigned int
+     * @return std::size_t
      */
-    unsigned int getSize() const;
+    std::size_t getSize() const;
 };

@@ -6,13 +6,14 @@
 
 #pragma once
 
+#include <cstddef>
 #include <string>
 #include <unordered_map>
 #include <vector>
 
 #include "Arg.hpp"
-#include "Turtle.hpp"
 #include "Cmd.hpp"
+#include "Turtle.hpp"
 
 /**
  * @brief Provides Logo code execution.
@@ -56,7 +57,7 @@ class Executor {
      */
     void handleCommand(std::vector<Cmd> const &procedure,
                        std::unordered_map<std::string, double> &argMap,
-                       unsigned int &pos);
+                       std::size_t &pos);
     /**
      * @brief Handles a procedure call.
      *
@@ -75,7 +76,7 @@ class Executor {
      */
     void handleConditional(std::vector<Cmd> const &procedure,
                            std::unordered_map<std::string, double> &argMap,
-                           unsigned int &pos);
+                           std::size_t &pos);
 
     /**
      * @brief Creates an argMap for a procedure call.

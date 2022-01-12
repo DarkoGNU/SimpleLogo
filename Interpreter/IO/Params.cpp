@@ -6,6 +6,7 @@
 
 #include "Params.hpp"
 
+#include <cstdio>
 #include <iostream>
 #include <string>
 
@@ -31,7 +32,7 @@ bool Params::readParams(int argc, char const *const argv[]) {
         } else if (type == "-o") {
             outputPath = std::filesystem::path(value);
         } else if (type == "-s") {
-            size = std::stoi(value);
+            std::sscanf(value.c_str(), "%zu", &size);
         } else {
             help(argv[0]);
             return false;
@@ -52,4 +53,4 @@ std::filesystem::path Params::getInputPath() const { return inputPath; }
 
 std::filesystem::path Params::getOutputPath() const { return outputPath; }
 
-unsigned int Params::getSize() const { return size; }
+std::size_t Params::getSize() const { return size; }

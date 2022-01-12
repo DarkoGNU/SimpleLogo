@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <cstddef>
+
 #include "TileMap.hpp"
 
 /**
@@ -38,20 +40,24 @@ class Turtle {
 
   public:
     /**
-     * @brief Construct a new Turtle object
+     * @brief Construct a new Turtle object.
+     * The TileMap is stores as a reference. Appropriate lifetime for it needs
+     * to be ensured
      *
      * @param tileMap one-dimensional TileMap
      */
     Turtle(TileMap &tileMap);
     /**
-     * @brief Construct a new Turtle object
+     * @brief Construct a new Turtle object.
+     * The TileMap is stores as a reference. Appropriate lifetime for it needs
+     * to be ensured
      *
      * @param tileMap one-dimensional TileMap
      * @param startX initial X
      * @param startY initial Y
      * @param startAngle initial angle
      */
-    Turtle(TileMap &tileMap, unsigned int startX, unsigned int startY,
+    Turtle(TileMap &tileMap, std::size_t startX, std::size_t startY,
            double startAngle);
 
     /**
