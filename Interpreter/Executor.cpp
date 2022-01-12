@@ -11,7 +11,7 @@
 #include <utility>
 
 Executor::Executor(std::vector<std::vector<Cmd>> code, Turtle &turtle)
-    : turtle(turtle), procedureMap(createProcedureMap(code)) {}
+    : turtle(turtle), procedureMap(createProcedureMap(std::move(code))) {}
 
 std::unordered_map<std::string, std::vector<Cmd>>
 Executor::createProcedureMap(std::vector<std::vector<Cmd>> code) {

@@ -49,8 +49,10 @@ void Params::help(const char exePath[]) {
               << " -i <input path> -o <output path> -s <size> \n";
 }
 
-std::filesystem::path Params::getInputPath() const { return inputPath; }
+std::filesystem::path const &Params::getInputPath() const { return inputPath; }
 
-std::filesystem::path Params::getOutputPath() const { return outputPath; }
+std::filesystem::path const &Params::getOutputPath() const {
+    return outputPath;
+}
 
 std::size_t Params::getSize() const { return size; }

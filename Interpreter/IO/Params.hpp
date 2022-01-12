@@ -47,13 +47,13 @@ class Params {
      *
      * @return std::filesystem::path
      */
-    std::filesystem::path getInputPath() const;
+    std::filesystem::path const &getInputPath() const;
     /**
      * @brief Get the path to the output file.
      *
      * @return std::filesystem::path
      */
-    std::filesystem::path getOutputPath() const;
+    std::filesystem::path const &getOutputPath() const;
     /**
      * @brief Get the size (length and width) of the output.
      *

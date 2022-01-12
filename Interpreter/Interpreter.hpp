@@ -11,7 +11,7 @@
 #include "Turtle.hpp"
 
 /**
- * @brief provides a simple interface for interpreting Logo files.
+ * @brief Provides a simple interface for interpreting Logo files.
  */
 class Interpreter {
 

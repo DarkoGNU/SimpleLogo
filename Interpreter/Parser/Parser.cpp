@@ -43,13 +43,13 @@ bool Parser::parse() {
 std::string Parser::readFile() const {
     std::ifstream file(inputPath);
 
-    if (file.bad())
+    if (file.fail())
         return std::string();
 
     std::stringstream buffer;
     buffer << file.rdbuf();
 
-    if (file.bad())
+    if (file.fail())
         return std::string();
 
     return buffer.str();

@@ -10,6 +10,7 @@
 #include <cctype>
 #include <regex>
 #include <stdexcept>
+#include <utility>
 
 DeepLexer::DeepLexer(std::vector<std::string> simpleTokens)
     : simpleTokens{simpleTokens}, code{std::vector<Cmd>()} {
@@ -38,15 +39,15 @@ void DeepLexer::tokenize() {
             procedures.emplace(newCommand.name);
             code.emplace_back(std::vector<Cmd>());
 
-            code[proc].push_back(newCommand);
+            code[proc].emplace_back(std::move(newCommand));
             handleProcedure();
 
         } else if (newCommand.type == Cmd::Type::conditional) {
-            code[0].push_back(newCommand);
+            code[0].emplace_back(std::move(newCommand));
             handleConditional();
 
         } else {
-            code[0].push_back(newCommand);
+            code[0].emplace_back(std::move(newCommand));
         }
     }
 
@@ -87,20 +88,22 @@ bool DeepLexer::handleComplex() {
 }
 
 std::string DeepLexer::getCleanToken() const {
-    return cleanToken(simpleTokens[pos]);
+    auto token = simpleTokens[pos];
+    cleanToken(token);
+    return token;
 }
 
 Cmd DeepLexer::getCommand() const { return Cmd(getCleanToken(), procedures); }
 
-std::string DeepLexer::cleanToken(std::string token) {
+void DeepLexer::cleanToken(std::string &token) {
     // If it's end, we don't need any more information
     const static auto endTest = [](char c) { return !std::isspace(c); };
     auto it = std::find_if(token.begin(), token.end(), endTest);
 
     if (it + 4 <= token.end() && std::string(it, it + 4) == "end ")
-        return "end";
+        token = "end";
     if (it + 7 <= token.end() && std::string(it, it + 7) == "koniec ")
-        return "koniec";
+        token = "koniec";
 
     // Remove any whitespace
     const static std::regex pattern1{R"((\s)+)"};
@@ -113,6 +116,4 @@ std::string DeepLexer::cleanToken(std::string token) {
     // If there's ), remove it
     if (token.find(')') != std::string::npos)
         token.pop_back();
-
-    return token;
 }

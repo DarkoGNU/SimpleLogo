@@ -14,8 +14,8 @@
 #include "Writer.hpp"
 
 Interpreter::Interpreter(const int argc, char const *const argv[])
-    : status(params.readParams(argc, argv)), tilemap(params.getSize()),
-      turtle(tilemap) {}
+    : params(), status(params.readParams(argc, argv)),
+      tilemap(params.getSize()), turtle(tilemap) {}
 
 bool Interpreter::bad() const { return !status; }
 
@@ -43,7 +43,7 @@ void Interpreter::writeMap() {
                    ::tolower);
 
     if (extension == ".png")
-        status = Writer::writePng(params.getOutputPath(), tilemap.getTiles(),
+        status = Writer::writePng(params.getOutputPath(), tilemap.getTilesRef(),
                                   tilemap.getSize());
     else
         status = Writer::writeText(params.getOutputPath(), tilemap.toString());

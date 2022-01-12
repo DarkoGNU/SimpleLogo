@@ -15,12 +15,12 @@ bool writeText(const std::filesystem::path &outputPath, std::string_view text) {
 
     std::ofstream file(outputPath);
 
-    if (file.bad())
+    if (file.fail())
         return false;
 
     file << text;
 
-    if (file.bad())
+    if (file.fail())
         return false;
 
     return true;

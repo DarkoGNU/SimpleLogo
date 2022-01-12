@@ -46,7 +46,7 @@ class DeepLexer {
      * @param token string containing a command
      * @return std::string
      */
-    static std::string cleanToken(std::string token);
+    static void cleanToken(std::string &token);
 
     /**
      * @brief Clean & return currently parsed command string.
