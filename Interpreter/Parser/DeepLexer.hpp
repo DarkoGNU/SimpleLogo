@@ -11,7 +11,7 @@
 #include <unordered_set>
 #include <vector>
 
-#include "TurtleCommand.hpp"
+#include "Cmd.hpp"
 
 /**
  * @brief Parses individual Turtle commands.
@@ -25,7 +25,7 @@ class DeepLexer {
     /**
      * @brief Parsed commands.
      */
-    std::vector<std::vector<TurtleCommand>> code;
+    std::vector<std::vector<Cmd>> code;
     /**
      * @brief Defined procedures.
      * Includes a default main procedure
@@ -57,9 +57,9 @@ class DeepLexer {
     /**
      * @brief Constructs and returns currently parsed command.
      *
-     * @return TurtleCommand
+     * @return Cmd
      */
-    TurtleCommand getCommand() const;
+    Cmd getCommand() const;
 
     /**
      * @brief Handles procedure parsing.
@@ -92,7 +92,7 @@ class DeepLexer {
     /**
      * @brief Get parsed code.
      *
-     * @return std::vector<std::vector<TurtleCommand>>
+     * @return std::vector<std::vector<Cmd>>
      */
-    std::vector<std::vector<TurtleCommand>> getCode() const;
+    std::vector<std::vector<Cmd>> getCode() const;
 };

@@ -14,7 +14,7 @@
 
 Parser::Parser(std::filesystem::path inputPath) : inputPath(inputPath) {}
 
-std::vector<std::vector<TurtleCommand>> Parser::getCode() const { return code; }
+std::vector<std::vector<Cmd>> Parser::getCode() const { return code; }
 
 bool Parser::parse() {
     // Read the file

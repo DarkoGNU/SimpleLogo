@@ -18,7 +18,7 @@
 /**
  * @brief Represents a Logo command.
  */
-class TurtleCommand {
+class Cmd {
   public:
     /**
      * @brief Type of the command.
@@ -40,33 +40,33 @@ class TurtleCommand {
      */
     enum class Comparison { greater, less, equal, inequal, null };
 
-    const TurtleCommand::Type type;
-    const TurtleCommand::Comparison comparison;
+    const Cmd::Type type;
+    const Cmd::Comparison comparison;
     const std::string name;
     const std::vector<Arg> args;
 
-    TurtleCommand(std::string const &code,
+    Cmd(std::string const &code,
               std::unordered_set<std::string> const &procedures);
 
   private:
-    static const std::unordered_map<std::string, TurtleCommand::Type> typeMap;
+    static const std::unordered_map<std::string, Cmd::Type> typeMap;
 
-    TurtleCommand(std::tuple<TurtleCommand::Type, TurtleCommand::Comparison, std::string,
+    Cmd(std::tuple<Cmd::Type, Cmd::Comparison, std::string,
                          std::vector<Arg>>
                   vars);
 
-    static std::tuple<TurtleCommand::Type, TurtleCommand::Comparison, std::string,
+    static std::tuple<Cmd::Type, Cmd::Comparison, std::string,
                       std::vector<Arg>>
     createCommand(std::string const &code,
                   std::unordered_set<std::string> const &procedures);
 
-    static std::tuple<TurtleCommand::Type, TurtleCommand::Comparison, std::string,
+    static std::tuple<Cmd::Type, Cmd::Comparison, std::string,
                       std::vector<Arg>>
     handleConditional(std::string const &name, std::string const &expr);
 
-    TurtleCommand::Type getType(const std::unordered_set<std::string> &procedures);
+    Cmd::Type getType(const std::unordered_set<std::string> &procedures);
 
-    TurtleCommand::Comparison getComparison(std::string &code);
+    Cmd::Comparison getComparison(std::string &code);
 
     std::vector<Arg> getArgs(const std::string &code);
 };

@@ -4,7 +4,7 @@
  * Licensed under GPL-3.0-or-later
  */
 
-#include "TurtleCommand.hpp"
+#include "Cmd.hpp"
 
 #include <cstddef>
 #include <sstream>
@@ -12,22 +12,22 @@
 
 #include <utility>
 
-using varTuple = std::tuple<TurtleCommand::Type, TurtleCommand::Comparison, std::string,
+using varTuple = std::tuple<Cmd::Type, Cmd::Comparison, std::string,
                             std::vector<Arg>>;
 
 // The public constructor
-TurtleCommand::TurtleCommand(std::string const &code,
+Cmd::Cmd(std::string const &code,
                      std::unordered_set<std::string> const &procedures)
-    : TurtleCommand{createCommand(code, procedures)} {}
+    : Cmd{createCommand(code, procedures)} {}
 
 // The delegated constructor
-TurtleCommand::TurtleCommand(varTuple vars)
+Cmd::Cmd(varTuple vars)
     : type{std::get<0>(vars)}, comparison{std::get<1>(vars)},
       name{std::get<2>(vars)}, args{std::get<3>(vars)} {}
 
 // The almighty tuple creator :)
 varTuple
-TurtleCommand::createCommand(std::string const &code,
+Cmd::createCommand(std::string const &code,
                          std::unordered_set<std::string> const &procedures) {
 
     // Split the command
@@ -42,23 +42,23 @@ TurtleCommand::createCommand(std::string const &code,
     auto const& name = parts[0];
 
     // Search for the type in typeMap
-    TurtleCommand::Type type;
-    TurtleCommand::Comparison comparison;
+    Cmd::Type type;
+    Cmd::Comparison comparison;
     auto typeIt = typeMap.find(name);
 
     // If not found, decide whether it's a definition or a call
     if (typeIt == typeMap.end())
         type = procedures.find(name) == procedures.end()
-                   ? TurtleCommand::Type::definition
-                   : TurtleCommand::Type::call;
+                   ? Cmd::Type::definition
+                   : Cmd::Type::call;
     else
         type = typeIt->second;
 
     // Special treatment for conditionals
-    if (type == TurtleCommand::Type::conditional)
+    if (type == Cmd::Type::conditional)
         return handleConditional(name, parts[1]);
     else
-        comparison = TurtleCommand::Comparison::null;
+        comparison = Cmd::Comparison::null;
 
     // Handle args
     std::vector<Arg> nArgs;
@@ -68,34 +68,34 @@ TurtleCommand::createCommand(std::string const &code,
     return std::make_tuple(type, comparison, name, nArgs);
 }
 
-varTuple TurtleCommand::handleConditional(std::string const& name, std::string const &expr) {
-    TurtleCommand::Comparison exprType;
+varTuple Cmd::handleConditional(std::string const& name, std::string const &expr) {
+    Cmd::Comparison exprType;
     std::size_t index;
 
     if (index = expr.find("<>"); index != std::string::npos)
-        exprType = TurtleCommand::Comparison::inequal;
+        exprType = Cmd::Comparison::inequal;
     else if (index = expr.find(">"); index != std::string::npos)
-        exprType = TurtleCommand::Comparison::greater;
+        exprType = Cmd::Comparison::greater;
     else if (index = expr.find("<"); index != std::string::npos)
-        exprType = TurtleCommand::Comparison::less;
+        exprType = Cmd::Comparison::less;
     else if (index = expr.find("="); index != std::string::npos)
-        exprType = TurtleCommand::Comparison::equal;
+        exprType = Cmd::Comparison::equal;
     else
         throw std::runtime_error("Unknown comparison type");
 
     // Just assign the first argument
     std::string arg1 = expr.substr(0, index);
     // The second one needs a check
-    std::string arg2 = exprType == TurtleCommand::Comparison::inequal
+    std::string arg2 = exprType == Cmd::Comparison::inequal
                            ? expr.substr(index + 2)
                            : expr.substr(index + 1);
 
     std::vector nArgs { Arg(arg1), Arg(arg2) };
 
-    return std::make_tuple(TurtleCommand::Type::conditional, exprType, name, nArgs);
+    return std::make_tuple(Cmd::Type::conditional, exprType, name, nArgs);
 }
 
-std::vector<Arg> TurtleCommand::getArgs(const std::string &code) {
+std::vector<Arg> Cmd::getArgs(const std::string &code) {
     std::stringstream ss(code);
     std::vector<Arg> nArgs;
     std::string arg;
@@ -106,17 +106,17 @@ std::vector<Arg> TurtleCommand::getArgs(const std::string &code) {
     return nArgs;
 }
 
-const std::unordered_map<std::string, TurtleCommand::Type> TurtleCommand::typeMap{
-    {"przod", TurtleCommand::Type::forward},
-    {"forward", TurtleCommand::Type::forward},
-    {"tyl", TurtleCommand::Type::back},
-    {"back", TurtleCommand::Type::back},
-    {"prawo", TurtleCommand::Type::right},
-    {"right", TurtleCommand::Type::right},
-    {"lewo", TurtleCommand::Type::left},
-    {"left", TurtleCommand::Type::left},
-    {"jezeli", TurtleCommand::Type::conditional},
-    {"if", TurtleCommand::Type::conditional},
-    {"koniec", TurtleCommand::Type::end},
-    {"end", TurtleCommand::Type::end},
+const std::unordered_map<std::string, Cmd::Type> Cmd::typeMap{
+    {"przod", Cmd::Type::forward},
+    {"forward", Cmd::Type::forward},
+    {"tyl", Cmd::Type::back},
+    {"back", Cmd::Type::back},
+    {"prawo", Cmd::Type::right},
+    {"right", Cmd::Type::right},
+    {"lewo", Cmd::Type::left},
+    {"left", Cmd::Type::left},
+    {"jezeli", Cmd::Type::conditional},
+    {"if", Cmd::Type::conditional},
+    {"koniec", Cmd::Type::end},
+    {"end", Cmd::Type::end},
 };

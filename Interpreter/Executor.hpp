@@ -12,7 +12,7 @@
 
 #include "Arg.hpp"
 #include "Turtle.hpp"
-#include "TurtleCommand.hpp"
+#include "Cmd.hpp"
 
 /**
  * @brief Provides Logo code execution.
@@ -27,16 +27,16 @@ class Executor {
      * @brief Maps procedure names to full procedures.
      * Stores the source code
      */
-    std::unordered_map<std::string, std::vector<TurtleCommand>> procedureMap;
+    std::unordered_map<std::string, std::vector<Cmd>> procedureMap;
 
     /**
      * @brief Create a procedureMap for the constructor.
      *
      * @param code the source code
-     * @return std::unordered_map<std::string, std::vector<TurtleCommand>>
+     * @return std::unordered_map<std::string, std::vector<Cmd>>
      */
-    static std::unordered_map<std::string, std::vector<TurtleCommand>>
-    createProcedureMap(std::vector<std::vector<TurtleCommand>> code);
+    static std::unordered_map<std::string, std::vector<Cmd>>
+    createProcedureMap(std::vector<std::vector<Cmd>> code);
 
     /**
      * @brief Executes a procedure.
@@ -44,7 +44,7 @@ class Executor {
      * @param procedure the procedure's code
      * @param argMap the arguments and their values
      */
-    void call(std::vector<TurtleCommand> const &procedure,
+    void call(std::vector<Cmd> const &procedure,
               std::unordered_map<std::string, double> &argMap);
     /**
      * @brief Handles a Logo command.
@@ -54,7 +54,7 @@ class Executor {
      * @param argMap current procedure's arguments
      * @param pos the command's location in the procedure
      */
-    void handleCommand(std::vector<TurtleCommand> const &procedure,
+    void handleCommand(std::vector<Cmd> const &procedure,
                        std::unordered_map<std::string, double> &argMap,
                        unsigned int &pos);
     /**
@@ -63,7 +63,7 @@ class Executor {
      * @param current the call
      * @param argMap current procedure's arguments
      */
-    void handleCall(TurtleCommand const &current,
+    void handleCall(Cmd const &current,
                     std::unordered_map<std::string, double> &argMap);
     /**
      * @brief Handles a conditional statement (an if).
@@ -73,7 +73,7 @@ class Executor {
      * @param argMap current procedure's arguments
      * @param pos the conditional's location in the procedure
      */
-    void handleConditional(std::vector<TurtleCommand> const &procedure,
+    void handleConditional(std::vector<Cmd> const &procedure,
                            std::unordered_map<std::string, double> &argMap,
                            unsigned int &pos);
 
@@ -86,7 +86,7 @@ class Executor {
      * @return std::unordered_map<std::string, double>
      */
     static std::unordered_map<std::string, double>
-    getArgMap(TurtleCommand const &definition, TurtleCommand const &current,
+    getArgMap(Cmd const &definition, Cmd const &current,
               std::unordered_map<std::string, double> &argMap);
 
     /**
@@ -111,7 +111,7 @@ class Executor {
      */
     static bool
     evaluateComparison(Arg const &first, Arg const &second,
-                       TurtleCommand::Comparison type,
+                       Cmd::Comparison type,
                        std::unordered_map<std::string, double> &argMap);
 
     /**
@@ -133,7 +133,7 @@ class Executor {
      * @param code the code
      * @param turtle reference to a Turtle
      */
-    Executor(std::vector<std::vector<TurtleCommand>> code, Turtle &turtle);
+    Executor(std::vector<std::vector<Cmd>> code, Turtle &turtle);
 
     /**
      * @brief Executes the code on the turtle.

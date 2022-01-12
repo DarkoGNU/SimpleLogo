@@ -10,7 +10,7 @@
 #include <string>
 #include <vector>
 
-#include "TurtleCommand.hpp"
+#include "Cmd.hpp"
 
 /**
  * @brief Provides a simple interface to read and parse Logo source file.
@@ -23,7 +23,7 @@ class Parser {
     /**
      * @brief Parsed Logo code.
      */
-    std::vector<std::vector<TurtleCommand>> code;
+    std::vector<std::vector<Cmd>> code;
 
     /**
      * @brief Reads a text file.
@@ -49,7 +49,7 @@ class Parser {
     /**
      * @brief Get parsed code.
      *
-     * @return std::vector<std::vector<TurtleCommand>>
+     * @return std::vector<std::vector<Cmd>>
      */
-    std::vector<std::vector<TurtleCommand>> getCode() const;
+    std::vector<std::vector<Cmd>> getCode() const;
 };

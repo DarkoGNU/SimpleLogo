@@ -12,14 +12,14 @@
 #include <stdexcept>
 
 DeepLexer::DeepLexer(std::vector<std::string> simpleTokens)
-    : simpleTokens{simpleTokens}, code{std::vector<TurtleCommand>()} {
+    : simpleTokens{simpleTokens}, code{std::vector<Cmd>()} {
 
     // The main code will be a default main() procedure
-    code[0].emplace_back(TurtleCommand("main ", procedures));
+    code[0].emplace_back(Cmd("main ", procedures));
     procedures.emplace("main");
 }
 
-std::vector<std::vector<TurtleCommand>> DeepLexer::getCode() const {
+std::vector<std::vector<Cmd>> DeepLexer::getCode() const {
     return code;
 }
 
@@ -30,18 +30,18 @@ void DeepLexer::tokenize() {
         proc = 0;
         auto newCommand = getCommand();
 
-        if (newCommand.type == TurtleCommand::Type::end)
+        if (newCommand.type == Cmd::Type::end)
             throw std::runtime_error("There's at least one ending too much");
 
-        if (newCommand.type == TurtleCommand::Type::definition) {
+        if (newCommand.type == Cmd::Type::definition) {
             proc = procedures.size();
             procedures.emplace(newCommand.name);
-            code.emplace_back(std::vector<TurtleCommand>());
+            code.emplace_back(std::vector<Cmd>());
 
             code[proc].push_back(newCommand);
             handleProcedure();
 
-        } else if (newCommand.type == TurtleCommand::Type::conditional) {
+        } else if (newCommand.type == Cmd::Type::conditional) {
             code[0].push_back(newCommand);
             handleConditional();
 
@@ -72,14 +72,14 @@ bool DeepLexer::handleComplex() {
         code[proc].push_back(getCommand());
         auto type = code[proc].back().type;
 
-        if (type == TurtleCommand::Type::definition)
+        if (type == Cmd::Type::definition)
             throw std::runtime_error(
                 "Nested procedure definitions aren't supported");
 
-        else if (type == TurtleCommand::Type::conditional)
+        else if (type == Cmd::Type::conditional)
             handleConditional();
 
-        else if (type == TurtleCommand::Type::end)
+        else if (type == Cmd::Type::end)
             return true;
     }
 
@@ -90,8 +90,8 @@ std::string DeepLexer::getCleanToken() const {
     return cleanToken(simpleTokens[pos]);
 }
 
-TurtleCommand DeepLexer::getCommand() const {
-    return TurtleCommand(getCleanToken(), procedures);
+Cmd DeepLexer::getCommand() const {
+    return Cmd(getCleanToken(), procedures);
 }
 
 std::string DeepLexer::cleanToken(std::string token) {
