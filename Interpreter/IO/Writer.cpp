@@ -31,7 +31,8 @@ bool writeText(std::filesystem::path const &outputPath, std::string_view text) {
 bool writePng(std::filesystem::path const &outputPath,
               std::vector<bool> const &tiles, std::size_t size) {
 
-    png::image<png::gray_pixel_1> image(size, size);
+    png::image<png::gray_pixel_1> image(static_cast<png::uint_32>(size),
+                                        static_cast<png::uint_32>(size));
 
     for (std::size_t y = 0; y < size; y++)
         for (std::size_t x = 0; x < size; x++)
