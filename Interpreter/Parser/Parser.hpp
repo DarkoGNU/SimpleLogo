@@ -19,7 +19,7 @@ class Parser {
     /**
      * @brief Path to the source file.
      */
-    const std::filesystem::path inputPath;
+    std::filesystem::path const inputPath;
     /**
      * @brief Parsed Logo code.
      */
@@ -49,8 +49,14 @@ class Parser {
     /**
      * @brief Get parsed code.
      *
-     * @return std::vector<std::vector<Cmd>>
+     * @return std::vector<std::vector<Cmd>> const&
      */
     std::vector<std::vector<Cmd>> getCode() const;
-    std::vector<std::vector<Cmd>> getCodeRef();
+
+    /**
+     * @brief Get parsed code (reference).
+     *
+     * @return std::vector<std::vector<Cmd>>&
+     */
+    std::vector<std::vector<Cmd>> &getCodeRef();
 };

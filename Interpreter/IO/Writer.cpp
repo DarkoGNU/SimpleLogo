@@ -11,9 +11,9 @@
 #include "png++/png.hpp"
 
 namespace Writer {
-bool writeText(const std::filesystem::path &outputPath, std::string_view text) {
+bool writeText(std::filesystem::path const &outputPath, std::string_view text) {
 
-    std::ofstream file(outputPath);
+    std::ofstream file(outputPath, std::ios::out);
 
     if (file.fail())
         return false;
@@ -28,8 +28,8 @@ bool writeText(const std::filesystem::path &outputPath, std::string_view text) {
 
 // The task demands a BMP file (optional feature), but I'm too lazy
 // so I just write a PNG file using PNG++
-bool writePng(const std::filesystem::path &outputPath,
-              const std::vector<bool> &tiles, unsigned int size) {
+bool writePng(std::filesystem::path const &outputPath,
+              std::vector<bool> const &tiles, unsigned int size) {
 
     png::image<png::gray_pixel_1> image(size, size);
 

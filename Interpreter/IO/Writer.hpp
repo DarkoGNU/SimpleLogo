@@ -22,7 +22,7 @@ namespace Writer {
  * @param text text to write
  * @return bool
  */
-bool writeText(const std::filesystem::path &outputPath, std::string_view text);
+bool writeText(std::filesystem::path const &outputPath, std::string_view text);
 
 /**
  * @brief Writes a PNG file.
@@ -33,7 +33,7 @@ bool writeText(const std::filesystem::path &outputPath, std::string_view text);
  * @param size length and width of tiles
  * @return bool
  */
-bool writePng(const std::filesystem::path &outputPath,
-              const std::vector<bool> &tiles, unsigned int size);
+bool writePng(std::filesystem::path const &outputPath,
+              std::vector<bool> const &tiles, unsigned int size);
 
 } // namespace Writer

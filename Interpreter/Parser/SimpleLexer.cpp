@@ -24,9 +24,9 @@ namespace {
 std::string cleanString(std::string const &text) {
     // Get rid of comments
     std::stringstream ss(text);
-    std::string line;
     std::string result;
 
+    std::string line;
     while (getline(ss, line)) {
         std::size_t comment = line.find("//");
         if (comment != std::string::npos)

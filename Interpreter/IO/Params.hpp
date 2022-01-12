@@ -30,7 +30,7 @@ class Params {
      *
      * @param exePath path to the executable
      */
-    static void help(const char exePath[]);
+    static void help(char const exePath[]);
 
   public:
     /**
@@ -45,15 +45,16 @@ class Params {
     /**
      * @brief Get the path to the input file.
      *
-     * @return std::filesystem::path
+     * @return std::filesystem::path const&
      */
     std::filesystem::path const &getInputPath() const;
     /**
-     * @brief Get the path to the output file.
+     * @brief Get the path to the input file.
      *
-     * @return std::filesystem::path
+     * @return std::filesystem::path const&
      */
     std::filesystem::path const &getOutputPath() const;
+
     /**
      * @brief Get the size (length and width) of the output.
      *

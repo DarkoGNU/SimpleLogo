@@ -24,15 +24,15 @@ class Arg {
     /**
      * @brief Argument's operation.
      */
-    const Arg::Operation operation;
+    Arg::Operation const operation;
     /**
      * @brief Argument's value.
      */
-    const double value;
+    double const value;
     /**
      * @brief Argument's name.
      */
-    const std::string name;
+    std::string const name;
 
     /**
      * @brief Construct a new Arg.

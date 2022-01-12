@@ -36,7 +36,7 @@ varTuple Cmd::createCommand(std::string const &code,
 
     // Special treatment for conditionals
     if (type == Cmd::Type::conditional)
-        return handleConditional(std::move(parts[0]), std::move(parts[1]));
+        return handleConditional(parts[0], parts[1]);
 
     // Handle args
     std::vector<Arg> nArgs;
@@ -70,7 +70,8 @@ Cmd::Type Cmd::getType(std::string const &name,
         return typeIt->second;
 }
 
-varTuple Cmd::handleConditional(std::string name, std::string expr) {
+varTuple Cmd::handleConditional(std::string const &name,
+                                std::string const &expr) {
     Cmd::Comparison exprType;
     std::size_t index;
 
@@ -92,7 +93,7 @@ varTuple Cmd::handleConditional(std::string name, std::string expr) {
                            ? expr.substr(index + 2)
                            : expr.substr(index + 1);
 
-    return std::make_tuple(Cmd::Type::conditional, exprType, std::move(name),
+    return std::make_tuple(Cmd::Type::conditional, exprType, name,
                            std::vector<Arg>{Arg(arg1), Arg(arg2)});
 }
 

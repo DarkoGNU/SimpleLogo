@@ -20,7 +20,7 @@ class TileMap {
      * @brief Size of the TileMap.
      * It's both its length and width
      */
-    const std::size_t size;
+    std::size_t const size;
     /**
      * @brief Container storing the state of tiles.
      * A tile is false by default, it becomes true when something steps on it.
@@ -63,15 +63,9 @@ class TileMap {
     std::string toString(char stepped = '*', char unstepped = ' ') const;
 
     /**
-     * @brief Get a copy of tiles.
-     *
-     * @return std::vector<bool>
-     */
-    std::vector<bool> getTiles() const;
-    /**
      * @brief Get a reference to tiles.
      *
-     * @return std::vector<bool>&
+     * @return std::vector<bool> const&
      */
-    std::vector<bool> &getTilesRef();
+    std::vector<bool> const &getTiles() const;
 };

@@ -33,6 +33,4 @@ std::string TileMap::toString(char stepped, char unstepped) const {
     return visualMap;
 }
 
-std::vector<bool> TileMap::getTiles() const { return tiles; }
-
-std::vector<bool> &TileMap::getTilesRef() { return tiles; }
+std::vector<bool> const &TileMap::getTiles() const { return tiles; }

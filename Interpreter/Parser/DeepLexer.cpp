@@ -13,10 +13,10 @@
 #include <utility>
 
 DeepLexer::DeepLexer(std::vector<std::string> simpleTokens)
-    : simpleTokens{simpleTokens}, code{std::vector<Cmd>()} {
+    : simpleTokens{std::move(simpleTokens)} {
 
     // The main code will be a default main() procedure
-    code[0].emplace_back(Cmd("main ", procedures));
+    code.emplace_back(std::vector<Cmd>{Cmd("main ", procedures)});
     procedures.emplace("main");
 }
 
@@ -37,9 +37,8 @@ void DeepLexer::tokenize() {
         if (newCommand.type == Cmd::Type::definition) {
             proc = procedures.size();
             procedures.emplace(newCommand.name);
-            code.emplace_back(std::vector<Cmd>());
 
-            code[proc].emplace_back(std::move(newCommand));
+            code.emplace_back(std::vector<Cmd>{std::move(newCommand)});
             handleProcedure();
 
         } else if (newCommand.type == Cmd::Type::conditional) {
@@ -70,7 +69,7 @@ void DeepLexer::handleConditional() {
 bool DeepLexer::handleComplex() {
     for (pos++; pos < simpleTokens.size(); pos++) {
 
-        code[proc].push_back(getCommand());
+        code[proc].emplace_back(getCommand());
         auto type = code[proc].back().type;
 
         if (type == Cmd::Type::definition)

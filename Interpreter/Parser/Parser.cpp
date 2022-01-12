@@ -17,17 +17,11 @@ Parser::Parser(std::filesystem::path inputPath) : inputPath(inputPath) {}
 
 std::vector<std::vector<Cmd>> Parser::getCode() const { return code; }
 
-std::vector<std::vector<Cmd>> Parser::getCodeRef() { return code; }
+std::vector<std::vector<Cmd>> &Parser::getCodeRef() { return code; }
 
 bool Parser::parse() {
-    // Read the file
-    std::string codeString = readFile();
-
-    if (codeString.empty())
-        return false;
-
     // Basic splitting
-    std::vector<std::string> simpleTokens = SimpleLexer::tokenize(codeString);
+    std::vector<std::string> simpleTokens = SimpleLexer::tokenize(readFile());
 
     if (simpleTokens.empty())
         return false;
@@ -41,16 +35,20 @@ bool Parser::parse() {
 }
 
 std::string Parser::readFile() const {
-    std::ifstream file(inputPath);
+    std::ifstream file(inputPath,
+                       std::ios::in | std::ios::binary | std::ios::ate);
 
     if (file.fail())
         return std::string();
 
-    std::stringstream buffer;
-    buffer << file.rdbuf();
+    std::string content;
+    content.resize(file.tellg());
+
+    file.seekg(0, std::ios::beg);
+    file.read(&content[0], content.size());
 
     if (file.fail())
         return std::string();
 
-    return buffer.str();
+    return content;
 }

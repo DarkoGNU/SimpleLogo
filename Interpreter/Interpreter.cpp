@@ -43,7 +43,7 @@ void Interpreter::writeMap() {
                    ::tolower);
 
     if (extension == ".png")
-        status = Writer::writePng(params.getOutputPath(), tilemap.getTilesRef(),
+        status = Writer::writePng(params.getOutputPath(), tilemap.getTiles(),
                                   tilemap.getSize());
     else
         status = Writer::writeText(params.getOutputPath(), tilemap.toString());

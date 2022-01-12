@@ -42,20 +42,20 @@ class Cmd {
     /**
      * @brief Type of the command.
      */
-    const Cmd::Type type;
+    Cmd::Type const type;
     /**
      * @brief Comparison type (for conditionals).
      * Null for other types of command
      */
-    const Cmd::Comparison comparison;
+    Cmd::Comparison const comparison;
     /**
      * @brief Name of the command.
      */
-    const std::string name;
+    std::string const name;
     /**
      * @brief Command's arguments.
      */
-    const std::vector<Arg> args;
+    std::vector<Arg> const args;
 
     /**
      * @brief Construct a new Cmd.
@@ -100,7 +100,7 @@ class Cmd {
      * std::vector<Arg>>
      */
     static std::tuple<Cmd::Type, Cmd::Comparison, std::string, std::vector<Arg>>
-    handleConditional(std::string name, std::string expr);
+    handleConditional(std::string const &name, std::string const &expr);
     /**
      * @brief Splits a command by space.
      *
