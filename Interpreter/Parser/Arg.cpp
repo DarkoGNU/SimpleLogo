@@ -7,20 +7,21 @@
 #include "Arg.hpp"
 
 #include <cstddef>
+#include <utility>
 
 // The public constructor
 Arg::Arg(std::string const &arg) : Arg{createArg(arg)} {}
 
 // The delegated constructor
 Arg::Arg(std::tuple<Arg::Operation, double, std::string> vars)
-    : operation{std::get<0>(vars)}, value{std::get<1>(vars)}, name{std::get<2>(
-                                                                  vars)} {}
+    : operation{std::get<0>(vars)}, value{std::get<1>(vars)},
+      name{std::move(std::get<2>(vars))} {}
 
+// The almighty tuple creator :)
 std::tuple<Arg::Operation, double, std::string>
 Arg::createArg(std::string const &arg) {
     // Search for an operatiom
-    constexpr auto operations = "*/+-";
-    std::size_t index = arg.find_first_of(operations);
+    std::size_t index = arg.find_first_of("*/+-");
 
     // If there's no operation, it's a name/value
     if (index == std::string::npos)
@@ -29,7 +30,7 @@ Arg::createArg(std::string const &arg) {
                                      std::string())
                    : std::make_tuple(Arg::Operation::name, 0.0, arg);
 
-    // Determine the specific
+    // Determine the specific operation
     Arg::Operation operation;
     switch (arg[index]) {
     case ('*'):

@@ -9,66 +9,68 @@
 #include <cstddef>
 #include <sstream>
 #include <stdexcept>
-
 #include <utility>
 
-using varTuple = std::tuple<Cmd::Type, Cmd::Comparison, std::string,
-                            std::vector<Arg>>;
+using varTuple =
+    std::tuple<Cmd::Type, Cmd::Comparison, std::string, std::vector<Arg>>;
 
 // The public constructor
 Cmd::Cmd(std::string const &code,
-                     std::unordered_set<std::string> const &procedures)
+         std::unordered_set<std::string> const &procedures)
     : Cmd{createCommand(code, procedures)} {}
 
 // The delegated constructor
 Cmd::Cmd(varTuple vars)
     : type{std::get<0>(vars)}, comparison{std::get<1>(vars)},
-      name{std::get<2>(vars)}, args{std::get<3>(vars)} {}
+      name{std::move(std::get<2>(vars))}, args{std::move(std::get<3>(vars))} {}
 
 // The almighty tuple creator :)
-varTuple
-Cmd::createCommand(std::string const &code,
-                         std::unordered_set<std::string> const &procedures) {
+varTuple Cmd::createCommand(std::string const &code,
+                            std::unordered_set<std::string> const &procedures) {
 
     // Split the command
-    std::stringstream ss(code);
-    std::vector<std::string> parts;
+    auto parts = splitCommand(code);
 
-    std::string token;
-    while (std::getline(ss, token, ' '))
-        parts.emplace_back(token);
-
-    // Get its name
-    auto const& name = parts[0];
-
-    // Search for the type in typeMap
-    Cmd::Type type;
-    Cmd::Comparison comparison;
-    auto typeIt = typeMap.find(name);
-
-    // If not found, decide whether it's a definition or a call
-    if (typeIt == typeMap.end())
-        type = procedures.find(name) == procedures.end()
-                   ? Cmd::Type::definition
-                   : Cmd::Type::call;
-    else
-        type = typeIt->second;
+    // Get its type
+    Cmd::Type type = getType(code, procedures);
 
     // Special treatment for conditionals
     if (type == Cmd::Type::conditional)
-        return handleConditional(name, parts[1]);
-    else
-        comparison = Cmd::Comparison::null;
+        return handleConditional(std::move(parts[0]), std::move(parts[1]));
 
     // Handle args
     std::vector<Arg> nArgs;
     for (unsigned int i = 1; i < parts.size(); i++)
         nArgs.emplace_back(Arg(parts[i]));
 
-    return std::make_tuple(type, comparison, name, nArgs);
+    return std::make_tuple(type, Cmd::Comparison::null, std::move(parts[0]),
+                           std::move(nArgs));
 }
 
-varTuple Cmd::handleConditional(std::string const& name, std::string const &expr) {
+std::vector<std::string> Cmd::splitCommand(std::string const &code) {
+    std::stringstream ss(code);
+    std::vector<std::string> parts;
+
+    std::string token;
+    while (std::getline(ss, token, ' '))
+        parts.emplace_back(std::move(token));
+
+    return parts;
+}
+
+Cmd::Type Cmd::getType(std::string const &name,
+                       std::unordered_set<std::string> const &procedures) {
+    auto typeIt = typeMap.find(name);
+
+    // If not found, decide whether it's a definition or a call
+    if (typeIt == typeMap.end())
+        return procedures.find(name) == procedures.end() ? Cmd::Type::definition
+                                                         : Cmd::Type::call;
+    else
+        return typeIt->second;
+}
+
+varTuple Cmd::handleConditional(std::string name, std::string expr) {
     Cmd::Comparison exprType;
     std::size_t index;
 
@@ -90,33 +92,15 @@ varTuple Cmd::handleConditional(std::string const& name, std::string const &expr
                            ? expr.substr(index + 2)
                            : expr.substr(index + 1);
 
-    std::vector nArgs { Arg(arg1), Arg(arg2) };
-
-    return std::make_tuple(Cmd::Type::conditional, exprType, name, nArgs);
-}
-
-std::vector<Arg> Cmd::getArgs(const std::string &code) {
-    std::stringstream ss(code);
-    std::vector<Arg> nArgs;
-    std::string arg;
-
-    while (std::getline(ss, arg, ' '))
-        nArgs.emplace_back(Arg(arg));
-
-    return nArgs;
+    return std::make_tuple(Cmd::Type::conditional, exprType, std::move(name),
+                           std::vector<Arg>{Arg(arg1), Arg(arg2)});
 }
 
 const std::unordered_map<std::string, Cmd::Type> Cmd::typeMap{
-    {"przod", Cmd::Type::forward},
-    {"forward", Cmd::Type::forward},
-    {"tyl", Cmd::Type::back},
-    {"back", Cmd::Type::back},
-    {"prawo", Cmd::Type::right},
-    {"right", Cmd::Type::right},
-    {"lewo", Cmd::Type::left},
-    {"left", Cmd::Type::left},
-    {"jezeli", Cmd::Type::conditional},
-    {"if", Cmd::Type::conditional},
-    {"koniec", Cmd::Type::end},
-    {"end", Cmd::Type::end},
+    {"przod", Cmd::Type::forward},      {"forward", Cmd::Type::forward},
+    {"tyl", Cmd::Type::back},           {"back", Cmd::Type::back},
+    {"prawo", Cmd::Type::right},        {"right", Cmd::Type::right},
+    {"lewo", Cmd::Type::left},          {"left", Cmd::Type::left},
+    {"jezeli", Cmd::Type::conditional}, {"if", Cmd::Type::conditional},
+    {"koniec", Cmd::Type::end},         {"end", Cmd::Type::end},
 };
