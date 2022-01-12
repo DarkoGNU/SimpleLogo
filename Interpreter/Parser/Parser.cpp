@@ -8,6 +8,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <utility>
 
 #include "DeepLexer.hpp"
 #include "SimpleLexer.hpp"
@@ -15,6 +16,8 @@
 Parser::Parser(std::filesystem::path inputPath) : inputPath(inputPath) {}
 
 std::vector<std::vector<Cmd>> Parser::getCode() const { return code; }
+
+std::vector<std::vector<Cmd>> Parser::getCodeRef() { return code; }
 
 bool Parser::parse() {
     // Read the file
@@ -30,9 +33,9 @@ bool Parser::parse() {
         return false;
 
     // Split it further
-    DeepLexer deepLexer(simpleTokens);
+    DeepLexer deepLexer(std::move(simpleTokens));
     deepLexer.tokenize();
-    code = deepLexer.getCode();
+    code = std::move(deepLexer.getCodeRef());
 
     return !code.empty();
 }

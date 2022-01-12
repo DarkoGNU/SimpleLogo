@@ -95,4 +95,5 @@ class DeepLexer {
      * @return std::vector<std::vector<Cmd>>
      */
     std::vector<std::vector<Cmd>> getCode() const;
+    std::vector<std::vector<Cmd>> &getCodeRef();
 };

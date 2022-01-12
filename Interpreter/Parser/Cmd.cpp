@@ -32,7 +32,7 @@ varTuple Cmd::createCommand(std::string const &code,
     auto parts = splitCommand(code);
 
     // Get its type
-    Cmd::Type type = getType(code, procedures);
+    Cmd::Type type = getType(parts[0], procedures);
 
     // Special treatment for conditionals
     if (type == Cmd::Type::conditional)

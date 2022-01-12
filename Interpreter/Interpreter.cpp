@@ -30,7 +30,7 @@ bool Interpreter::execute() {
         return false;
     }
 
-    Executor executor(parser.getCode(), turtle);
+    Executor executor(std::move(parser.getCodeRef()), turtle);
     executor.execute();
 
     writeMap();

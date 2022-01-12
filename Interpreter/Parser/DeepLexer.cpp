@@ -19,9 +19,9 @@ DeepLexer::DeepLexer(std::vector<std::string> simpleTokens)
     procedures.emplace("main");
 }
 
-std::vector<std::vector<Cmd>> DeepLexer::getCode() const {
-    return code;
-}
+std::vector<std::vector<Cmd>> DeepLexer::getCode() const { return code; }
+
+std::vector<std::vector<Cmd>> &DeepLexer::getCodeRef() { return code; }
 
 void DeepLexer::tokenize() {
     // code[0] will store the main code
@@ -90,16 +90,17 @@ std::string DeepLexer::getCleanToken() const {
     return cleanToken(simpleTokens[pos]);
 }
 
-Cmd DeepLexer::getCommand() const {
-    return Cmd(getCleanToken(), procedures);
-}
+Cmd DeepLexer::getCommand() const { return Cmd(getCleanToken(), procedures); }
 
 std::string DeepLexer::cleanToken(std::string token) {
     // If it's end, we don't need any more information
     const static auto endTest = [](char c) { return !std::isspace(c); };
     auto it = std::find_if(token.begin(), token.end(), endTest);
+
     if (it + 4 <= token.end() && std::string(it, it + 4) == "end ")
         return "end";
+    if (it + 7 <= token.end() && std::string(it, it + 7) == "koniec ")
+        return "koniec";
 
     // Remove any whitespace
     const static std::regex pattern1{R"((\s)+)"};
