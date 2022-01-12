@@ -6,7 +6,7 @@
 
 #include "TileMap.hpp"
 
-TileMap::TileMap(unsigned int size) : size{size}, tiles(size * size, false){};
+TileMap::TileMap(unsigned int size) : size{size}, tiles(size * size, false){}
 
 unsigned int TileMap::getSize() const { return size; }
 

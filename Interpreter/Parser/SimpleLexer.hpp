@@ -20,4 +20,4 @@ namespace SimpleLexer {
  * @return std::vector<std::string>
  */
 std::vector<std::string> tokenize(std::string const &code);
-}; // namespace SimpleLexer
+} // namespace SimpleLexer

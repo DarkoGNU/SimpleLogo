@@ -10,15 +10,18 @@
 #include <unordered_set>
 #include <vector>
 
+#include <tuple>
+#include <unordered_map>
+
 #include "Arg.hpp"
 
 /**
- * @brief Represents a Logo's command.
+ * @brief Represents a Logo command.
  */
 class TurtleCommand {
   public:
     /**
-     * @brief The command's type.
+     * @brief Type of the command.
      */
     enum class Type {
         forward,
@@ -37,73 +40,33 @@ class TurtleCommand {
      */
     enum class Comparison { greater, less, equal, inequal, null };
 
-    /**
-     * @brief Command's name.
-     * Has to be initialized before type
-     */
-    const std::string name;
-    /**
-     * @brief Command's type.
-     * Has to be initialized after name
-     */
     const TurtleCommand::Type type;
-    /**
-     * @brief Command's comparison.
-     * Has to be initialized after name
-     */
     const TurtleCommand::Comparison comparison;
-    /**
-     * @brief Command's arguments.
-     * Has to be initialized after comparison
-     */
+    const std::string name;
     const std::vector<Arg> args;
 
-    /**
-     * @brief Construct a new TurtleCommand object
-     *
-     * @param code string representing the command
-     * @param procedures used to determine whether it's a definition or call
-     */
-    TurtleCommand(std::string code,
-                  const std::unordered_set<std::string> &procedures);
+    TurtleCommand(std::string const &code,
+              std::unordered_set<std::string> const &procedures);
 
   private:
-    /**
-     * @brief Get the name for the constructor.
-     * Has to be called before getType.
-     * The string will be modified
-     *
-     * @param code reference to string representing the command
-     * @return std::string
-     */
-    static std::string getName(std::string &code);
-    /**
-     * @brief Get the type for the constructor.
-     * Depends on name being initialized.
-     * The name won't be modified
-     *
-     * @param procedures already defined procedures
-     * @return TurtleCommand::Type
-     */
-    TurtleCommand::Type
-    getType(const std::unordered_set<std::string> &procedures) const;
-    /**
-     * @brief Get the type of comparison for the constructor.
-     * Has to be called before getArgs.
-     * Depends on type being initialized.
-     * The string may be modified
-     *
-     * @param code reference to string representing the command
-     * @return TurtleCommand::Comparison
-     */
-    TurtleCommand::Comparison getComparison(std::string &code) const;
-    /**
-     * @brief Get the arguments for the constructor.
-     * Has to be called after getComparison.
-     * The string won't be modified
-     *
-     * @param code reference to string representing the command
-     * @return std::vector<Arg>
-     */
-    static std::vector<Arg> getArgs(const std::string &code);
+    static const std::unordered_map<std::string, TurtleCommand::Type> typeMap;
+
+    TurtleCommand(std::tuple<TurtleCommand::Type, TurtleCommand::Comparison, std::string,
+                         std::vector<Arg>>
+                  vars);
+
+    static std::tuple<TurtleCommand::Type, TurtleCommand::Comparison, std::string,
+                      std::vector<Arg>>
+    createCommand(std::string const &code,
+                  std::unordered_set<std::string> const &procedures);
+
+    static std::tuple<TurtleCommand::Type, TurtleCommand::Comparison, std::string,
+                      std::vector<Arg>>
+    handleConditional(std::string const &name, std::string const &expr);
+
+    TurtleCommand::Type getType(const std::unordered_set<std::string> &procedures);
+
+    TurtleCommand::Comparison getComparison(std::string &code);
+
+    std::vector<Arg> getArgs(const std::string &code);
 };
