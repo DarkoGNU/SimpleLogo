@@ -16,7 +16,7 @@ Turtle::Turtle(TileMap &tileMap)
     left(90);
 }
 
-Turtle::Turtle(TileMap &tileMap, std::size_t startX, std::size_t startY,
+Turtle::Turtle(TileMap &tileMap, double startX, double startY,
                double startAngle)
     : tileMap(tileMap), x(startX), y(startY), angle(startAngle) {}
 

@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <filesystem>
 #include <string_view>
 #include <vector>
@@ -34,6 +35,6 @@ bool writeText(std::filesystem::path const &outputPath, std::string_view text);
  * @return bool
  */
 bool writePng(std::filesystem::path const &outputPath,
-              std::vector<bool> const &tiles, unsigned int size);
+              std::vector<bool> const &tiles, std::size_t size);
 
 } // namespace Writer

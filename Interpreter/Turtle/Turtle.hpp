@@ -57,8 +57,7 @@ class Turtle {
      * @param startY initial Y
      * @param startAngle initial angle
      */
-    Turtle(TileMap &tileMap, std::size_t startX, std::size_t startY,
-           double startAngle);
+    Turtle(TileMap &tileMap, double startX, double startY, double startAngle);
 
     /**
      * @brief Turns left.
