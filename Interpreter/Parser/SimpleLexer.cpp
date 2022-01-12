@@ -50,7 +50,7 @@ std::vector<std::string> tokenize(std::string const &code) {
     while (std::getline(ss, token, ';'))
         // Safeguard against empty tokens
         if (!std::all_of(token.begin(), token.end(), ::isspace))
-            simpleTokens.push_back(token);
+            simpleTokens.push_back(std::move(token));
 
     return simpleTokens;
 }

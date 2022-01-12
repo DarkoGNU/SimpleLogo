@@ -1,0 +1,61 @@
+// Copyright 2021 The SimpleLogo Authors.
+// Licensed under GPL-3.0-or-later
+
+// ./SimpleLogo -i Test8.txt -o Tested8.png -s 1200
+// Testing multiple procedures
+
+bush1(x, n)
+    jezeli(n > 0)
+        forward(x);
+        left(45);
+	    bush1(x*0.75, n-1);
+        right(90);
+	    bush1(x*0.75, n-1);
+	    left(45);tyl(x);
+    koniec jezeli;
+koniec bush1;
+
+bush2(x, n)
+    jezeli(n > 0)
+        forward(x);
+        left(60);
+	    bush2(x*0.75, n-1);
+        right(120);
+	    bush2(x*0.75, n-1);
+	    left(60);tyl(x);
+    koniec jezeli;
+koniec bush2;
+
+bush3(x, n)
+    jezeli(n > 0)
+        forward(x);
+        left(45);
+	    bush3(x*0.6, n-1);
+        right(90);
+	    bush3(x*0.6, n-1);
+	    left(45);tyl(x);
+    koniec jezeli;
+koniec bush3;
+
+bush4(x, n)
+    jezeli(n > 0)
+        forward(x);
+        left(35);
+	    bush4(x*0.8, n-1);
+        right(70);
+	    bush4(x*0.8, n-1);
+	    left(35);tyl(x);
+    koniec jezeli;
+koniec bush4;
+
+bush1(200, 5);
+right(90);
+
+bush2(200, 5);
+right(90);
+
+bush3(200, 5);
+right(90);
+
+bush4(200, 5);
+right(90);
