@@ -13,7 +13,8 @@
 #include "DeepLexer.hpp"
 #include "SimpleLexer.hpp"
 
-Parser::Parser(std::filesystem::path inputPath) : inputPath(inputPath) {}
+Parser::Parser(std::filesystem::path inputPath)
+    : inputPath(std::move(inputPath)) {}
 
 std::vector<std::vector<Cmd>> Parser::getCode() const { return code; }
 

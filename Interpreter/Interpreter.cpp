@@ -14,7 +14,7 @@
 #include "Writer.hpp"
 
 Interpreter::Interpreter(const int argc, char const *const argv[])
-    : params(), status(params.readParams(argc, argv)),
+    : status(params.readParams(argc, argv)),
       tilemap(params.getSize()), turtle(tilemap) {}
 
 bool Interpreter::bad() const { return !status; }
