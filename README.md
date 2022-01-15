@@ -1,4 +1,6 @@
-# SimpleLogo [![Ubuntu](https://github.com/DarkoGNU/SimpleLogo/actions/workflows/Ubuntu.yml/badge.svg)](https://github.com/DarkoGNU/SimpleLogo/actions/workflows/Ubuntu.yml) [![macOS](https://github.com/DarkoGNU/SimpleLogo/actions/workflows/macOS.yml/badge.svg)](https://github.com/DarkoGNU/SimpleLogo/actions/workflows/macOS.yml) [![Windows](https://github.com/DarkoGNU/SimpleLogo/actions/workflows/Windows.yml/badge.svg)](https://github.com/DarkoGNU/SimpleLogo/actions/workflows/Windows.yml)
+# SimpleLogo
+
+[![Ubuntu](https://github.com/DarkoGNU/SimpleLogo/actions/workflows/Ubuntu.yml/badge.svg)](https://github.com/DarkoGNU/SimpleLogo/actions/workflows/Ubuntu.yml) [![macOS](https://github.com/DarkoGNU/SimpleLogo/actions/workflows/macOS.yml/badge.svg)](https://github.com/DarkoGNU/SimpleLogo/actions/workflows/macOS.yml) [![Windows](https://github.com/DarkoGNU/SimpleLogo/actions/workflows/Windows.yml/badge.svg)](https://github.com/DarkoGNU/SimpleLogo/actions/workflows/Windows.yml)
 
 A simple Logo implementation in C++
 
