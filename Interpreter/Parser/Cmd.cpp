@@ -77,11 +77,11 @@ varTuple Cmd::handleConditional(std::string const &name,
 
     if (index = expr.find("<>"); index != std::string::npos)
         exprType = Cmd::Comparison::inequal;
-    else if (index = expr.find(">"); index != std::string::npos)
+    else if (index = expr.find('>'); index != std::string::npos)
         exprType = Cmd::Comparison::greater;
-    else if (index = expr.find("<"); index != std::string::npos)
+    else if (index = expr.find('<'); index != std::string::npos)
         exprType = Cmd::Comparison::less;
-    else if (index = expr.find("="); index != std::string::npos)
+    else if (index = expr.find('='); index != std::string::npos)
         exprType = Cmd::Comparison::equal;
     else
         throw std::runtime_error("Unknown comparison type");

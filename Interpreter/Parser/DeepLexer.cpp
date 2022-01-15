@@ -95,24 +95,25 @@ std::string DeepLexer::getCleanToken() const {
 Cmd DeepLexer::getCommand() const { return Cmd(getCleanToken(), procedures); }
 
 void DeepLexer::cleanToken(std::string &token) {
-    // If it's end, we don't need any more information
-    const static auto endTest = [](char c) { return !std::isspace(c); };
-    auto it = std::find_if(token.begin(), token.end(), endTest);
+    auto const it = std::find_if(token.begin(), token.end(),
+                                 [](char c) { return !std::isspace(c); });
 
+    // If it's end, we don't need any more information
     if (it + 4 <= token.end() && std::string(it, it + 4) == "end ")
         token = "end";
-    if (it + 7 <= token.end() && std::string(it, it + 7) == "koniec ")
+    else if (it + 7 <= token.end() && std::string(it, it + 7) == "koniec ")
         token = "koniec";
+    else {
+        // Remove any whitespace
+        const static std::regex pattern1{R"((\s)+)"};
+        token = std::regex_replace(token, pattern1, "");
 
-    // Remove any whitespace
-    const static std::regex pattern1{R"((\s)+)"};
-    token = std::regex_replace(token, pattern1, "");
+        // Replace (, with spaces
+        const static std::regex pattern2{R"([\(,])"};
+        token = std::regex_replace(token, pattern2, " ");
 
-    // Replace (, with spaces
-    const static std::regex pattern2{R"([\(,])"};
-    token = std::regex_replace(token, pattern2, " ");
-
-    // If there's ), remove it
-    if (token.find(')') != std::string::npos)
-        token.pop_back();
+        // If there's ), remove it
+        if (token.find(')') != std::string::npos)
+            token.pop_back();
+    }
 }
