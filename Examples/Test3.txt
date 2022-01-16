@@ -1,5 +1,5 @@
-// Copyright 2021 The SimpleLogo Authors.
-// Licensed under GPL-3.0-or-later
+// This one isn't copyrightes by us.
+// It's an example given in the specification
 
 // ./SimpleLogo -i Test3.txt -o Tested3.png -s 1400
 // It can take a while!
