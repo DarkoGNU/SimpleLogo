@@ -1,0 +1,15 @@
+// Copyright 2021 The SimpleLogo Authors.
+// Licensed under GPL-3.0-or-later
+
+// ./SimpleLogo -i Test11.txt -o Tested11.txt -s 100
+// Testing high recursion depth
+// Maximum depth on my PC before segfault: 47615
+
+hell(x)
+    if (x > 1)
+        hell(x - 1);
+    end if;
+end hell;
+
+forward(25);
+hell(47615);

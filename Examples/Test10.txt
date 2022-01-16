@@ -1,0 +1,38 @@
+// Copyright 2021 The SimpleLogo Authors.
+// Licensed under GPL-3.0-or-later
+
+// ./SimpleLogo -i Test10.txt -o Tested10.txt -s 100000
+// Testing huuuge images :)
+
+// Execution time on my PC (i7-6700HQ): 2 minutes, 3 seconds.
+// Most of the time spend on saving the .txt file
+// The result looks correct!
+
+Divide-and-conquer(x)
+    if(x > 1)
+        right(90);
+        forward(x * 0.5);
+
+        right(90);
+        forward(x);
+
+        right(90);
+        forward(x);
+
+        right(90);
+        forward(x);
+
+        right(90);
+        forward(x * 0.5);
+
+        right(90);
+        forward(x * 0.125);
+        right(180);
+        Divide-and-conquer(x * 0.75);
+
+    end if;
+end Divide-and-conquer;
+
+// Set appropriate values
+forward(50000);
+Divide-and-conquer(100000);
