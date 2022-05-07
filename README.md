@@ -8,7 +8,7 @@ A simple Logo implementation in C++
 
 Just a few lines of recursive code will result in beautiful imagery 😃
 
-![Flower](https://user-images.githubusercontent.com/42816979/167272076-8069b558-d5c7-4e59-8817-289eff5e67ff.png)
+![Flower](https://user-images.githubusercontent.com/42816979/167272139-54b535ec-5d08-4f08-8e9f-f2cbb324ccfe.png)
 ![Triangles](https://user-images.githubusercontent.com/42816979/167272079-b982e0c7-8f41-42f3-9196-45432bf5968d.png)
 ![Cube](https://user-images.githubusercontent.com/42816979/167272080-68247144-ec3d-4f76-8b39-024fecae0f0d.png)
 
