@@ -65,7 +65,7 @@ Check the folder Examples for examples of SimpleLogo's scripting language
 
 Please put the following copyright disclaimer where it's appropriate:
 
-Copyright 2021 The SimpleLogo Authors.  
+Copyright 2022 The SimpleLogo Authors.  
 Licensed under GPL-3.0-or-later
 
 ## Contributions and bug reports
